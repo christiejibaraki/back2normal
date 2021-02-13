@@ -1,0 +1,326 @@
+
+* {
+    box-sizing: border-box;
+}
+
+html, body, p, a, h1, h2, h3, h4, h5, h6{
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 140px;
+}
+
+html {
+    height: 100%;
+}
+
+/* Style the body */
+body {
+    font-family: Arial;
+    margin: 0;
+    height: 100%;
+}
+
+/* Style the top navigation bar */
+#navbar {
+    display: flex;
+    background-color: #110934;
+    flex-wrap: wrap;
+    height: 5%;
+}
+
+/* Style the navigation bar links */
+#navbar a {
+    color: white;
+    padding: 14px 20px;
+    margin-right: 70px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+}
+
+#dataHeader {
+    color: #e8e8e8;
+    padding: 14px 15px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+#sortedBy {
+    color: #9aaab6;
+    padding: 14px 5px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+#sortedByValue {
+    color: #9aaab6;
+    padding: 14px 5px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Rajdhani', sans-serif;
+    border-bottom: 1px solid #5c5c60;
+}
+
+#ascending {
+    color: #9aaab6;
+    padding: 14px 0px;
+    margin-top: 0px;
+    margin-right: 220px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Rajdhani', sans-serif;
+    border-bottom: 1px solid #5c5c60;
+    font-family: 'Arial Unicode MS', 'Consolas';
+
+}
+
+#sortedByValue:hover {
+    color: #fb9902;
+
+}
+
+#navbar p {
+    color: #e8e8e8;
+    padding: 14px 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-decoration: none;
+    text-align: center;
+}
+
+
+
+/* Change color on hover */
+#navbar a:hover {
+    background-color: #e8e8e8;
+    color: black;
+}
+
+/* Column container */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+/* Create two unequal columns that sits next to each other */
+/* Sidebar/left column */
+.side {
+    flex: 10%;
+    flex-wrap: wrap;
+    max-width: 10%;
+    background-color: #23233f;
+    /*padding: 20px;*/
+}
+
+.side h2 {
+    color: #8e8685;
+    /*margin-top: -10px;*/
+}
+
+.side h3 {
+    color: #4424D6;
+}
+
+.side p {
+    color: #e8e8e8;
+}
+
+/* Main column */
+.data {
+    flex: 25%;
+    background-color: #F0F7D4;
+    padding-top: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.analysis {
+    flex: 65%;
+    background-color: #323a4b;
+    padding: 20px;
+}
+
+.movie {
+    width: 95%;
+    background-color: #fff;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    transition: 0.2s all;
+    margin: 10px;
+    height: 120px;
+    overflow: hidden;
+    padding: 3px;
+    color: #5c5c60;
+
+}
+
+.movie .overview{
+    font-size: 14px;
+    margin-top: -3px;
+}
+
+.movie h3 {
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    text-align: left;
+
+    color: #09051d;
+}
+
+.movie .featuredImage {
+    width: 70%;
+    float: left;
+    margin: 1.5%;
+    max-width: 70px;
+    margin-top: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
+
+}
+
+.movie .featuredImage h4 {
+    width: 85%;
+    margin-top: -6px;
+    margin-left: 0px;
+    margin-bottom: -2px;
+    text-align: center;
+    padding-top: 2px;
+    color: #fdfdfd;
+    background-color: #23233f;
+    border-radius: 2px;
+
+}
+
+.movie:hover {
+    background-color: #ececec;
+}
+
+.movie .featuredImage img {
+    max-width: 85%;
+    border-radius: 3px;
+    -webkit-filter: opacity(70%);
+    filter: opacity(70%);
+}
+
+/*.map {*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*border-radius: 5px;*/
+    /*position: relative;*/
+/*}*/
+
+#movieDetail {
+    opacity: 0.95;
+    position: absolute;
+    top: 100px;
+    right: 100px;
+    width: 600px;
+    height: 600px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background: #fff;
+    z-index: 1000;
+    border-radius: 15px;
+}
+
+.close {
+    position: absolute;
+    font-size: 30px;
+    right: 5px;
+    top: 5px;
+    color: #2f2c2c;
+    background-color: #fdfdfd;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-decoration: none;
+    border-radius: 10px;
+
+}
+
+/*.content {*/
+    /*padding-top: -10px;*/
+/*}*/
+
+/*.content-detail h1 {*/
+    /*color: #110934;*/
+    /*margin-bottom: -20px;*/
+    /*font-family: 'Audiowide', cursive;*/
+/*}*/
+
+/*.content-detail .genre {*/
+    /*color: #91000b;*/
+    /*margin-top: -25px;*/
+    /*padding: 5px;;*/
+    /*margin-left: -5px;*/
+
+/*}*/
+
+
+/*.content-detail .contentHolder {*/
+    /*background-color: whitesmoke;*/
+    /*min-height: 420px;*/
+    /*max-height: 420px;*/
+    /*border-radius: 5px;*/
+    /*overflow-y: scroll;*/
+    /*overflow-x: hidden;*/
+/*}*/
+
+/*.content-detail .bigImage img {*/
+    /*width: 40%;*/
+    /*float: right;*/
+    /*margin: 1.5%;*/
+    /*margin-top: 20px;*/
+    /*margin-left: 20px;*/
+    /*margin-right: 5px;*/
+    /*border-radius: 5px;*/
+
+/*}*/
+
+/*.content-detail .text {*/
+    /*color: #5c5c60;*/
+    /*font-size: 20px;*/
+    /*padding: 5px;*/
+    /*margin-top: -20px;*/
+/*}*/
+
+
+/*.content-detail .entities {*/
+    /*color: #91000b;*/
+    /*margin-top: 0px;*/
+    /*padding: 5px;*/
+/*}*/
+
+/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 700px) {
+    .row, .navbar {
+        flex-direction: column;
+    }
+}
+
