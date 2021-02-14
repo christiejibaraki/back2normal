@@ -15,7 +15,7 @@
 <!-- The flexible grid (content) -->
 <div class="row">
     <div class="data">
-        <svg id="my_dataviz" width="400" height="300"></svg>
+        <svg id="my_dataviz" width=1000 height=1000></svg>
     </div>
 </div>
 
@@ -46,9 +46,9 @@
     // Map and projection
     var path = d3.geoPath();
     var projection = d3.geoMercator()
-        .scale(70)
-        .center([0,20])
-        .translate([width / 2, height / 2]);
+        .scale(width * 90)
+        .center([-87.6298, 41.8781])
+        .translate([width / 2, height / 2])
 
     // Data and color scale
     var data = d3.map();
@@ -58,8 +58,9 @@
 
     // Load external data and boot
     d3.queue()
-        .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
-        .defer(d3.csv, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world_population.csv", function(d) { data.set(d.code, +d.pop); })
+        .defer(d3.json, "http://127.0.0.1:8080/view/data/Boundaries%20-%20ZIP%20Codes.geojson")
+        // .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
+        // .defer(d3.csv, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world_population.csv", function(d) { data.set(d.code, +d.pop); })
         .await(ready);
 
     function ready(error, topo) {
@@ -77,7 +78,7 @@
         }
 
         let mouseLeave = function(d) {
-            d3.selectAll(".Country")
+            d3.selectAll(".Zip")
                 .transition()
                 .duration(200)
                 .style("opacity", .8)
@@ -100,10 +101,10 @@
             // set the color of each country
             .attr("fill", function (d) {
                 d.total = data.get(d.id) || 0;
-                return colorScale(d.total);
+                return colorScale(d.totals);
             })
             .style("stroke", "transparent")
-            .attr("class", function(d){ return "Country" } )
+            .attr("class", function(d){ return "Zip" } )
             .style("opacity", .8)
             .on("mouseover", mouseOver )
             .on("mouseleave", mouseLeave )
