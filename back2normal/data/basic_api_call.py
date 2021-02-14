@@ -1,6 +1,11 @@
 import os
 import pandas as pd
 from sodapy import Socrata
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+
 from util import basic_io
 
 # in .config/ create socrata_chicago_keys.json with contents:
@@ -37,3 +42,4 @@ client = Socrata(
 dataset_identifier = "553k-3xzc"
 results = client.get(dataset_identifier, limit=2000)
 results_df = pd.DataFrame.from_records(results)
+print(results_df)
