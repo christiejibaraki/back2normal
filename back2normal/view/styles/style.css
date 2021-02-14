@@ -8,11 +8,17 @@ html, body, p, a, h1, h2, h3, h4, h5, h6{
 }
 
 #map {
-    position: relative;
-    z-index: 0;
-    width: 100%;
+    width: 960px;
     height: 500px;
 }
+
+
+/*#map {*/
+    /*position: relative;*/
+    /*z-index: 0;*/
+/*width: 100%;*/
+/*height: 500px;*/
+/*}*/
 
 .container {
     max-width: 900px;
