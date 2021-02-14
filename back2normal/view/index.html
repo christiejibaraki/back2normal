@@ -7,8 +7,6 @@
     <link href="https://fonts.googleapis.com/css?family=Audiowide|Rajdhani" rel="stylesheet">
     <link rel="stylesheet" href="styles/style.css" media="screen" charset="utf-8">
 
-
-
 </head>
 <body>
 
@@ -47,20 +45,21 @@
     var path = d3.geoPath();
     var projection = d3.geoMercator()
         .scale(width * 90)
+        // chicago maps need to be centered here
         .center([-87.6298, 41.8781])
         .translate([width / 2, height / 2])
 
     // Data and color scale
     var data = d3.map();
     var colorScale = d3.scaleThreshold()
-        .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000])
+        .domain([5, 10, 20, 30, 50, 60])
         .range(d3.schemeBlues[7]);
 
     // Load external data and boot
     d3.queue()
         .defer(d3.json, "http://127.0.0.1:8080/view/data/Boundaries%20-%20ZIP%20Codes.geojson")
         // .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
-        // .defer(d3.csv, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world_population.csv", function(d) { data.set(d.code, +d.pop); })
+        .defer(d3.csv, "http://127.0.0.1:8080/view/data/test_cases_chic_zip.csv", function(d) { data.set(d.zipcode, +d.cases); })
         .await(ready);
 
     function ready(error, topo) {
@@ -100,8 +99,8 @@
             )
             // set the color of each country
             .attr("fill", function (d) {
-                d.total = data.get(d.id) || 0;
-                return colorScale(d.totals);
+                d.total = data.get(d.zip) || 0;
+                return colorScale(d.total+ 20);
             })
             .style("stroke", "transparent")
             .attr("class", function(d){ return "Zip" } )

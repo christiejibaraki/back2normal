@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Empty map</title>
+    <meta
+            name="viewport"
+            content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js"></script>
+    <script src="http://d3js.org/d3.v4.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <link
+            href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css"
+            rel="stylesheet"
+    />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    mapboxgl.accessToken = "pk.eyJ1IjoiaWJhcmFraWNqIiwiYSI6ImNrbDQ2ZmpxcTBsYXQyb21naGx1b3NvYWIifQ.QPA5g9Xb3RzQyJcT8cDttA";
+
+    var map = new mapboxgl.Map({
+        container: "map", // container id
+        style: "mapbox://styles/mapbox/streets-v9", // stylesheet location
+        center: [-87.6298, 41.8781], // starting position [lng, lat]
+        zoom: 14 // starting zoom
+    });
+
+    var container = map.getCanvasContainer();
+
+    // The svg
+    var svg = d3.select(container).append("svg").style("position", "absolute").style("z-index", 2),
+        width = +svg.attr("width"),
+        height = +svg.attr("height");
+
+    // Map and projection
+    var path = d3.geoPath();
+    var projection = d3.geoMercator()
+        .scale(width * 90)
+        // chicago maps need to be centered here
+        .center([-87.6298, 41.8781])
+        .translate([width / 2, height / 2])
+
+    // Data and color scale
+    var data = d3.map();
+    var colorScale = d3.scaleThreshold()
+        .domain([5, 10, 20, 30, 50, 60])
+        .range(d3.schemeBlues[7]);
+
+    // Load external data and boot
+    d3.queue()
+        .defer(d3.json, "http://127.0.0.1:8080/view/data/Boundaries%20-%20ZIP%20Codes.geojson")
+        // .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
+        .defer(d3.csv, "http://127.0.0.1:8080/view/data/test_cases_chic_zip.csv", function(d) { data.set(d.zipcode, +d.cases); })
+        .await(ready);
+
+    function ready(error, topo) {
+
+        let mouseOver = function(d) {
+            d3.selectAll(".Country")
+                .transition()
+                .duration(200)
+                .style("opacity", .5)
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .style("opacity", 1)
+                .style("stroke", "black")
+        }
+
+        let mouseLeave = function(d) {
+            d3.selectAll(".Zip")
+                .transition()
+                .duration(200)
+                .style("opacity", .8)
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .style("stroke", "transparent")
+        }
+
+        // Draw the map
+        svg.append("g")
+            .selectAll("path")
+            .data(topo.features)
+            .enter()
+            .append("path")
+            // draw each country
+            .attr("d", d3.geoPath()
+                .projection(projection)
+            )
+            // set the color of each country
+            .attr("fill", function (d) {
+                d.total = data.get(d.zip) || 0;
+                return colorScale(d.total+ 20);
+            })
+            .style("stroke", "transparent")
+            .attr("class", function(d){ return "Zip" } )
+            .style("opacity", .8)
+            .on("mouseover", mouseOver )
+            .on("mouseleave", mouseLeave )
+    }
+</script>
+</body>
+</html>
