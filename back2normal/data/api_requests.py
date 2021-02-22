@@ -24,8 +24,22 @@ class RequestResponse:
         # need to implement query
         # https://dev.socrata.com/docs/queries/
 
+        # For header codes included in response object: 
+        # https://dev.socrata.com/docs/response-codes.html
+
+        # Difference between a Request and a Response object:
+        # https://requests.readthedocs.io/en/master/user/advanced/#request-and-response-objects
+        # ()
+       
         self.request = requests.Request(request_url, params)
-        self.response = self.request.prepare()
+        self.response = requests.get(request_url, params=params)
+        #self.request = self.response.request
+
+        self.data_df = pd.DataFrame.from_dict(self.response.json())
+        self.df_dtypes = self.data_df.dtypes
+
+        self.header_fields = self.response.headers['X-SODA2-Fields']
+        self.header_dtypes = self.response.headers['X-SODA2-Types']
 
     def print_request(self):
         # doesn't work, but for debugging queries
