@@ -5,7 +5,7 @@ PRAGMA_INFO_FIELD_INDEX = 1
 PRAGMA_INFO_DTYPE_INDEX = 2
 
 
-class DBClient():
+class DBClient:
 
     def __init__(self, db_path = DB_PATH):
 
