@@ -67,3 +67,5 @@ df_numeric_and_strings = df_numeric.convert_dtypes(convert_integer=False)
 print(df_numeric_and_strings.dtypes)
 print(df_numeric_and_strings.head())
 
+df_numeric_and_strings.to_sql('my_better_table', conn, if_exists='replace')
+print(cursor.execute("pragma table_info('my_better_table')").fetchall())
