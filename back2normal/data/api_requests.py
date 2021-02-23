@@ -8,7 +8,7 @@ import sys
 
 class RequestResponse:
 
-    def __init__(self, request_url, params, query=""):
+    def __init__(self, request_url, params, select_field_list = None):
 
         self._session = requests.Session()
         self.request = None
@@ -20,9 +20,9 @@ class RequestResponse:
         self.header_dtypes = None
         self.df_dtypes = None
 
-        self._get_request(request_url, params)
+        self._get_request(request_url, params, select_field_list)
 
-    def _get_request(self, request_url, params, query=""):
+    def _get_request(self, request_url, params, select_field_list):
         # need to implement query
         # https://dev.socrata.com/docs/queries/
 
@@ -32,6 +32,10 @@ class RequestResponse:
         # Difference between a Request and a Response object:
         # https://requests.readthedocs.io/en/master/user/advanced/#request-and-response-objects
         # ()
+
+        if not not select_field_list:
+            select_statement = f"?$select={', '.join(select_field_list)}"
+            request_url = request_url + select_statement
        
         self.request = requests.Request(request_url, params)
         self.response = self._session.get(request_url, params = params)
@@ -56,4 +60,5 @@ class RequestResponse:
         # converting itself or call this method
         self.data_df = self.data_df.apply(pd.to_numeric, errors='ignore')
         self.data_df = self.data_df.convert_dtypes(convert_integer=False)
+        self.df_dtypes = self.data_df.dtypes
 
