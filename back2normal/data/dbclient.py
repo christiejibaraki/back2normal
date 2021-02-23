@@ -15,7 +15,11 @@ class DBClient:
 
     def create_table_from_pandas(self, data_df, table_name, replace=True):
 
-        data_df.to_sql(table_name, self.conn, if_exists='replace' if replace else 'fail')
+        try:
+            data_df.to_sql(table_name, self.conn, if_exists='replace' if replace else 'fail')
+        except sqlite3.InterfaceError as e:
+            print(data_df.dtypes)
+            raise e
 
     def get_table_info(self, table_name):
 

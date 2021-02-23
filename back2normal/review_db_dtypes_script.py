@@ -1,5 +1,5 @@
 import os
-from data import api_requests, dbclient
+from data import api_requests, dbclient, soda_data
 from util import basic_io
 
 APP_TOKEN_STR = "app_token"
@@ -26,3 +26,16 @@ print(response_obj_fields.request_url)
 print(response_obj_fields.df_dtypes)
 response_obj_fields.convert_types() #converts dtypes
 print(response_obj_fields.df_dtypes)
+
+#### add datasets from dict
+#### errors out for more complex objects, POINT (-87.622844 41.886262)
+#### force to string? don't include?
+
+for data_obj in soda_data.datasets.values():
+    api_resp = api_requests.RequestResponse(data_obj.base_url,
+                                            params,
+                                            data_obj.desired_attr_lst)
+    api_resp.convert_types()
+    db.create_table_from_pandas(api_resp.data_df, data_obj.table_name)
+    print(db.get_table_info(data_obj.table_name))
+
