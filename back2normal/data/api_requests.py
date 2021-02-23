@@ -34,7 +34,7 @@ class RequestResponse:
         # ()
        
         self.request = requests.Request(request_url, params)
-        self.response = self._session.get(url, params)
+        self.response = self._session.get(request_url, params = params)
         #self.request = self.response.request
 
         self.data_df = pd.DataFrame.from_dict(self.response.json())
