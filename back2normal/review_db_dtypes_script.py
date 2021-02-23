@@ -9,6 +9,7 @@ keys = basic_io.read_json_to_dict(path_to_keys)
 params={"$$app_token": keys[APP_TOKEN_STR]}
 
 response_obj = api_requests.RequestResponse("https://data.cityofchicago.org/resource/naz8-j4nc.json", params)
+response_obj.convert_types() #converts dtypes
 
 table_name = "test_table"
 db = dbclient.DBClient()

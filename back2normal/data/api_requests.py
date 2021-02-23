@@ -10,6 +10,7 @@ class RequestResponse:
 
     def __init__(self, request_url, params, query=""):
 
+        self._session = requests.Session()
         self.request = None
         self.response = None
         self.data_df = None
@@ -33,7 +34,7 @@ class RequestResponse:
         # ()
        
         self.request = requests.Request(request_url, params)
-        self.response = requests.get(request_url, params=params)
+        self.response = self._session.get(url, params)
         #self.request = self.response.request
 
         self.data_df = pd.DataFrame.from_dict(self.response.json())
@@ -49,5 +50,10 @@ class RequestResponse:
             ''.join('{}={}'.format(k, v) for k, v in self.request.headers.items())
         ))
 
-
+    def convert_types(self):
+        # making this a method that's not called by constructor for now
+        # but eventually probably makes sense to have constructor do
+        # converting itself or call this method
+        self.data_df = self.data_df.apply(pd.to_numeric, errors='ignore')
+        self.data_df = self.data_df.convert_dtypes(convert_integer=False)
 
