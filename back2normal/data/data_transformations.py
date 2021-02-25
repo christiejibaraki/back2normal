@@ -37,7 +37,6 @@ def get_next_saturday(YYYY_MM_DD_str):
     :return: datetime object representing the next saturday
     """
     date_obj = datetime.strptime(YYYY_MM_DD_str, SOCRATA_STR_DT_FORMAT)
-    date_obj.weekday()
     days_until_saturday = timedelta((SATURDAY_INDEX - date_obj.weekday()) % DAYS_IN_WEEK)
     return date_obj + days_until_saturday
 
