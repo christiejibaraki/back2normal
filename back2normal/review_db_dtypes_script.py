@@ -31,7 +31,7 @@ print(response_obj_fields.df_dtypes)
 #### errors out for more complex objects, POINT (-87.622844 41.886262)
 #### force to string? don't include?
 
-for data_obj in soda_data.datasets.values():
+for data_obj in soda_data.datasets:
     api_resp = api_requests.RequestResponse(data_obj.base_url,
                                             params,
                                             data_obj.desired_attr_lst)
