@@ -54,22 +54,7 @@ def get_cdc_mmwr_week(YYY_MM_DD_str):
     next_sat_str = next_saturday.strftime(SOCRATA_STR_DT_FORMAT)
     return WEEK_END_TO_CDC_WEEK[next_sat_str]
 
-################################################################
-################################################################
-#          examples below to be removed
-################################################################
-################################################################
 
-## zip code from long, lat
-from util import basic_io
-path_to_keys = os.path.join('config', 'mapbox_keys.json')
-keys = basic_io.read_json_to_dict(path_to_keys)
-app_token = keys["app-token"]
-
-long = -73.989
-lat = 40.733
-zip = get_zipcode_from_mapbox(long, lat, app_token)
-print(zip)
 
 ### date of next saturday
 ## (because CDC MMWR weeks end on Saturdays)
