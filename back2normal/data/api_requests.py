@@ -39,7 +39,7 @@ class RequestResponse:
             # there is also a select query that specifies an aggregation method
             # group query documentation: https://dev.socrata.com/docs/queries/group.html
             # should add some error handling
-                group_statement = f"&$group={', ',join(group_by_field_list)}"
+                group_statement = f"&$group={', '.join(group_by_field_list)}"
                 request_url = request_url + group_statement
 
 
