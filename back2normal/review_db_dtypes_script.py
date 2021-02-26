@@ -27,6 +27,19 @@ print(response_obj_fields.df_dtypes)
 response_obj_fields.convert_types() #converts dtypes
 print(response_obj_fields.df_dtypes)
 
+#### group by some attribute
+#### i picked an arbitrary dataset that would be good for testing this
+response_obj_slct_group = api_requests.RequestResponse(
+    "https://data.cityofchicago.org/resource/mq3i-nnqe.json",
+    params, ["on_street", "COUNT(stop_id)"], ["on_street"])
+print(response_obj_slct_group.request_url)
+print(response_obj_slct_group.header_fields)
+print(response_obj_slct_group.df_dtypes)
+response_obj_slct_group.convert_types() #converts dtypes
+print(response_obj_slct_group.df_dtypes)
+
+
+
 #### add datasets from dict
 #### errors out for more complex objects, POINT (-87.622844 41.886262)
 #### force to string? don't include?
