@@ -10,25 +10,22 @@ class SodaData:
         self.table_name = table_name
         self.identifier = identifier
         self.base_url = f"https://data.cityofchicago.org/resource/{identifier}.json"
-        self.request_url = self._build_soql_query()
-
-        # if empty or None, will use all available fields
         self.desired_attr_lst = desired_attr_lst
+        self.group_by_lst = group_by
+        self.where_lst = where
+        self.request_url = self._build_soql_query()
 
     def _build_soql_query(self):
         
-        query =  f"select {', '.join(select_field_list)} "
+        query =  f"SELECT {', '.join(self.desired_attr_lst)} "
+        if self.where_lst:
+            #Multiple clauses AND
+            query += f"WHERE {'AND '.join(self.where_lst)} "
+        if self.group_by_lst:
+            query += f"GROUP BY {', '.join(self.group_by_lst)}"
 
-        # # if select_field_list not empty or None, create select query
-        # if not not select_field_list:  # could this just be if select_field_list:
-        #     select_statement = f"?$select={', '.join(select_field_list)}"
-        #     request_url = request_url + select_statement
-        #     if not not group_by_field_list:
-        #         # I nested this because there can only be a group_by query if
-        #         # there is also a select query that specifies an aggregation method
-        #         # group query documentation: https://dev.socrata.com/docs/queries/group.html
-        #         # should add some error handling
-        #         group_statement = f"&$group={', '.join(group_by_field_list)}"
+        return self.base_url + query
+
         #         request_url = request_url + group_statement
 
 

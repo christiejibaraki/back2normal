@@ -10,6 +10,7 @@ APP_TOKEN_STR = "app_token"
 path_to_keys = os.path.join('config', 'socrata_chicago_keys.json')
 keys = basic_io.read_json_to_dict(path_to_keys)
 params = {"$$app_token": keys[APP_TOKEN_STR]}
+query = ['*']
 
 response_obj = api_requests.SocrataAPIClient("https://data.cityofchicago.org/resource/naz8-j4nc.json", params)
 response_obj.convert_types() #converts dtypes
@@ -24,7 +25,8 @@ print(db.get_table_info(table_name))
 #### select specific fields
 response_obj_fields = api_requests.SocrataAPIClient(
     "https://data.cityofchicago.org/resource/naz8-j4nc.json",
-    params, ["cases_total", "deaths_total"])
+    params)
+    
 print(response_obj_fields.request_url)
 print(response_obj_fields.df_dtypes)
 response_obj_fields.convert_types() #converts dtypes
@@ -48,7 +50,7 @@ print(response_obj_slct_group.df_dtypes)
 #### force to string? don't include?
 
 for data_obj in soda_data.datasets:
-    api_resp = api_requests.SocrataAPIClient(data_obj.base_url,
+    api_resp = api_requests.SocrataAPIClient(data_obj.request_url,
                                              params)
     api_resp.convert_types()
     db.create_table_from_pandas(api_resp.data_df, data_obj.table_name)
