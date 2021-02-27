@@ -3,8 +3,8 @@ class SodaData:
 
     def __init__(self, dataset_name, table_name, identifier,
                  desired_attr_lst,
-                 group_by = None,
-                 where = None):
+                 group_by=None,
+                 where=None):
 
         self.dataset_name = dataset_name
         self.table_name = table_name
@@ -17,7 +17,7 @@ class SodaData:
 
     def _build_soql_query(self):
         
-        query =  f"SELECT {', '.join(self.desired_attr_lst)} "
+        query =  f"?$query=SELECT {', '.join(self.desired_attr_lst)} "
         if self.where_lst:
             #Multiple clauses AND
             query += f"WHERE {'AND '.join(self.where_lst)} "

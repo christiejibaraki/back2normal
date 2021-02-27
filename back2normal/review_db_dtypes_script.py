@@ -23,25 +23,25 @@ db.create_table_from_pandas(response_obj.data_df, table_name)
 print(db.get_table_info(table_name))
 
 #### select specific fields
-response_obj_fields = api_requests.SocrataAPIClient(
-    "https://data.cityofchicago.org/resource/naz8-j4nc.json",
-    params)
+# response_obj_fields = api_requests.SocrataAPIClient(
+#     "https://data.cityofchicago.org/resource/naz8-j4nc.json",
+#     params)
     
-print(response_obj_fields.request_url)
-print(response_obj_fields.df_dtypes)
-response_obj_fields.convert_types() #converts dtypes
-print(response_obj_fields.df_dtypes)
+# print(response_obj_fields.request_url)
+# print(response_obj_fields.df_dtypes)
+# response_obj_fields.convert_types() #converts dtypes
+# print(response_obj_fields.df_dtypes)
 
 #### group by some attribute
 #### i picked an arbitrary dataset that would be good for testing this
-response_obj_slct_group = api_requests.SocrataAPIClient(
-    "https://data.cityofchicago.org/resource/mq3i-nnqe.json",
-    params, ["on_street", "COUNT(stop_id)"], ["on_street"])
-print(response_obj_slct_group.request_url)
-print(response_obj_slct_group.header_fields)
-print(response_obj_slct_group.df_dtypes)
-response_obj_slct_group.convert_types() #converts dtypes
-print(response_obj_slct_group.df_dtypes)
+# response_obj_slct_group = api_requests.SocrataAPIClient(
+#     "https://data.cityofchicago.org/resource/mq3i-nnqe.json",
+#     params, ["on_street", "COUNT(stop_id)"], ["on_street"])
+# print(response_obj_slct_group.request_url)
+# print(response_obj_slct_group.header_fields)
+# print(response_obj_slct_group.df_dtypes)
+# response_obj_slct_group.convert_types() #converts dtypes
+# print(response_obj_slct_group.df_dtypes)
 
 
 
@@ -55,4 +55,3 @@ for data_obj in soda_data.datasets:
     api_resp.convert_types()
     db.create_table_from_pandas(api_resp.data_df, data_obj.table_name)
     print(db.get_table_info(data_obj.table_name))
-
