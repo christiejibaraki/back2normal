@@ -2,7 +2,8 @@
 *keys.json
 
 # large data resources
-resources/
+resources/GroundTruth/
+resources/IDPH/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
