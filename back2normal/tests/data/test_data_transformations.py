@@ -45,4 +45,7 @@ def test_cdc_lookup_resource():
     assert week_ending_to_cdc_week_dict["2021-01-02"] == 53
 
 
-
+def test_get_chicago_zipcodes():
+    zipcodes = data_transformations.get_chicago_zipcodes()
+    assert len(zipcodes) == 59
+    assert isinstance(zipcodes[0], str)

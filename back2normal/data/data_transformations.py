@@ -13,6 +13,16 @@ SOCRATA_STR_DT_FORMAT = '%Y-%m-%d'
 WEEK_END_TO_CDC_WEEK = basic_io.read_json_to_dict("resources/cdc_week.json")
 
 
+def get_chicago_zipcodes():
+    """
+    read resource json to list of 59 chicago zipcodes
+
+    :return: list of (str) where each str is zipcode of chicago
+    """
+    return basic_io.read_json_to_dict(os.path.join(
+        "resources", "chicago_zips_59.json"))
+
+
 def get_zipcode_from_mapbox(long, lat, access_token):
     """
     get zipcode for geo coords via mapbox api
