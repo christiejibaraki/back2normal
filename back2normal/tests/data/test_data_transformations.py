@@ -1,15 +1,13 @@
 import os
 from datetime import datetime
 from data import data_transformations
-from util import basic_io
+from util import basic_io, api_util
 
 # @before??? yes
 
 
 def test_get_zip_code_from_mapbox():
-    path_to_keys = os.path.join('config', 'mapbox_keys.json')
-    keys = basic_io.read_json_to_dict(path_to_keys)
-    app_token = keys["app-token"]
+    app_token = api_util.get_mapbox_app_token()
 
     long = -73.989
     lat = 40.733

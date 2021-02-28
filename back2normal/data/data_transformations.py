@@ -34,7 +34,7 @@ def get_zipcode_from_mapbox(long, lat, access_token):
     """
     request_url = f"https://api.mapbox.com/geocoding/v5/mapbox.places/{long},{lat}.json"
     params = {"types": "postcode", "access_token": access_token}
-    response = requests.get(url=request_url, params = params)
+    response = requests.get(url=request_url, params=params)
 
     return int(response.json()['features'][0]['text'])
 
