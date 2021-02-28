@@ -1,9 +1,6 @@
-import os
 from datetime import datetime
 from data import data_transformations
 from util import basic_io, api_util
-
-# @before??? yes
 
 
 def test_get_zip_code_from_mapbox():
