@@ -3,8 +3,6 @@ import requests
 import pandas as pd
 from util import api_util
 
-APP_TOKEN_STR = "app_token"
-
 
 class SocrataAPIClient:
 
@@ -36,8 +34,8 @@ class SocrataAPIClient:
         # get and parse response
         self.response = requests.get(request_url, self.params)
         self.request_url = self.response.request.url
-        # self.header_fields = self.response.headers['X-SODA2-Fields']
-        # self.header_dtypes = self.response.headers['X-SODA2-Types']
+        self.header_fields = self.response.headers['X-SODA2-Fields']
+        self.header_dtypes = self.response.headers['X-SODA2-Types']
 
         # convert to pandas df
         self.data_df = pd.DataFrame.from_dict(self.response.json())
