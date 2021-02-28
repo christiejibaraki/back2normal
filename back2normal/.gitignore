@@ -1,6 +1,9 @@
 # api keys
 *keys.json
 
+# large data resources
+resources/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
