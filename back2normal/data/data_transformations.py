@@ -52,4 +52,3 @@ def get_cdc_mmwr_week(YYY_MM_DD_str):
     next_saturday = get_next_saturday(YYY_MM_DD_str)
     next_sat_str = next_saturday.strftime(SOCRATA_STR_DT_FORMAT)
     return WEEK_END_TO_CDC_WEEK[next_sat_str]
-
