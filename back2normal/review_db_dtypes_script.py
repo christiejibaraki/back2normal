@@ -1,5 +1,5 @@
 import os
-from data import api_requests, dbclient, soda_data
+from data import api_requests, dbclient, soda_data, daily_case_data_by_zip_pull
 from util import basic_io
 
 APP_TOKEN_STR = "app_token"
@@ -47,7 +47,6 @@ print(api_resp_groupby.header_fields)
 print(api_resp_groupby.data_df)
 
 
-
 #Testing more complex query with WHERE and GROUP BY fields
 #This query is not working--and i think the WHERE clause
 #is the problem
@@ -68,3 +67,7 @@ print(api_resp_complex.header_fields)
 print(api_resp_complex.data_df)
 
 
+# daily covid data by zipcod
+daily_covid_data = daily_case_data_by_zip_pull.get_daily_covid_data_from_api(testing=True)
+db.create_table_from_pandas(daily_covid_data, 'IDPH_COVID_DAILY')
+print(db.get_table_info('IDPH_COVID_DAILY'))
