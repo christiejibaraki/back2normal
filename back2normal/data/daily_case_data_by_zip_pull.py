@@ -3,10 +3,8 @@ import requests
 import csv
 import pandas as pd
 
-#excessive commenting is for my own benefit
-
-#citation:
-#https://stackoverflow.com/questions/35371043/use-python-requests-to-download-csv
+# citation:
+# https://stackoverflow.com/questions/35371043/use-python-requests-to-download-csv
 
 CSV_URL = 'https://il-covid-zip-data.s3.us-east-2.amazonaws.com/latest/zips.csv'
 SELECT_COLUMNS = ['date', 'zipcode', 'confirmed_cases',
@@ -40,7 +38,7 @@ def get_daily_covid_data_from_api(testing=False):
         data_list = list(readout)
         df = pd.DataFrame(data_list[1:], columns=data_list[0])
 
-        #select columns to keep
+        # select columns to keep
         select_df = df.loc[:, SELECT_COLUMNS]
         return select_df
 

@@ -11,7 +11,6 @@ class SocrataAPIClient:
         self.data_df = None
 
         # for reviewing datatypes
-        #These need to be set
         self.header_fields = None
         self.header_dtypes = None
         self.df_dtypes = None

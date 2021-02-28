@@ -76,5 +76,3 @@ datasets.append(SodaData("Traffic Crashes - Crashes",
                           "STREET_NO", "STREET_DIRECTION", "STREET_NAME",
                           "MOST_SEVERE_INJURY", "CRASH_HOUR",
                           "LATITUDE", "LONGITUDE"]))
-
-
