@@ -10,7 +10,7 @@ SOCRATA_STR_DT_FORMAT = '%Y-%m-%d'
 
 # data sourced from https://ibis.health.state.nm.us/resource/MMWRWeekCalendar.html#part3
 # created from script sandbox/data/create_cdc_mmwr_lookup.py
-WEEK_END_TO_CDC_WEEK = basic_io.read_json_to_dict("data/cdc_week.json")
+WEEK_END_TO_CDC_WEEK = basic_io.read_json_to_dict("resources/cdc_week.json")
 
 
 def get_zipcode_from_mapbox(long, lat, access_token):

@@ -3,7 +3,7 @@ from datetime import datetime
 from data import data_transformations
 from util import basic_io
 
-# @before???
+# @before??? yes
 
 
 def test_get_zip_code_from_mapbox():
@@ -32,7 +32,8 @@ def test_get_cdc_mmr_week():
 
 
 def test_cdc_lookup_resource():
-    week_ending_to_cdc_week_dict = basic_io.read_json_to_dict("data/cdc_week.json")
+    week_ending_to_cdc_week_dict =\
+        basic_io.read_json_to_dict("resources/cdc_week.json")
 
     assert week_ending_to_cdc_week_dict["2020-05-02"] == 18
     assert week_ending_to_cdc_week_dict["2023-04-15"] == 15
