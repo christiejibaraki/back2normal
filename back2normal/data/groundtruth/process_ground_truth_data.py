@@ -13,4 +13,7 @@ for dirName, subdirList, fileList in os.walk(ground_truth_file_path):
         print(fname)
         print(header)
 
-
+#combine files 
+#if some files do not contain the same column then they should say none
+#combine into single pandas dataframe 
+#create additional column for zipcode 
