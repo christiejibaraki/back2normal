@@ -4,7 +4,8 @@ class SodaData:
     def __init__(self, dataset_name, table_name, identifier,
                  desired_attr_lst,
                  group_by=None,
-                 where=None):
+                 where=None,
+                 limit=None):
 
         self.dataset_name = dataset_name
         self.table_name = table_name
@@ -13,9 +14,12 @@ class SodaData:
         self.desired_attr_lst = desired_attr_lst
         self.group_by_lst = group_by
         self.where_lst = where
+        self.limit = limit
         self.request_url = self._build_soql_query()
 
     def _build_soql_query(self):
+
+        # soql docs: https://dev.socrata.com/docs/queries/
         
         query =  f"?$query=SELECT {', '.join(self.desired_attr_lst)} "
         if self.where_lst:
@@ -23,6 +27,8 @@ class SodaData:
             query += f"WHERE {'AND '.join(self.where_lst)} "
         if self.group_by_lst:
             query += f"GROUP BY {', '.join(self.group_by_lst)}"
+        if self.limit:
+            query += f"LIMIT {self.limit}"
 
         return self.base_url + query
 
@@ -44,5 +50,7 @@ datasets.append(SodaData("COVID-19 Vaccinations by ZIP Code",
                           "total_doses_daily", "total_doses_cumulative",
                           "vaccine_series_completed_daily",
                           "vaccine_series_completed_percent_population",
-                          "population"]))
-                          
+                          "population"],
+                         None,
+                         None,
+                         5000))
