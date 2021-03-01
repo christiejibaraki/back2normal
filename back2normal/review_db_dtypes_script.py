@@ -17,6 +17,7 @@ for data_obj in soda_data.datasets:
     print(api_resp.header_dtypes)
     print(api_resp.df_dtypes)
     print(db.get_table_info(data_obj.table_name))
+    print(f"nrow df:{len(api_resp.data_df)}")
 
 # daily covid data by zipcod
 daily_covid_data = daily_case_data_by_zip_pull.get_daily_covid_data_from_api(testing=True)

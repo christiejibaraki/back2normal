@@ -23,7 +23,7 @@ class SocrataAPIClient:
     @staticmethod
     def _get_app_token_params():
         token = api_util.get_socrata_app_token()
-        return {"$$app_token": token}
+        return {"$$app_token": token, "$$limit": 5000}
 
     def _get_request(self, request_url):
         # For header codes included in response object: 
@@ -34,6 +34,11 @@ class SocrataAPIClient:
         # get and parse response
         self.response = requests.get(request_url, self.params)
         self.request_url = self.response.request.url
+        if self.response.status_code != 200:
+            raise Exception(f"request error: "
+                            f"{self.response.headers['X-Error-Message']}\n"
+                            f"{self.request_url}")
+
         self.header_fields = self.response.headers['X-SODA2-Fields']
         self.header_dtypes = self.response.headers['X-SODA2-Types']
 
