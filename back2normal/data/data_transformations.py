@@ -62,3 +62,35 @@ def get_cdc_mmwr_week(YYY_MM_DD_str):
     next_saturday = get_next_saturday(YYY_MM_DD_str)
     next_sat_str = next_saturday.strftime(SOCRATA_STR_DT_FORMAT)
     return WEEK_END_TO_CDC_WEEK[next_sat_str]
+
+
+def compute_moving_avg_from_daily_data(daily_data_df, zipcode_col_name, date_col_name, cols_to_avg):
+    """
+    computes a 7 day moving average for input columns in cols_to_avg
+
+    functions takes a pandas dataframe, the name of the column containing zipcode,
+    the name of the column containing date, and a list of variables to be averaged.
+
+    returns the dataframe with appended average columns
+    (there will be one new column for every col in cols_to_avg, which
+    represents the 7 day moving average for that col on that day)
+
+    new columns names 'AVG7DAY_' + orig col name
+
+    input:
+        daily_data_df: pandas DataFrame
+        zipcode_col_name (str) name of col containing zipcode
+        date_col_name: (str) name of col containing date
+        cols_to_avg: (list) of (str) where each item is name of col to be averaged
+
+    returns:
+        nothing?? appends cols to dataframe
+    """
+
+    # 1. group by zipcode?
+    # 2. sort by date
+    # 2. then apply https://www.datacamp.com/community/tutorials/moving-averages-in-pandas?
+    #       assume adjacent rows are 1 day apart, use rolling window = 7
+    # 3. ????
+
+    pass
