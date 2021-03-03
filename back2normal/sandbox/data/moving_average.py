@@ -2,23 +2,7 @@ import pandas as pd
 from data import soda_data, api_requests
 
 
-daily_vacc_data = soda_data.datasets[0]
-response = api_requests.SocrataAPIClient(daily_vacc_data.request_url)
-response.convert_types()
-response.data_df
 
-daily_data_df = response.data_df
-print(daily_data_df.columns)
-zipcode_col_name = 'zip_code'
-date_col_name = 'date'
-
-# sort on date
-daily_data_df.sort_values(date_col_name, inplace=True)
-pd.set_option('display.max_columns', None)
-print(daily_data_df.head())
-
-zipcode_subset_test = daily_data_df.loc[daily_data_df[zipcode_col_name]=="60657"]
-zipcode_subset_test["total_doses_daily"].rolling(window = 7).mean().head(n = 7)
 
 # function to implement
 def compute_moving_avg_from_daily_data(daily_data_df, zipcode_col_name, date_col_name, cols_to_avg):
@@ -48,6 +32,33 @@ def compute_moving_avg_from_daily_data(daily_data_df, zipcode_col_name, date_col
     # 2. sort by date
     # 2. then apply https://www.datacamp.com/community/tutorials/moving-averages-in-pandas?
     #       assume adjacent rows are 1 day apart, use rolling window = 7
-    # 3. ????
+    # 3. Profit?
+    daily_data_df.sort_values(date_col_name, inplace = True)
 
-    pass
+    for col_name in cols_to_avg:
+        new_col_name = 'AVG7DAY' + col_name
+        daily_data_df[new_col_name] = daily_data_df.groupby(zipcode_col_name)[col_name].rolling(window = 7).mean().reset_index(level = 0, drop=True)
+
+``
+
+daily_vacc_data = soda_data.datasets[0]
+response = api_requests.SocrataAPIClient(daily_vacc_data.request_url)
+response.convert_types()
+response.data_df
+
+daily_data_df = response.data_df
+daily_data_df.sort_values(date_col_name, inplace = True)
+
+zipcode_col_name = 'zip_code'
+date_col_name = 'date'
+cols_to_avg = ['total_doses_daily']
+col_name = 'total_doses_daily'
+
+
+
+daily_data_df.groupby(zipcode_col_name)[col_name].rolling(window = 7).mean()
+daily_data_df.groupby(zipcode_col_name)[col_name].rolling(window = 7).mean()
+daily_data_df[new_col_name] = daily_data_df.groupby(zipcode_col_name)[col_name].rolling(window = 7).mean().reset_index(level = 0, drop=True)
+
+
+# compute_moving_avg_from_daily_data(daily_data_df, 'zip_code', 'date',['total_doses_daily'])
