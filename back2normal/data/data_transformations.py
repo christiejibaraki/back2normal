@@ -2,6 +2,7 @@ import os
 import requests
 from datetime import datetime, timedelta
 from util import basic_io
+import pandas as pd
 
 # https://strftime.org/ python datetime formats
 DAYS_IN_WEEK = 7
@@ -87,10 +88,10 @@ def compute_moving_avg_from_daily_data(daily_data_df, zipcode_col_name, date_col
         nothing?? appends cols to dataframe
     """
 
-    # 1. group by zipcode?
-    # 2. sort by date
-    # 2. then apply https://www.datacamp.com/community/tutorials/moving-averages-in-pandas?
-    #       assume adjacent rows are 1 day apart, use rolling window = 7
-    # 3. ????
+    daily_data_df.sort_values(date_col_name, inplace = True)
 
-    pass
+    for col_name in cols_to_avg:
+        new_col_name = 'AVG7DAY' + col_name
+        daily_data_df[new_col_name] = \
+            (daily_data_df.groupby(zipcode_col_name)[col_name].rolling(window = 7).mean()
+            .reset_index(level = 0, drop=True))
