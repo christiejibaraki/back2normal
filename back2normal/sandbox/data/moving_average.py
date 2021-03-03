@@ -18,7 +18,7 @@ pd.set_option('display.max_columns', None)
 print(daily_data_df.head())
 
 zipcode_subset_test = daily_data_df.loc[daily_data_df[zipcode_col_name]=="60657"]
-
+zipcode_subset_test["total_doses_daily"].rolling(window = 7).mean().head(n = 7)
 
 # function to implement
 def compute_moving_avg_from_daily_data(daily_data_df, zipcode_col_name, date_col_name, cols_to_avg):
