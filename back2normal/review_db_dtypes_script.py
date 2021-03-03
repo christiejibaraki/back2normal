@@ -10,7 +10,7 @@ db = dbclient.DBClient()
 
 for data_obj in soda_data.datasets:
     api_resp = api_requests.SocrataAPIClient(data_obj.request_url)
-    api_resp.convert_types()
+    api_resp.convert_dtypes()
     db.create_table_from_pandas(api_resp.data_df, data_obj.table_name)
     print(api_resp.request_url)
     print(api_resp.header_fields)

@@ -92,6 +92,6 @@ def compute_moving_avg_from_daily_data(daily_data_df, zipcode_col_name, date_col
 
     for col_name in cols_to_avg:
         new_col_name = 'AVG7DAY' + col_name
-        daily_data_df[new_col_name] = \
-            (daily_data_df.groupby(zipcode_col_name)[col_name].rolling(window = 7).mean()
-            .reset_index(level = 0, drop=True))
+        daily_data_df[new_col_name] = (
+            daily_data_df.groupby(zipcode_col_name)[col_name].rolling(window=7).mean().
+                reset_index(level=0, drop=True))

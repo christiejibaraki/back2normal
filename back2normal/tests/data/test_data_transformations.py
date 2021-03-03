@@ -1,5 +1,5 @@
 from datetime import datetime
-from data import data_transformations
+from data import soda_data, api_requests, data_transformations
 from util import basic_io, api_util
 
 
@@ -44,3 +44,21 @@ def test_get_chicago_zipcodes():
     zipcodes = data_transformations.get_chicago_zipcodes()
     assert len(zipcodes) == 59
     assert isinstance(zipcodes[0], str)
+
+
+def test_compute_moving_avg_from_daily_data():
+    daily_vacc_data = soda_data.datasets[0]
+    response = api_requests.SocrataAPIClient(daily_vacc_data.request_url)
+    response.convert_dtypes()
+    daily_data_df = response.data_df
+
+    data_transformations.compute_moving_avg_from_daily_data(
+        daily_data_df, 'zip_code', 'date', ['total_doses_daily'])
+
+    # avg = (daily_data_df["total_doses_daily"]
+    #        [daily_data_df['zip_code' == "60637"]])
+    #
+    # print(avg)
+
+
+

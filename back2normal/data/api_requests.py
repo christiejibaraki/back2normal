@@ -44,7 +44,7 @@ class SocrataAPIClient:
         self.data_df = pd.DataFrame.from_dict(self.response.json())
         self.df_dtypes = self.data_df.dtypes
 
-    def convert_types(self):
+    def convert_dtypes(self):
         # making this a method that's not called by constructor for now
         # but eventually probably makes sense to have constructor do
         # converting itself or call this method

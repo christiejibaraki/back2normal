@@ -3,7 +3,7 @@ from data import soda_data, api_requests, data_transformations
 
 daily_vacc_data = soda_data.datasets[0]
 response = api_requests.SocrataAPIClient(daily_vacc_data.request_url)
-response.convert_types()
+response.convert_dtypes()
 response.data_df
 
 daily_data_df = response.data_df
@@ -18,3 +18,5 @@ daily_data_df = response.data_df
 # daily_data_df[new_col_name] = daily_data_df.groupby(zipcode_col_name)[col_name].rolling(window = 7).mean().reset_index(level = 0, drop=True)
 
 data_transformations.compute_moving_avg_from_daily_data(daily_data_df, 'zip_code', 'date',['total_doses_daily'])
+
+print(daily_data_df[daily_data_df['zip_code' == "60637"]])
