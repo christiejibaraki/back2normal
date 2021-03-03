@@ -55,10 +55,11 @@ def test_compute_moving_avg_from_daily_data():
     data_transformations.compute_moving_avg_from_daily_data(
         daily_data_df, 'zip_code', 'date', ['total_doses_daily'])
 
-    # avg = (daily_data_df["total_doses_daily"]
-    #        [daily_data_df['zip_code' == "60637"]])
-    #
-    # print(avg)
+    true_avg = (daily_data_df.loc[daily_data_df['zip_code'] == "60637"]
+               ['total_doses_daily'][:7].sum()/7)
+    assert true_avg == (daily_data_df.loc[daily_data_df
+                       ['zip_code'] == '60637']['AVG7DAY_total_doses_daily']
+                       [6:7].values[0])
 
 
 
