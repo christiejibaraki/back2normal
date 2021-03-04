@@ -1,5 +1,6 @@
 import pandas as pd
-from data import api_requests, dbclient, soda_data, daily_case_data_by_zip_pull
+from data import api_requests, dbclient, soda_data,\
+    daily_case_data_by_zip_pull, data_transformations
 from data.groundtruth import process_ground_truth_data
 from data.zillow import process_zillow_data
 
@@ -15,19 +16,25 @@ db = dbclient.DBClient()
 #    this returns a json that is converted to pandas dataframe
 #    by default, all data values are of type str
 # 3. convert_dtypes() infers correct data types for pandas df
-# 4. use dbclient to create sql table from the pandas df
+# 4. compute weekly averages
+# 5. use dbclient to create sql table from the pandas df
 
 for data_obj in soda_data.datasets.values():
     print(f" ##### making api request and create table for {data_obj.dataset_name} ####")
     print(f"    sqlite table will be named {data_obj.sql_table_name}")
-    api_resp = api_requests.SocrataAPIClient(data_obj.request_url)
-    api_resp.convert_dtypes()
-    db.create_table_from_pandas(api_resp.data_df, data_obj.sql_table_name)
+    api_resp = api_requests.SocrataAPIClient(data_obj.request_url)  # 2
+    api_resp.convert_dtypes()  # 3
+    data_transformations.\
+        compute_moving_avg_from_daily_data(api_resp.data_df,
+                                           'zip_code',  # should store this
+                                           'date',  # this too
+                                           data_obj.week_avg_attr_list)  # 4
+    db.create_table_from_pandas(api_resp.data_df, data_obj.sql_table_name)  # 5
     print(f"    request url: {api_resp.request_url}")
     print(f"    request headers {api_resp.header_fields}")
     print(f"    request header dtypes {api_resp.header_dtypes}")
     print("~~~~ pandas df dtypes ~~~~")
-    print(api_resp.df_dtypes)
+    print(api_resp.data_df.dtypes)
     print("~~~~ sql table info ~~~~~")
     print(db.get_table_info(data_obj.sql_table_name))
     print(f"nrow df:{len(api_resp.data_df)}\n")
@@ -54,7 +61,6 @@ daily_foot_traffic_data = process_ground_truth_data.get_combined_ground_truth_da
 db.create_table_from_pandas(daily_foot_traffic_data, 'DAILY_FOOT_TRAFFIC_DATA')
 print("\nDAILY FOOT TRAFFIC Table Info")
 print(db.get_table_info('DAILY_FOOT_TRAFFIC_DATA'))
-
 
 # ZILLOW ZORI Data
 chicago_area_rents, chicago_city_rents = process_zillow_data.get_zillow_zori_data()

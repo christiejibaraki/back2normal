@@ -45,24 +45,21 @@ class SodaData:
         return self.base_url + query
 
 
-datasets = {}
-
 ############################################
 ######## COVID-19 Vaccinations by ZIP Code
 ############################################
 
 # https://dev.socrata.com/foundry/data.cityofchicago.org/553k-3xzc
-
-datasets["COVID-19 Vaccinations by ZIP Code"] = \
-    SodaData("COVID-19 Vaccinations by ZIP Code",
-             "VACCINATIONS_DAILY",
-             "553k-3xzc",
-             ["zip_code", "date",
-              "total_doses_daily", "total_doses_cumulative",
-              "vaccine_series_completed_daily",
-              "vaccine_series_completed_percent_population",
-              "population"],
-             ["total_doses_daily", "vaccine_series_completed_daily"],
-             None,
-             None,
-             5000)
+datasets = {"COVID-19 Vaccinations by ZIP Code":
+            SodaData("COVID-19 Vaccinations by ZIP Code",
+                     "VACCINATIONS_DAILY",
+                     "553k-3xzc",
+                     ["zip_code", "date",
+                      "total_doses_daily", "total_doses_cumulative",
+                      "vaccine_series_completed_daily",
+                      "vaccine_series_completed_percent_population",
+                      "population"],
+                     ["total_doses_daily", "vaccine_series_completed_daily"],
+                     None,
+                     None,
+                     5000)}

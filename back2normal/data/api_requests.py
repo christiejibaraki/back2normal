@@ -16,7 +16,6 @@ class SocrataAPIClient:
         # for reviewing datatypes
         self.header_fields = None
         self.header_dtypes = None
-        self.df_dtypes = None
 
         self._get_request(request_url)
 
@@ -42,7 +41,6 @@ class SocrataAPIClient:
 
         # convert to pandas df
         self.data_df = pd.DataFrame.from_dict(self.response.json())
-        self.df_dtypes = self.data_df.dtypes
 
     def convert_dtypes(self):
         # making this a method that's not called by constructor for now
@@ -50,4 +48,3 @@ class SocrataAPIClient:
         # converting itself or call this method
         self.data_df = self.data_df.apply(pd.to_numeric, errors='ignore')
         self.data_df = self.data_df.convert_dtypes(convert_integer=False)
-        self.df_dtypes = self.data_df.dtypes
