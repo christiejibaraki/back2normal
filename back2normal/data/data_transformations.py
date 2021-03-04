@@ -13,6 +13,10 @@ SOCRATA_STR_DT_FORMAT = '%Y-%m-%d'
 # created from script sandbox/data/create_cdc_mmwr_lookup.py
 WEEK_END_TO_CDC_WEEK = basic_io.read_json_to_dict("resources/cdc_week.json")
 
+# hard coded moving avg values
+MOVING_AVG_WINDOW = 7
+COL_PREFIX = 'AVG7DAY_'
+
 
 def get_chicago_zipcodes():
     """
@@ -67,7 +71,7 @@ def get_cdc_mmwr_week(YYY_MM_DD_str):
 
 def compute_moving_avg_from_daily_data(daily_data_df, zipcode_col_name, date_col_name, cols_to_avg):
     """
-    computes a 7 day moving average for input columns in cols_to_avg
+    computes a 7 day average for input columns in cols_to_avg
 
     functions takes a pandas dataframe, the name of the column containing zipcode,
     the name of the column containing date, and a list of variables to be averaged.
@@ -85,13 +89,13 @@ def compute_moving_avg_from_daily_data(daily_data_df, zipcode_col_name, date_col
         cols_to_avg: (list) of (str) where each item is name of col to be averaged
 
     returns:
-        nothing?? appends cols to dataframe
+        NA, appends cols to dataframe
     """
 
-    daily_data_df.sort_values(date_col_name, inplace = True)
+    daily_data_df.sort_values(date_col_name, inplace=True)
 
     for col_name in cols_to_avg:
-        new_col_name = 'AVG7DAY_' + col_name
+        new_col_name = COL_PREFIX + col_name
         daily_data_df[new_col_name] = (
-            daily_data_df.groupby(zipcode_col_name)[col_name].rolling(window=7).mean().
-                reset_index(level=0, drop=True))
+            daily_data_df.groupby(zipcode_col_name)[col_name].
+            rolling(window=MOVING_AVG_WINDOW).mean().reset_index(level=0, drop=True))
