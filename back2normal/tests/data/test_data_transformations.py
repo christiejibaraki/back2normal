@@ -1,3 +1,4 @@
+import statistics
 from datetime import datetime
 from data import soda_data, api_requests, data_transformations
 from util import basic_io, api_util
@@ -47,7 +48,7 @@ def test_get_chicago_zipcodes():
 
 
 def test_compute_moving_avg_from_daily_data():
-    daily_vacc_data = soda_data.datasets[0]
+    daily_vacc_data = soda_data.datasets["COVID-19 Vaccinations by ZIP Code"]
     response = api_requests.SocrataAPIClient(daily_vacc_data.request_url)
     response.convert_dtypes()
     daily_data_df = response.data_df
@@ -55,8 +56,9 @@ def test_compute_moving_avg_from_daily_data():
     data_transformations.compute_moving_avg_from_daily_data(
         daily_data_df, 'zip_code', 'date', ['total_doses_daily'])
 
-    true_avg = (daily_data_df.loc[daily_data_df['zip_code'] == "60637"]
-               ['total_doses_daily'][:7].sum()/7)
+    true_avg = statistics.mean(daily_data_df.loc[daily_data_df['zip_code'] == "60637"]
+               ['total_doses_daily'][:data_transformations.MOVING_AVG_WINDOW])
+
     assert true_avg == (daily_data_df.loc[daily_data_df
                        ['zip_code'] == '60637']['AVG7DAY_total_doses_daily']
                        [6:7].values[0])
