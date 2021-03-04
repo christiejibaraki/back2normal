@@ -4,6 +4,7 @@
 # large data resources
 resources/GroundTruth/
 resources/IDPH/
+resources/Zillow/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

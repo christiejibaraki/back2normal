@@ -1,5 +1,10 @@
+import pandas as pd
 from data import api_requests, dbclient, soda_data, daily_case_data_by_zip_pull
 from data.groundtruth import process_ground_truth_data
+from data.zillow import process_zillow_data
+
+pd.set_option('display.max_columns', None)
+
 # Script to demonstrate how classes interact with each other
 db = dbclient.DBClient()
 
@@ -49,3 +54,10 @@ daily_foot_traffic_data = process_ground_truth_data.get_combined_ground_truth_da
 db.create_table_from_pandas(daily_foot_traffic_data, 'DAILY_FOOT_TRAFFIC_DATA')
 print("\nDAILY FOOT TRAFFIC Table Info")
 print(db.get_table_info('DAILY_FOOT_TRAFFIC_DATA'))
+
+
+# ZILLOW ZORI Data
+chicago_area_rents, chicago_city_rents = process_zillow_data.get_zillow_zori_data()
+print("\nZILLOW Data")
+print(chicago_area_rents.columns)
+print(chicago_city_rents.columns)
