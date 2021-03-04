@@ -1,6 +1,11 @@
 import os
 import pandas as pd
 from sodapy import Socrata
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+
 from util import basic_io
 
 # in .config/ create socrata_chicago_keys.json with contents:
@@ -34,6 +39,13 @@ client = Socrata(
 # (3) request for each relevant dataset per day
 # (4) update db with daily data
 # ??
-dataset_identifier = "553k-3xzc"
+# we could just pull the data everytime the project is built
+# but might run up against api request limits at some point
+
+datasets_path = os.path.join("data", "datasets.json")
+datasets = basic_io.read_json_to_dict(datasets_path)
+
+dataset_identifier = datasets['COVID-19-Cases-Tests-and-Deaths-by-ZIP-Code']
 results = client.get(dataset_identifier, limit=2000)
-results_df = pd.DataFrame.from_records(results)
+len(results)
+results[0]
