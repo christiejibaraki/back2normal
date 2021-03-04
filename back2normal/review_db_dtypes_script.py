@@ -1,5 +1,5 @@
 from data import api_requests, dbclient, soda_data, daily_case_data_by_zip_pull
-
+from data.groundtruth import process_ground_truth_data
 # Script to demonstrate how classes interact with each other
 db = dbclient.DBClient()
 
@@ -34,6 +34,18 @@ for data_obj in soda_data.datasets.values():
 # 2. use dbclient to create sql table from pandas df
 
 daily_covid_data = daily_case_data_by_zip_pull.get_daily_covid_data_from_api(testing=True)
-db.create_table_from_pandas(daily_covid_data, 'IDPH_COVID_DAILY')
-print("DAILY COVID DATA Table Info")
+db.create_table_from_pandas(daily_covid_data, 'DAILY_COVID_CASE_DATA')
+print("\nDAILY COVID DATA Table Info")
 print(db.get_table_info('IDPH_COVID_DAILY'))
+
+
+# GROUND TRUTH Foot Traffic Data BY ZIP
+# 1. use function to read in and combine ground truth CSVs
+#    this returns a single pandas dataframe
+# 2. use dbclient to create sql table from pandas df
+
+### I'd like to remove the spaces from these column names (C.I.)
+daily_foot_traffic_data = process_ground_truth_data.get_combined_ground_truth_data()
+db.create_table_from_pandas(daily_foot_traffic_data, 'DAILY_FOOT_TRAFFIC_DATA')
+print("\nDAILY FOOT TRAFFIC Table Info")
+print(db.get_table_info('DAILY_FOOT_TRAFFIC_DATA'))
