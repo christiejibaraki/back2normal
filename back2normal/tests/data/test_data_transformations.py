@@ -53,15 +53,14 @@ def test_compute_moving_avg_from_daily_data():
     response.convert_dtypes()
     daily_data_df = response.data_df
 
+    col_to_avg = 'total_doses_daily'
+
     data_transformations.compute_moving_avg_from_daily_data(
-        daily_data_df, 'zip_code', 'date', ['total_doses_daily'])
+        daily_data_df, 'zip_code', 'date', [col_to_avg])
 
     true_avg = statistics.mean(daily_data_df.loc[daily_data_df['zip_code'] == "60637"]
                ['total_doses_daily'][:data_transformations.MOVING_AVG_WINDOW])
 
-    assert true_avg == (daily_data_df.loc[daily_data_df
-                       ['zip_code'] == '60637']['AVG7DAY_total_doses_daily']
-                       [6:7].values[0])
-
-
-
+    assert true_avg == (daily_data_df.loc[daily_data_df['zip_code'] == '60637']
+                        [data_transformations.MOVING_AVG_COL_PREFIX + col_to_avg]
+                        [6:7].values[0])

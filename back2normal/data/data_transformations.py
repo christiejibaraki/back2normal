@@ -15,7 +15,7 @@ WEEK_END_TO_CDC_WEEK = basic_io.read_json_to_dict("resources/cdc_week.json")
 
 # hard coded moving avg values
 MOVING_AVG_WINDOW = 7
-COL_PREFIX = 'AVG7DAY_'
+MOVING_AVG_COL_PREFIX = 'AVG7DAY_'
 
 
 def get_chicago_zipcodes():
@@ -95,7 +95,7 @@ def compute_moving_avg_from_daily_data(daily_data_df, zipcode_col_name, date_col
     daily_data_df.sort_values(date_col_name, inplace=True)
 
     for col_name in cols_to_avg:
-        new_col_name = COL_PREFIX + col_name
+        new_col_name = MOVING_AVG_COL_PREFIX + col_name
         daily_data_df[new_col_name] = (
             daily_data_df.groupby(zipcode_col_name)[col_name].
             rolling(window=MOVING_AVG_WINDOW).mean().reset_index(level=0, drop=True))

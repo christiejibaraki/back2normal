@@ -38,6 +38,7 @@ for data_obj in soda_data.datasets.values():
     print("~~~~ sql table info ~~~~~")
     print(db.get_table_info(data_obj.sql_table_name))
     print(f"nrow df:{len(api_resp.data_df)}\n")
+    print(api_resp.data_df.tail())
 
 # DAILY COVID DATA BY ZIP
 # [data from https://il-covid-zip-data.s3.us-east-2.amazonaws.com/latest/zips.csv]
