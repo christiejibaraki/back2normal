@@ -44,10 +44,13 @@ for data_obj in soda_data.datasets.values():
 # [data from https://il-covid-zip-data.s3.us-east-2.amazonaws.com/latest/zips.csv]
 # 1. use function get daily covid dataset as pandas df
 #    if testing = True, data is read from csv resource
-# 2. use dbclient to create sql table from pandas df
+# 2. compute weekly average columns
+# 3. use dbclient to create sql table from pandas df
 
-daily_covid_data = daily_case_data_by_zip_pull.get_daily_covid_data_from_api(testing=True)
-db.create_table_from_pandas(daily_covid_data, 'DAILY_COVID_CASE_DATA')
+daily_covid_data = daily_case_data_by_zip_pull.get_daily_covid_data_from_api(testing=True)  # 1
+daily_case_data_by_zip_pull.compute_weekly_columns_for_IDPH_data(daily_covid_data)  # 2
+print(daily_covid_data.tail())
+db.create_table_from_pandas(daily_covid_data, 'DAILY_COVID_CASE_DATA')  # 3
 print("\nDAILY COVID DATA Table Info")
 print(db.get_table_info('IDPH_COVID_DAILY'))
 

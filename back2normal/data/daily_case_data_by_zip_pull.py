@@ -2,15 +2,27 @@ import os
 import requests
 import csv
 import pandas as pd
+from data import data_transformations
 
 # citation:
 # https://stackoverflow.com/questions/35371043/use-python-requests-to-download-csv
 
 CSV_URL = 'https://il-covid-zip-data.s3.us-east-2.amazonaws.com/latest/zips.csv'
-SELECT_COLUMNS = ['date', 'zipcode', 'confirmed_cases',
-                  'confirmed_cases_change', 'total_tested',
-                  'total_tested_change']
 CSV_FILE_PATH = os.path.join("resources", "IDPH", "idph_covid_daily.csv")
+
+# hardcoded data fields
+DATE_COL = 'date'
+ZIP_COL = 'zipcode'
+CASES_COL = 'confirmed_cases'
+CASES_CHANGE_COL = 'confirmed_cases_change'
+TESTED_COL = 'total_tested'
+TESTED_CHANGE_COL = 'total_tested_change'
+
+SELECT_COLUMNS = [DATE_COL, ZIP_COL,
+                  CASES_COL, CASES_CHANGE_COL,
+                  TESTED_COL, TESTED_CHANGE_COL]
+
+COLS_TO_AVG = [CASES_COL, TESTED_COL]
 
 
 def get_daily_covid_data_from_api(testing=False):
@@ -41,6 +53,21 @@ def get_daily_covid_data_from_api(testing=False):
         # select columns to keep
         select_df = df.loc[:, SELECT_COLUMNS]
         return select_df
+
+
+def compute_weekly_columns_for_IDPH_data(daily_data_df):
+    """
+    Computes weekly average columns listed in COLS_TO_AVG
+    Appends columsn to daily_data_df
+
+    :param daily_data_df: daily covid data DataFrame
+    :return: NA modifies input DataFrame in place
+    """
+
+    data_transformations.compute_moving_avg_from_daily_data(daily_data_df,
+                                                            ZIP_COL,
+                                                            DATE_COL,
+                                                            COLS_TO_AVG)
 
 
 def get_daily_covid_data_from_file():
