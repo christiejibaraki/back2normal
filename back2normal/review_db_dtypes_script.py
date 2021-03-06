@@ -1,5 +1,5 @@
 import pandas as pd
-from data import dbclient, daily_case_data_by_zip_pull, data_transformations
+from data import dbclient, daily_case_data_by_zip, data_transformations
 from data.socrata import soda_data, socrata_api_requests
 from data.groundtruth import process_ground_truth_data
 from data.zillow import process_zillow_data
@@ -47,12 +47,12 @@ for data_obj in soda_data.datasets.values():
 # 2. compute weekly average columns
 # 3. use dbclient to create sql table from pandas df
 
-daily_covid_data = daily_case_data_by_zip_pull.get_daily_covid_data_from_api(testing=True)  # 1
-daily_case_data_by_zip_pull.compute_weekly_columns_for_IDPH_data(daily_covid_data)  # 2
+daily_covid_data = daily_case_data_by_zip.get_daily_covid_data_from_api(testing=True)  # 1
+daily_case_data_by_zip.compute_weekly_columns_for_IDPH_data(daily_covid_data)  # 2
 print(daily_covid_data.tail())
-db.create_table_from_pandas(daily_covid_data, 'DAILY_COVID_CASE_DATA')  # 3
+db.create_table_from_pandas(daily_covid_data, daily_case_data_by_zip.SQL_TABLE_NM)  # 3
 print("\nDAILY COVID DATA Table Info")
-print(db.get_table_info('IDPH_COVID_DAILY'))
+print(db.get_table_info(daily_case_data_by_zip.SQL_TABLE_NM))
 
 # GROUND TRUTH Foot Traffic Data BY ZIP
 # 1. use function to read in and combine ground truth CSVs

@@ -10,6 +10,7 @@ from data import data_transformations
 CSV_URL = 'https://il-covid-zip-data.s3.us-east-2.amazonaws.com/latest/zips.csv'
 CSV_FILE_PATH = os.path.join("resources", "IDPH", "idph_covid_daily.csv")
 
+SQL_TABLE_NM = 'DAILY_COVID_CASE_DATA'
 # hardcoded data fields
 DATE_COL = 'date'
 ZIP_COL = 'zipcode'

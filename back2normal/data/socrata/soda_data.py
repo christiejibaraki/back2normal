@@ -73,7 +73,7 @@ class SodaData:
 # https://dev.socrata.com/foundry/data.cityofchicago.org/553k-3xzc
 datasets = {"COVID-19 Vaccinations by ZIP Code":
             SodaData("COVID-19 Vaccinations by ZIP Code",
-                     "VACCINATIONS_DAILY",
+                     "VACCINATIONS",
                      "553k-3xzc",
                      ["zip_code", "date",
                       "total_doses_daily", "total_doses_cumulative",
@@ -84,3 +84,6 @@ datasets = {"COVID-19 Vaccinations by ZIP Code":
                      None,
                      None,
                      5000)}
+
+# datasets["Traffic Crashes"] = SodaData("Traffic Crashes",
+#                                        "TRAFFIC_CRASHES", )
