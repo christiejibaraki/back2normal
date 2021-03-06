@@ -1,8 +1,8 @@
-import pandas as pd
-from data import soda_data, api_requests, data_transformations   
+from data import data_transformations
+from data.socrata import soda_data, socrata_api_requests
 
 daily_vacc_data = soda_data.datasets[0]
-response = api_requests.SocrataAPIClient(daily_vacc_data.request_url)
+response = socrata_api_requests.SocrataAPIClient(daily_vacc_data.request_url)
 response.convert_dtypes()
 response.data_df
 
