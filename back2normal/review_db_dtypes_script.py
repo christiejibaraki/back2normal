@@ -1,6 +1,6 @@
 import pandas as pd
-from data import api_requests, dbclient, soda_data,\
-    daily_case_data_by_zip_pull, data_transformations
+from data import dbclient, daily_case_data_by_zip_pull, data_transformations
+from data.socrata import soda_data, socrata_api_requests
 from data.groundtruth import process_ground_truth_data
 from data.zillow import process_zillow_data
 
@@ -22,7 +22,7 @@ db = dbclient.DBClient()
 for data_obj in soda_data.datasets.values():
     print(f" ##### making api request and create table for {data_obj.dataset_name} ####")
     print(f"    sqlite table will be named {data_obj.sql_table_name}")
-    api_resp = api_requests.SocrataAPIClient(data_obj.request_url)  # 2
+    api_resp = socrata_api_requests.SocrataAPIClient(data_obj.request_url)  # 2
     api_resp.convert_dtypes()  # 3
     data_transformations.\
         compute_moving_avg_from_daily_data(api_resp.data_df,

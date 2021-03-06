@@ -1,4 +1,4 @@
-from data import soda_data, api_requests
+from data.socrata import soda_data, socrata_api_requests
 
 
 def test_soda_data_groupby_query():
@@ -9,7 +9,7 @@ def test_soda_data_groupby_query():
                                                 ["COUNT(CRASH_RECORD_ID)", "CRASH_DATE"],
                                                 group_by=['CRASH_DATE'])
 
-    api_resp_groupby = api_requests.SocrataAPIClient(soda_obj_groupby_query.request_url)
+    api_resp_groupby = socrata_api_requests.SocrataAPIClient(soda_obj_groupby_query.request_url)
 
     correct_query = "https://data.cityofchicago.org/resource/85ca-t3if.json" \
                     "?$query=SELECT COUNT(CRASH_RECORD_ID), " \
@@ -27,7 +27,7 @@ def test_soda_data_groupby_and_where_query():
                                                 group_by=['CRASH_DATE'],
                                                 where=["CRASH_DATE > '2020-01-01T14:00:00'"])
 
-    api_resp_complex = api_requests.SocrataAPIClient(soda_obj_complex_query.request_url)
+    api_resp_complex = socrata_api_requests.SocrataAPIClient(soda_obj_complex_query.request_url)
 
     correct_query = "https://data.cityofchicago.org/resource/85ca-t3if.json" \
                     "?$query=SELECT COUNT(CRASH_RECORD_ID), CRASH_DATE WHERE " \

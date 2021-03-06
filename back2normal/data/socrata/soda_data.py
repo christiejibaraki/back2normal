@@ -1,5 +1,12 @@
 
 class SodaData:
+    """
+    Data object for managing/storing fields related to a Socrata dataset.
+
+    This class builds a socrata request url using a soql query.
+    The request can be made via data/socrata_api_requests
+
+    """
 
     def __init__(self, dataset_name, sql_table_name, identifier,
                  desired_attr_lst,
@@ -7,6 +14,20 @@ class SodaData:
                  group_by=None,
                  where=None,
                  limit=None):
+        """
+        Constructor for SodaData
+
+            dataset_name: (str) internal/informal name for data set
+            sql_table_name: (str) table name in sqlite db
+            identifier: (str) socrata ID
+            desired_attr_list: list of (str) where each item represents
+                a field in the soql select statement
+            week_avg_attr_lst: list of (str) that should be a subset of
+                desired_attr_list. represents fields on which to compute a weekly avg.
+            group_by = (str) name of field to groupby in soql query
+            where = (str) where statements for soql query
+            limit = (int) number of rows on which to limit soql query
+        """
 
         self.dataset_name = dataset_name
         self.sql_table_name = sql_table_name
