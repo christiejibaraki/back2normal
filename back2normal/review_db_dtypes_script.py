@@ -13,31 +13,20 @@ if os.path.exists(dbclient.DB_PATH):
     os.remove(dbclient.DB_PATH)
 db = dbclient.DBClient()
 
-
-# Traffic crash data
-# traffic_data_obj = soda_data.SodaData("Traffic Crashes",
-#                                        "TRAFFIC_CRASHES",
-#                                        "85ca-t3if",
-#                                        ["CRASH_RECORD_ID", "CRASH_DATE",
-#                                         "latitude", "longitude"],
-#                                        where=["CRASH_DATE > '2019-01-01T14:00:00'"],
-#                                       limit=300000)
-#
-# api_resp = socrata_api_requests.SocrataAPIClient(traffic_data_obj.request_url)  # 2
-# print(api_resp.data_df.shape)
-
 # SOCRATA DATA PROCESS [data from https://data.cityofchicago.org]
-# 1. get SodaData obj (representing single dataset) from soda_data.datasets
-#       (a dict where key is dataset name, value is SodaData object)
+# 1. get SodaData obj (representing single dataset) from soda_data global const
 # 2. use SocrataAPIClient to get dataset, using SodaData.request_url
 #    this returns a json that is converted to pandas dataframe
 #    by default, all data values are of type str
 # 3. convert_dtypes() infers correct data types for pandas df
+#
+#    MISC data manipulations (e.g. traffic crasehs: add zipcode col from lat, long)
+#
 # 4. compute weekly averages
 # 5. use dbclient to create sql table from the pandas df
 
 # Vaccinations
-data_obj = soda_data.VACCINATION_DATA_OBJ
+data_obj = soda_data.VACCINATION_DATA_OBJ  # 1
 print(f" ##### making api request and create table for {data_obj.dataset_name} ####")
 print(f"    sqlite table will be named {data_obj.sql_table_name}")
 api_resp = socrata_api_requests.SocrataAPIClient(data_obj.request_url)  # 2
@@ -57,6 +46,19 @@ print("~~~~ sql table info ~~~~~")
 print(db.get_table_info(data_obj.sql_table_name))
 print(f"nrow df:{len(api_resp.data_df)}\n")
 print(api_resp.data_df.tail())
+
+# Traffic Crashes
+data_obj = soda_data.TRAFFIC_CRASH_DATA_OBJ  # 1
+api_resp = socrata_api_requests.SocrataAPIClient(data_obj.request_url)  # 2
+api_resp.convert_dtypes()  # 3
+
+# convert location to zip
+# compute count by zip
+# compute weekly averages
+# store table
+
+# data_df = api_resp.data_df
+# print(api_resp.data_df.shape)
 
 # DAILY COVID DATA BY ZIP
 # [data from https://il-covid-zip-data.s3.us-east-2.amazonaws.com/latest/zips.csv]

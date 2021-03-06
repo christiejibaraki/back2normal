@@ -84,11 +84,10 @@ VACCINATION_DATA_OBJ = SodaData("COVID-19 Vaccinations by ZIP Code",
                          None,
                          5000)
 
-# https://dev.socrata.com/foundry/data.cityofchicago.org/85ca-t3if
-# datasets["Traffic Crashes"] = SodaData("Traffic Crashes",
-#                                        "TRAFFIC_CRASHES",
-#                                        "85ca-t3if",
-#                                        ["COUNT(CRASH_RECORD_ID) as TOTAL_COUNT", "CRASH_DATE"],
-#                                        group_by=['CRASH_DATE'],
-#                                        where=["CRASH_DATE > '2020-01-01T14:00:00'"],
-#                                        limit=100)
+TRAFFIC_CRASH_DATA_OBJ = SodaData("Traffic Crashes",
+                              "TRAFFIC_CRASHES",
+                              "85ca-t3if",
+                              ["CRASH_RECORD_ID", "CRASH_DATE",
+                               "latitude", "longitude"],
+                              where=["CRASH_DATE > '2019-01-01T14:00:00'"],
+                              limit=300000)
