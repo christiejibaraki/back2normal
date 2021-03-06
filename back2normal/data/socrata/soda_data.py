@@ -55,13 +55,13 @@ class SodaData:
 
         # soql docs: https://dev.socrata.com/docs/queries/
         
-        query =  f"?$query=SELECT {', '.join(self.desired_attr_lst)} "
+        query =  f"?$query=SELECT {', '.join(self.desired_attr_lst)}"
         if self.where_lst:
-            query += f"WHERE {'AND '.join(self.where_lst)} "
+            query += f" WHERE {'AND '.join(self.where_lst)}"
         if self.group_by_lst:
-            query += f"GROUP BY {', '.join(self.group_by_lst)}"
+            query += f" GROUP BY {', '.join(self.group_by_lst)}"
         if self.limit:
-            query += f"LIMIT {self.limit}"
+            query += f" LIMIT {self.limit}"
 
         return self.base_url + query
 
@@ -71,19 +71,24 @@ class SodaData:
 ############################################
 
 # https://dev.socrata.com/foundry/data.cityofchicago.org/553k-3xzc
-datasets = {"COVID-19 Vaccinations by ZIP Code":
-            SodaData("COVID-19 Vaccinations by ZIP Code",
-                     "VACCINATIONS",
-                     "553k-3xzc",
-                     ["zip_code", "date",
-                      "total_doses_daily", "total_doses_cumulative",
-                      "vaccine_series_completed_daily",
-                      "vaccine_series_completed_percent_population",
-                      "population"],
-                     ["total_doses_daily", "vaccine_series_completed_daily"],
-                     None,
-                     None,
-                     5000)}
+VACCINATION_DATA_OBJ = SodaData("COVID-19 Vaccinations by ZIP Code",
+                         "VACCINATIONS",
+                         "553k-3xzc",
+                         ["zip_code", "date",
+                          "total_doses_daily", "total_doses_cumulative",
+                          "vaccine_series_completed_daily",
+                          "vaccine_series_completed_percent_population",
+                          "population"],
+                         ["total_doses_daily", "vaccine_series_completed_daily"],
+                         None,
+                         None,
+                         5000)
 
+# https://dev.socrata.com/foundry/data.cityofchicago.org/85ca-t3if
 # datasets["Traffic Crashes"] = SodaData("Traffic Crashes",
-#                                        "TRAFFIC_CRASHES", )
+#                                        "TRAFFIC_CRASHES",
+#                                        "85ca-t3if",
+#                                        ["COUNT(CRASH_RECORD_ID) as TOTAL_COUNT", "CRASH_DATE"],
+#                                        group_by=['CRASH_DATE'],
+#                                        where=["CRASH_DATE > '2020-01-01T14:00:00'"],
+#                                        limit=100)

@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from data import dbclient, daily_case_data_by_zip, data_transformations
 from data.socrata import soda_data, socrata_api_requests
@@ -7,7 +8,23 @@ from data.zillow import process_zillow_data
 pd.set_option('display.max_columns', None)
 
 # Script to demonstrate how classes interact with each other
+if os.path.exists(dbclient.DB_PATH):
+    print("Deleting existing db and creating a new one for demo purposes\n")
+    os.remove(dbclient.DB_PATH)
 db = dbclient.DBClient()
+
+
+# Traffic crash data
+# traffic_data_obj = soda_data.SodaData("Traffic Crashes",
+#                                        "TRAFFIC_CRASHES",
+#                                        "85ca-t3if",
+#                                        ["CRASH_RECORD_ID", "CRASH_DATE",
+#                                         "latitude", "longitude"],
+#                                        where=["CRASH_DATE > '2019-01-01T14:00:00'"],
+#                                       limit=300000)
+#
+# api_resp = socrata_api_requests.SocrataAPIClient(traffic_data_obj.request_url)  # 2
+# print(api_resp.data_df.shape)
 
 # SOCRATA DATA PROCESS [data from https://data.cityofchicago.org]
 # 1. get SodaData obj (representing single dataset) from soda_data.datasets
@@ -19,26 +36,27 @@ db = dbclient.DBClient()
 # 4. compute weekly averages
 # 5. use dbclient to create sql table from the pandas df
 
-for data_obj in soda_data.datasets.values():
-    print(f" ##### making api request and create table for {data_obj.dataset_name} ####")
-    print(f"    sqlite table will be named {data_obj.sql_table_name}")
-    api_resp = socrata_api_requests.SocrataAPIClient(data_obj.request_url)  # 2
-    api_resp.convert_dtypes()  # 3
-    data_transformations.\
-        compute_moving_avg_from_daily_data(api_resp.data_df,
-                                           'zip_code',  # should store this
-                                           'date',  # this too
-                                           data_obj.week_avg_attr_list)  # 4
-    db.create_table_from_pandas(api_resp.data_df, data_obj.sql_table_name)  # 5
-    print(f"    request url: {api_resp.request_url}")
-    print(f"    request headers {api_resp.header_fields}")
-    print(f"    request header dtypes {api_resp.header_dtypes}")
-    print("~~~~ pandas df dtypes ~~~~")
-    print(api_resp.data_df.dtypes)
-    print("~~~~ sql table info ~~~~~")
-    print(db.get_table_info(data_obj.sql_table_name))
-    print(f"nrow df:{len(api_resp.data_df)}\n")
-    print(api_resp.data_df.tail())
+# Vaccinations
+data_obj = soda_data.VACCINATION_DATA_OBJ
+print(f" ##### making api request and create table for {data_obj.dataset_name} ####")
+print(f"    sqlite table will be named {data_obj.sql_table_name}")
+api_resp = socrata_api_requests.SocrataAPIClient(data_obj.request_url)  # 2
+api_resp.convert_dtypes()  # 3
+data_transformations.\
+    compute_moving_avg_from_daily_data(api_resp.data_df,
+                                       'zip_code',  # should store this
+                                       'date',  # this too
+                                       data_obj.week_avg_attr_list)  # 4
+db.create_table_from_pandas(api_resp.data_df, data_obj.sql_table_name)  # 5
+print(f"    request url: {api_resp.request_url}")
+print(f"    request headers {api_resp.header_fields}")
+print(f"    request header dtypes {api_resp.header_dtypes}")
+print("~~~~ pandas df dtypes ~~~~")
+print(api_resp.data_df.dtypes)
+print("~~~~ sql table info ~~~~~")
+print(db.get_table_info(data_obj.sql_table_name))
+print(f"nrow df:{len(api_resp.data_df)}\n")
+print(api_resp.data_df.tail())
 
 # DAILY COVID DATA BY ZIP
 # [data from https://il-covid-zip-data.s3.us-east-2.amazonaws.com/latest/zips.csv]
