@@ -54,7 +54,6 @@ db.create_table_from_pandas(daily_covid_data, 'DAILY_COVID_CASE_DATA')  # 3
 print("\nDAILY COVID DATA Table Info")
 print(db.get_table_info('IDPH_COVID_DAILY'))
 
-
 # GROUND TRUTH Foot Traffic Data BY ZIP
 # 1. use function to read in and combine ground truth CSVs
 #    this returns a single pandas dataframe

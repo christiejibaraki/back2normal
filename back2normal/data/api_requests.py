@@ -5,6 +5,10 @@ from util import api_util
 
 
 class SocrataAPIClient:
+    """
+    Class for making requests to Socrata Chicago API
+    and parsing, updating the response object
+    """
 
     def __init__(self, request_url):
 
@@ -21,10 +25,22 @@ class SocrataAPIClient:
 
     @staticmethod
     def _get_app_token_params():
+        """
+        gets api token and formats the params dict for request
+        :return: dict containing app token
+        """
         token = api_util.get_socrata_app_token()
         return {"$$app_token": token}
 
     def _get_request(self, request_url):
+        """
+        sends get request to socrata api
+        parses reponse header for debugging data types
+        converse json response to a pandas DataFrame
+
+        :param request_url: url for the get request
+        :return: NA
+        """
         # For header codes included in response object: 
         # https://dev.socrata.com/docs/response-codes.html
 
@@ -43,6 +59,15 @@ class SocrataAPIClient:
         self.data_df = pd.DataFrame.from_dict(self.response.json())
 
     def convert_dtypes(self):
+        """
+        Updates the data types in data_df, the pandas DataFrame containing the
+            API response data
+
+        Attempt to convert all fields to numeric types (float or integer)
+        Then convert non numeric types back to string
+
+        :return: NA
+        """
         # making this a method that's not called by constructor for now
         # but eventually probably makes sense to have constructor do
         # converting itself or call this method
