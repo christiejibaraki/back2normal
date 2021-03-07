@@ -101,10 +101,17 @@ def compute_moving_avg_from_daily_data(daily_data_df, zipcode_col_name, date_col
             rolling(window=MOVING_AVG_WINDOW).mean().reset_index(level=0, drop=True))
 
 
-
 def convert_df_dtypes(data_df):
     """
-    handling pandas dataframe datatypes
+    Updates the data types in data_df.
+    If API returns data as str, use this function to convert numeric types.
+
+        1. Attempts to convert all fields to numeric types (float or integer)
+        2. Then converts non numeric types back to string
+
+    input: pandas DataFrame
+    returns: pandas DataFrame with modified dtypes
+
     """
     data_df = data_df.apply(pd.to_numeric, errors='ignore')
     data_df = data_df.convert_dtypes(convert_integer=False)

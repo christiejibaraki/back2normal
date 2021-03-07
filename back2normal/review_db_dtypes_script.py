@@ -18,12 +18,11 @@ db = dbclient.DBClient()
 # 2. use SocrataAPIClient to get dataset, using SodaData.request_url
 #    this returns a json that is converted to pandas dataframe
 #    by default, all data values are of type str
-# 3. convert_dtypes() infers correct data types for pandas df
 #
 #    MISC data manipulations (e.g. traffic crasehs: add zipcode col from lat, long)
 #
-# 4. compute weekly averages
-# 5. use dbclient to create sql table from the pandas df
+# 3. compute weekly averages
+# 4. use dbclient to create sql table from the pandas df
 
 # Vaccinations
 data_obj = soda_data.VACCINATION_DATA_OBJ  # 1
@@ -34,8 +33,8 @@ data_transformations.\
     compute_moving_avg_from_daily_data(api_resp.data_df,
                                        'zip_code',  # should store this
                                        'date',  # this too
-                                       data_obj.week_avg_attr_list)  # 4
-db.create_table_from_pandas(api_resp.data_df, data_obj.sql_table_name)  # 5
+                                       data_obj.week_avg_attr_list)  # 3
+db.create_table_from_pandas(api_resp.data_df, data_obj.sql_table_name)  # 4
 print(f"    request url: {api_resp.request_url}")
 print(f"    request headers {api_resp.header_fields}")
 print(f"    request header dtypes {api_resp.header_dtypes}")

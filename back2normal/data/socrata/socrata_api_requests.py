@@ -64,21 +64,5 @@ class SocrataAPIClient:
         # convert to pandas df
         self.data_df = pd.DataFrame.from_dict(self.response.json())
 
-        #convert dtypes
+        # convert dtypes
         self.data_df = data_transformations.convert_df_dtypes(self.data_df)
-
-    # def convert_dtypes(self):
-    #     """
-    #     Updates the data types in data_df, the pandas DataFrame containing the
-    #         API response data
-
-    #     Attempt to convert all fields to numeric types (float or integer)
-    #     Then convert non numeric types back to string
-
-    #     :return: NA
-    #     """
-    #     # making this a method that's not called by constructor for now
-    #     # but eventually probably makes sense to have constructor do
-    #     # converting itself or call this method
-    #     self.data_df = data_transformations.convert_df_dtypes(self.data_df)
-

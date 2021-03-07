@@ -3,7 +3,6 @@ from data.socrata import soda_data, socrata_api_requests
 
 daily_vacc_data = soda_data.datasets[0]
 response = socrata_api_requests.SocrataAPIClient(daily_vacc_data.request_url)
-response.convert_dtypes()
 response.data_df
 
 daily_data_df = response.data_df

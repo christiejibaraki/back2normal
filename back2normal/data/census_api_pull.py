@@ -41,6 +41,7 @@ query_url = (f"https://api.census.gov/data/2019/acs/acs5/profile?"
              f"get={VARIABLE_LST}&for=zip%20code%20tabulation%20area:{ZIPS}"
              f"&in=state:17&key={CENSUS_API_KEY}")
 
+
 def get_census_data_from_api():
     """
     downloads pre-selected census demographic data by zip code from census API
@@ -55,10 +56,10 @@ def get_census_data_from_api():
 
     data_df = data_transformations.convert_df_dtypes(data_df)
     
-    #zip codes should be strings
+    # zip codes should be strings
     data_df['zip code tabulation area'] = data_df['zip code tabulation area'].astype(str)
 
-    #rename columns
+    # rename columns
     data_df = data_df.rename(columns=variable_dict)
 
     return data_df
