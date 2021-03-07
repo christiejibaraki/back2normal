@@ -2,6 +2,7 @@ import os
 import requests
 import pandas as pd
 from util import api_util
+from data import data_transformations
 
 
 class SocrataAPIClient:
@@ -37,6 +38,11 @@ class SocrataAPIClient:
         sends get request to socrata api
         parses reponse header for debugging data types
         converse json response to a pandas DataFrame
+        updates the data types in data_df, the pandas DataFrame containing the
+        API response data
+
+        Attempt to convert all fields to numeric types (float or integer)
+        Then convert non numeric types back to string
 
         :param request_url: url for the get request
         :return: NA
@@ -58,18 +64,21 @@ class SocrataAPIClient:
         # convert to pandas df
         self.data_df = pd.DataFrame.from_dict(self.response.json())
 
-    def convert_dtypes(self):
-        """
-        Updates the data types in data_df, the pandas DataFrame containing the
-            API response data
+        #convert dtypes
+        self.data_df = data_transformations.convert_df_dtypes(self.data_df)
 
-        Attempt to convert all fields to numeric types (float or integer)
-        Then convert non numeric types back to string
+    # def convert_dtypes(self):
+    #     """
+    #     Updates the data types in data_df, the pandas DataFrame containing the
+    #         API response data
 
-        :return: NA
-        """
-        # making this a method that's not called by constructor for now
-        # but eventually probably makes sense to have constructor do
-        # converting itself or call this method
-        self.data_df = self.data_df.apply(pd.to_numeric, errors='ignore')
-        self.data_df = self.data_df.convert_dtypes(convert_integer=False)
+    #     Attempt to convert all fields to numeric types (float or integer)
+    #     Then convert non numeric types back to string
+
+    #     :return: NA
+    #     """
+    #     # making this a method that's not called by constructor for now
+    #     # but eventually probably makes sense to have constructor do
+    #     # converting itself or call this method
+    #     self.data_df = data_transformations.convert_df_dtypes(self.data_df)
+

@@ -53,9 +53,7 @@ def get_census_data_from_api():
     headers = data_lsts.pop(0)
     data_df = pd.DataFrame(data_lsts, columns=headers)
 
-    #convert dtypes should be moved into a function
-    data_df = data_df.apply(pd.to_numeric, errors='ignore')
-    data_df = data_df.convert_dtypes(convert_integer=False)
+    data_df = data_transformations.convert_df_dtypes(data_df)
     
     #zip codes should be strings
     data_df['zip code tabulation area'] = data_df['zip code tabulation area'].astype(str)

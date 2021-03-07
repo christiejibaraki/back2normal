@@ -51,7 +51,6 @@ def test_get_chicago_zipcodes():
 def test_compute_moving_avg_from_daily_data():
     daily_vacc_data = soda_data.VACCINATION_DATA_OBJ
     response = socrata_api_requests.SocrataAPIClient(daily_vacc_data.request_url)
-    response.convert_dtypes()
     daily_data_df = response.data_df
 
     col_to_avg = 'total_doses_daily'

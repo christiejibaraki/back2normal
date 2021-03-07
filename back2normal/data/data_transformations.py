@@ -99,3 +99,13 @@ def compute_moving_avg_from_daily_data(daily_data_df, zipcode_col_name, date_col
         daily_data_df[new_col_name] = (
             daily_data_df.groupby(zipcode_col_name)[col_name].
             rolling(window=MOVING_AVG_WINDOW).mean().reset_index(level=0, drop=True))
+
+
+
+def convert_df_dtypes(data_df):
+    """
+    handling pandas dataframe datatypes
+    """
+    data_df = data_df.apply(pd.to_numeric, errors='ignore')
+    data_df = data_df.convert_dtypes(convert_integer=False)
+    return data_df

@@ -30,7 +30,6 @@ data_obj = soda_data.VACCINATION_DATA_OBJ  # 1
 print(f" ##### making api request and create table for {data_obj.dataset_name} ####")
 print(f"    sqlite table will be named {data_obj.sql_table_name}")
 api_resp = socrata_api_requests.SocrataAPIClient(data_obj.request_url)  # 2
-api_resp.convert_dtypes()  # 3
 data_transformations.\
     compute_moving_avg_from_daily_data(api_resp.data_df,
                                        'zip_code',  # should store this
@@ -50,7 +49,6 @@ print(api_resp.data_df.tail())
 # Traffic Crashes
 data_obj = soda_data.TRAFFIC_CRASH_DATA_OBJ  # 1
 api_resp = socrata_api_requests.SocrataAPIClient(data_obj.request_url)  # 2
-api_resp.convert_dtypes()  # 3
 
 # convert location to zip
 # compute count by zip
