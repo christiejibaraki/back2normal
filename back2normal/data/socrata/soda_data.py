@@ -84,10 +84,10 @@ VACCINATION_DATA_OBJ = SodaData("COVID-19 Vaccinations by ZIP Code",
                          None,
                          5000)
 
-TRAFFIC_CRASH_DATA_OBJ = SodaData("Traffic Crashes",
+TRAFFIC_CRASH_DATA_OBJ_HISTORICAL = SodaData("Traffic Crashes",
                               "TRAFFIC_CRASHES",
                               "85ca-t3if",
                               ["CRASH_RECORD_ID", "CRASH_DATE",
                                "latitude", "longitude"],
-                              where=["CRASH_DATE > '2019-01-01T14:00:00'"],
+                              where=["CRASH_DATE > '2019-01-01T00:00:00'", "CRASH_DATE < '2021-03-07T00:00:00'"],
                               limit=300000)

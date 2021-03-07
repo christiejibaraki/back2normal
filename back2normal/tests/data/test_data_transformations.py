@@ -3,18 +3,28 @@ from datetime import datetime
 from data import data_transformations
 from data.socrata import soda_data, socrata_api_requests
 from util import basic_io, api_util
+import requests
+import math
 
 
 def test_get_zip_code_from_mapbox():
     app_token = api_util.get_mapbox_app_token()
+    session = requests.session()
 
     long = -73.989
     lat = 40.733
-    zip = data_transformations.get_zipcode_from_mapbox(long, lat, app_token)
 
+    # requires large resource file at the moment
+    # zip = data_transformations.get_zipcode_from_mapbox(lat, long, session, app_token)
+    # assert zip == "10003", "simple zipcode test failed"
+    #
+    # zip = data_transformations.get_zipcode_from_mapbox(math.nan, math.nan, session, app_token)
+    # assert zip is None, "NA zipcode test failed"
+
+    zip = data_transformations.get_zipcode_from_lat_long(lat, long, session, app_token)
     assert zip == "10003", "simple zipcode test failed"
 
-    zip = data_transformations.get_zipcode_from_mapbox("nan", "nan", app_token)
+    zip = data_transformations.get_zipcode_from_lat_long(math.nan, math.nan, session, app_token)
     assert zip is None, "NA zipcode test failed"
 
 
