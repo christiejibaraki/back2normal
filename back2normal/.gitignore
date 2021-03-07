@@ -5,6 +5,7 @@
 resources/GroundTruth/
 resources/IDPH/
 resources/Zillow/
+historical_traffic_1_1_2019-3_7_20201.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
