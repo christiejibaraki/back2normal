@@ -4,6 +4,9 @@ import pandas as pd
 from util import api_util, basic_io
 from data import data_transformations
 
+# there is census data for all 59 of the zipcodes in chicago_zips_59.json
+# EXCEPT for 60666
+
 # ACS API Documentation:
 # https://www.census.gov/content/dam/Census/library/publications/2020/acs/acs_api_handbook_2020.pdf
 
@@ -15,7 +18,7 @@ zip_lst = data_transformations.get_chicago_zipcodes()
 ZIPS = ",".join(zip_lst)
 CENSUS_API_KEY = api_util.get_census_key()
 
-var_to_colname_dict = {'NAME': 'zipcode', 'DP02_0016E': 'hhold_size',
+var_to_colname_dict = {'NAME': 'zcta', 'DP02_0016E': 'hhold_size',
                  'DP02_0017E': 'fam_size',
                  'DP03_0005PE': 'unemploy_rate',
                  'DP03_0062E': 'median_income',
@@ -32,10 +35,10 @@ var_to_colname_dict = {'NAME': 'zipcode', 'DP02_0016E': 'hhold_size',
                  'DP02_0062PE': 'pct_high_school_grad',
                  'DP02_0152PE': 'pct_hholds_w_computer',
                  'DP02_0153PE': 'pct_hholds_w_internet',
-                 'DP03_0096PE': 'pct_w_health_insur',
+                 'DP03_0096PE': 'pct_w_health_insur'
                  }
 
-var_to_desc_dict = {'NAME': 'Zipcode', 'DP02_0016E': 'Average hhold size',
+var_to_desc_dict = {'NAME': 'Zip Code Tabluation Area', 'DP02_0016E': 'Average hhold size',
                  'DP02_0017E': 'Average family size',
                  'DP03_0005PE': 'Unemployment rate for pop. >= 16 years in labor force',
                  'DP03_0062E': 'Median household income (dollars)',
@@ -54,6 +57,8 @@ var_to_desc_dict = {'NAME': 'Zipcode', 'DP02_0016E': 'Average hhold size',
                  'DP02_0153PE': 'Pct. of hholds w/ broadband internet',
                  'DP03_0096PE': 'Pct. of pop. w/ health insurance coverage',
                  }
+
+zip_col_rename_dict = {'zip code tabulation area': 'zipcode'}
 
 VARIABLE_LST = ",".join(var_to_colname_dict.keys())
 
@@ -75,11 +80,12 @@ def get_census_data_from_api():
     data_df = pd.DataFrame(data_lsts, columns=headers)
 
     data_df = data_transformations.convert_df_dtypes(data_df)
-    
-    # zip codes should be strings
-    data_df['zip code tabulation area'] = data_df['zip code tabulation area'].astype(str)
 
     # rename columns
     data_df = data_df.rename(columns=var_to_colname_dict)
+    data_df = data_df.rename(columns=zip_col_rename_dict)
+
+    # zip codes should be strings
+    data_df['zipcode'] = data_df['zipcode'].astype(str)
 
     return data_df
