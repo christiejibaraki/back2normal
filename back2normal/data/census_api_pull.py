@@ -6,7 +6,6 @@ from data import data_transformations
 
 # ACS API Documentation:
 # https://www.census.gov/content/dam/Census/library/publications/2020/acs/acs_api_handbook_2020.pdf
-# VARIABLE_LST
 
 # We're using the 2019 ACS 5-year data profiles
 # Full list of variables: https://api.census.gov/data/2019/acs/acs5/profile/variables.html
@@ -16,7 +15,27 @@ zip_lst = data_transformations.get_chicago_zipcodes()
 ZIPS = ",".join(zip_lst)
 CENSUS_API_KEY = api_util.get_census_key()
 
-variable_dict = {'NAME': 'Zipcode', 'DP02_0016E': 'Average hhold size',
+var_to_colname_dict = {'NAME': 'zipcode', 'DP02_0016E': 'hhold_size',
+                 'DP02_0017E': 'fam_size',
+                 'DP03_0005PE': 'unemploy_rate',
+                 'DP03_0062E': 'median_income',
+                 'DP03_0119PE': 'pct_below_poverty_lvl',
+                 'DP05_0018E': 'median_age',
+                 'DP05_0024PE': 'pct_65_or_older',
+                 'DP05_0071PE': 'pct_hispanic',
+                 'DP05_0080PE': 'pct_asian',
+                 'DP05_0078PE': 'pct_black',
+                 'DP05_0077PE': 'pct_white',
+                 'DP05_0081PE': 'pct_pacific_islander',
+                 'DP05_0079PE': 'pct_american_indian',
+                 'DP05_0082PE': 'pct_other_race',
+                 'DP02_0062PE': 'pct_high_school_grad',
+                 'DP02_0152PE': 'pct_hholds_w_computer',
+                 'DP02_0153PE': 'pct_hholds_w_internet',
+                 'DP03_0096PE': 'pct_w_health_insur',
+                 }
+
+var_to_desc_dict = {'NAME': 'Zipcode', 'DP02_0016E': 'Average hhold size',
                  'DP02_0017E': 'Average family size',
                  'DP03_0005PE': 'Unemployment rate for pop. >= 16 years in labor force',
                  'DP03_0062E': 'Median household income (dollars)',
@@ -35,7 +54,8 @@ variable_dict = {'NAME': 'Zipcode', 'DP02_0016E': 'Average hhold size',
                  'DP02_0153PE': 'Pct. of hholds w/ broadband internet',
                  'DP03_0096PE': 'Pct. of pop. w/ health insurance coverage',
                  }
-VARIABLE_LST = ",".join(variable_dict.keys())
+
+VARIABLE_LST = ",".join(var_to_colname_dict.keys())
 
 query_url = (f"https://api.census.gov/data/2019/acs/acs5/profile?"
              f"get={VARIABLE_LST}&for=zip%20code%20tabulation%20area:{ZIPS}"
@@ -60,6 +80,6 @@ def get_census_data_from_api():
     data_df['zip code tabulation area'] = data_df['zip code tabulation area'].astype(str)
 
     # rename columns
-    data_df = data_df.rename(columns=variable_dict)
+    data_df = data_df.rename(columns=var_to_colname_dict)
 
     return data_df
