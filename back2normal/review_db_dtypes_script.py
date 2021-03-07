@@ -63,11 +63,12 @@ print(db.get_table_info(daily_case_data_by_zip.SQL_TABLE_NM))
 #    this returns a single pandas dataframe
 # 2. use dbclient to create sql table from pandas df
 
-### I'd like to remove the spaces from these column names (C.I.)
 daily_foot_traffic_data = process_ground_truth_data.get_combined_ground_truth_data()
-db.create_table_from_pandas(daily_foot_traffic_data, 'DAILY_FOOT_TRAFFIC_DATA')
+process_ground_truth_data.compute_moving_avg(daily_foot_traffic_data)
+db.create_table_from_pandas(daily_foot_traffic_data, process_ground_truth_data.SQL_TABLE_NAME)
+
 print("\nDAILY FOOT TRAFFIC Table Info")
-print(db.get_table_info('DAILY_FOOT_TRAFFIC_DATA'))
+print(db.get_table_info(process_ground_truth_data.SQL_TABLE_NAME))
 
 # CENSUS Data
 census_df = census_api_pull.get_census_data_from_api()
