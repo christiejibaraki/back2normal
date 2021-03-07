@@ -6,6 +6,7 @@ from data import data_transformations
 GROUND_TRUTH_FILE_PATH = os.path.join("resources", "GroundTruth")
 #COLUMNS_TO_AVERAGE = ['BARS', 'GROCERY', 'RESTAURANT', 'PARKS_BEACHES', 'SCHOOLS_LIBRARIES']
 COLUMNS_TO_AVERAGE = ['GROCERY']
+SQL_TABLE_NAME = 'DAILY_FOOT_TRAFFIC_DATA'
 
 def get_combined_ground_truth_data():
     """
@@ -66,7 +67,7 @@ def clean_col_name(col_name_str):
 
 def compute_moving_avg(pandas_df):
     """
-    TyPe CoMpUtE mOvInG aVeRaGe
+    docstring
     """
 
     data_transformations.compute_moving_avg_from_daily_data(pandas_df, 'ZIP_CODE', 'TIME_STAMP', COLUMNS_TO_AVERAGE)
