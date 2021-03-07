@@ -1,9 +1,8 @@
 import os
 import pandas as pd
-from data import dbclient, daily_case_data_by_zip, data_transformations
+from data import dbclient, daily_case_data_by_zip, data_transformations, census_api_pull
 from data.socrata import soda_data, socrata_api_requests
 from data.groundtruth import process_ground_truth_data
-from data.zillow import process_zillow_data
 
 pd.set_option('display.max_columns', None)
 
@@ -45,18 +44,6 @@ print(db.get_table_info(data_obj.sql_table_name))
 print(f"nrow df:{len(api_resp.data_df)}\n")
 print(api_resp.data_df.tail())
 
-# Traffic Crashes
-data_obj = soda_data.TRAFFIC_CRASH_DATA_OBJ  # 1
-api_resp = socrata_api_requests.SocrataAPIClient(data_obj.request_url)  # 2
-
-# convert location to zip
-# compute count by zip
-# compute weekly averages
-# store table
-
-# data_df = api_resp.data_df
-# print(api_resp.data_df.shape)
-
 # DAILY COVID DATA BY ZIP
 # [data from https://il-covid-zip-data.s3.us-east-2.amazonaws.com/latest/zips.csv]
 # 1. use function get daily covid dataset as pandas df
@@ -82,8 +69,5 @@ db.create_table_from_pandas(daily_foot_traffic_data, 'DAILY_FOOT_TRAFFIC_DATA')
 print("\nDAILY FOOT TRAFFIC Table Info")
 print(db.get_table_info('DAILY_FOOT_TRAFFIC_DATA'))
 
-# ZILLOW ZORI Data
-chicago_area_rents, chicago_city_rents = process_zillow_data.get_zillow_zori_data()
-print("\nZILLOW Data")
-print(chicago_area_rents.columns)
-print(chicago_city_rents.columns)
+# CENSUS Data
+census_df = census_api_pull.get_census_data_from_api()

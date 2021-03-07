@@ -12,7 +12,10 @@ def test_get_zip_code_from_mapbox():
     lat = 40.733
     zip = data_transformations.get_zipcode_from_mapbox(long, lat, app_token)
 
-    assert zip == 10003, "simple zipcode test failed"
+    assert zip == "10003", "simple zipcode test failed"
+
+    zip = data_transformations.get_zipcode_from_mapbox("nan", "nan", app_token)
+    assert zip is None, "NA zipcode test failed"
 
 
 def test_get_next_saturday():

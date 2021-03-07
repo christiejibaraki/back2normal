@@ -3,6 +3,7 @@ import requests
 from datetime import datetime, timedelta
 from util import basic_io
 import pandas as pd
+from ratelimit import limits, sleep_and_retry
 
 # https://strftime.org/ python datetime formats
 DAYS_IN_WEEK = 7
@@ -17,6 +18,9 @@ WEEK_END_TO_CDC_WEEK = basic_io.read_json_to_dict("resources/cdc_week.json")
 MOVING_AVG_WINDOW = 7
 MOVING_AVG_COL_PREFIX = 'AVG7DAY_'
 
+# time period for mapbox api
+TIME_PERIOD = 60
+
 
 def get_chicago_zipcodes():
     """
@@ -28,6 +32,8 @@ def get_chicago_zipcodes():
         "resources", "chicago_zips_59.json"))
 
 
+@sleep_and_retry
+@limits(calls=600, period=TIME_PERIOD)
 def get_zipcode_from_mapbox(long, lat, access_token):
     """
     get zipcode for geo coords via mapbox api
@@ -35,13 +41,16 @@ def get_zipcode_from_mapbox(long, lat, access_token):
     :param long: longitude
     :param lat: latitude
     :param access_token: mapbox api access token
-    :return: (int) zipcode for input long, lat
+    :return: (str) zipcode for input long, lat
     """
     request_url = f"https://api.mapbox.com/geocoding/v5/mapbox.places/{long},{lat}.json"
     params = {"types": "postcode", "access_token": access_token}
     response = requests.get(url=request_url, params=params)
 
-    return int(response.json()['features'][0]['text'])
+    try:
+        return response.json()['features'][0]['text']
+    except IndexError:
+        return None
 
 
 def get_next_saturday(YYYY_MM_DD_str):
