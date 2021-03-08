@@ -195,13 +195,12 @@ def is_valid_chicago_zip(zip_str):
     return True
 
 
-def standardize_zip_code(data_df, original_zip_col_name):
+def standardize_zip_code_col(data_df, original_zip_col_name):
     """
     Standardize the zipcode column in a pandas DataFrame
-    1. rename original_zip_col_name to ZIP_COL_NAME (in place)
+    1. rename original_zip_col_name to STD_ZIP_COL_NAME (in place)
     2. convert col to string
     3. if not valid chicago zip (ie start with "6") replace with None
-
 
     :param data_df: pandas DataFrame containing zipcode col to standardize
     :param original_zip_col_name: (str) original zipcode col name
@@ -212,3 +211,17 @@ def standardize_zip_code(data_df, original_zip_col_name):
     data_df[STD_ZIP_COL_NAME] = data_df[STD_ZIP_COL_NAME].astype(str)
     mask = data_df[STD_ZIP_COL_NAME].apply(is_valid_chicago_zip)
     data_df[STD_ZIP_COL_NAME][mask == False] = None
+
+
+def standardize_date_col(data_df, original_date_col_name):
+    """
+    Standardize the date column in a pandas DataFrame
+    1. rename original_date_col_name to STD_DATE_COL_NAME (in place)
+    2. standardize date format
+    3. convert col to string
+
+    :param data_df: pandas DataFrame containing date col to standardize
+    :param original_date_col_name: (str) original date col name
+    :return: NA, modify df in place
+    """
+    pass

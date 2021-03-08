@@ -28,7 +28,7 @@ data_obj = soda_data.VACCINATION_DATA_OBJ  # 1
 print(f" ##### making api request and create table for {data_obj.dataset_name} ####")
 print(f"    sqlite table will be named {data_obj.sql_table_name}")
 api_resp = socrata_api_requests.SocrataAPIClient(data_obj.request_url)  # 2
-data_transformations.standardize_zip_code(api_resp.data_df, soda_data.ZIP_COL_NAME)
+data_transformations.standardize_zip_code_col(api_resp.data_df, soda_data.ZIP_COL_NAME)
 data_transformations.\
     compute_moving_avg_from_daily_data(api_resp.data_df,
                                        data_transformations.STD_ZIP_COL_NAME,  # should store this
@@ -53,7 +53,7 @@ print(api_resp.data_df.tail())
 # 3. use dbclient to create sql table from pandas df
 
 daily_covid_data = daily_case_data_by_zip.get_daily_covid_data_from_api(testing=True)  # 1
-data_transformations.standardize_zip_code(daily_covid_data, daily_case_data_by_zip.ZIP_COL_NAME)
+data_transformations.standardize_zip_code_col(daily_covid_data, daily_case_data_by_zip.ZIP_COL_NAME)
 data_transformations.\
     compute_moving_avg_from_daily_data(daily_covid_data,
                                        data_transformations.STD_ZIP_COL_NAME,
@@ -71,14 +71,12 @@ print(db.get_table_info(daily_case_data_by_zip.SQL_TABLE_NM))
 # 3. use dbclient to create sql table from pandas df
 
 daily_foot_traffic_data = process_ground_truth_data.get_combined_ground_truth_data()  # 1
-data_transformations.standardize_zip_code(daily_foot_traffic_data, process_ground_truth_data.ZIP_COL_NAME)
+data_transformations.standardize_zip_code_col(daily_foot_traffic_data, process_ground_truth_data.ZIP_COL_NAME)
 data_transformations.\
     compute_moving_avg_from_daily_data(daily_foot_traffic_data,
                                        data_transformations.STD_ZIP_COL_NAME,
                                        data_transformations.STD_DATE_COL_NAME,
                                        process_ground_truth_data.COLS_TO_AVG)
-
-process_ground_truth_data.compute_moving_avg(daily_foot_traffic_data)  # 2
 db.create_table_from_pandas(daily_foot_traffic_data, process_ground_truth_data.SQL_TABLE_NAME)  # 3
 
 print("\nDAILY FOOT TRAFFIC Table Info")
@@ -95,7 +93,7 @@ print(db.get_table_info(process_ground_truth_data.SQL_TABLE_NAME))
 traffic_crash_sql_table_name = "TRAFFIC_CRASH_DATA"
 crash_file = os.path.join("resources", "zipcode_crash_data_testing.csv")
 crash_data = pd.read_csv(crash_file)
-data_transformations.standardize_zip_code(crash_data, "zipcode")
+data_transformations.standardize_zip_code_col(crash_data, "zipcode")
 data_transformations.\
     compute_moving_avg_from_daily_data(crash_data,
                                        data_transformations.STD_ZIP_COL_NAME,
@@ -108,4 +106,4 @@ print(db.get_table_info(traffic_crash_sql_table_name))
 
 # CENSUS Data
 census_df = census_api_pull.get_census_data_from_api()
-data_transformations.standardize_zip_code(census_df, census_api_pull.ZIP_COL_NAME)
+data_transformations.standardize_zip_code_col(census_df, census_api_pull.ZIP_COL_NAME)
