@@ -1,8 +1,12 @@
 import os
-import requests
+import math
+from urllib import error
+from urllib3.exceptions import MaxRetryError
 from datetime import datetime, timedelta
 from util import basic_io
 import pandas as pd
+from ratelimit import limits, sleep_and_retry
+
 
 # https://strftime.org/ python datetime formats
 DAYS_IN_WEEK = 7
@@ -17,7 +21,13 @@ WEEK_END_TO_CDC_WEEK = basic_io.read_json_to_dict("resources/cdc_week.json")
 MOVING_AVG_WINDOW = 7
 MOVING_AVG_COL_PREFIX = 'AVG7DAY_'
 
-#standarizing zipcode and date columns
+# time period for mapbox api
+TIME_PERIOD = 60
+
+# location to zip path
+LOC_ZIP_FILE_PATH = os.path.join("resources", "location_zip.json")
+
+# standarizing zipcode and date columns
 ZIP_COL_NAME = 'ZIPCODE'
 DATE_COL_NAME = 'STD_DATE'
 
@@ -32,20 +42,50 @@ def get_chicago_zipcodes():
         "resources", "chicago_zips_59.json"))
 
 
-def get_zipcode_from_mapbox(long, lat, access_token):
+def get_zipcode_from_mapbox(lat, long, session, access_token):
     """
     get zipcode for geo coords via mapbox api
 
     :param long: longitude
     :param lat: latitude
     :param access_token: mapbox api access token
-    :return: (int) zipcode for input long, lat
+    :return: (str) zipcode for input long, lat
     """
+
+    if math.isnan(lat) or math.isnan(long) or lat == 0.0 or long == 0.0:
+        return None
+
+    location = repr((long, lat))
+    loc_to_zip_dic = basic_io.read_json_to_dict(LOC_ZIP_FILE_PATH)
+    if location in loc_to_zip_dic:
+        return loc_to_zip_dic[location]
+
+    zipcode = get_zipcode_from_lat_long(lat, long, session, access_token)
+    loc_to_zip_dic[location] = zipcode
+    basic_io.write_dict_to_json(LOC_ZIP_FILE_PATH, loc_to_zip_dic)
+
+    return zipcode
+
+
+@sleep_and_retry
+@limits(calls=600, period=TIME_PERIOD)
+def get_zipcode_from_lat_long(lat, long, session, access_token):
+
     request_url = f"https://api.mapbox.com/geocoding/v5/mapbox.places/{long},{lat}.json"
     params = {"types": "postcode", "access_token": access_token}
-    response = requests.get(url=request_url, params=params)
 
-    return int(response.json()['features'][0]['text'])
+    try:
+        response = session.get(url=request_url, params=params)
+        zipcode = response.json()['features'][0]['text']
+        return zipcode
+    except error.HTTPError as e1:
+        print(request_url)
+    except MaxRetryError as e2:
+        print(request_url)
+    except IndexError:
+        return None
+
+
 
 
 def get_next_saturday(YYYY_MM_DD_str):
@@ -130,6 +170,7 @@ def verify_chicago_zip(zip_str):
         return False
 
     return True
+
 
 def standardize_zip_code(df, original_zip_col_name):
     df.rename({original_zip_col_name: ZIP_COL_NAME},inplace=True)
