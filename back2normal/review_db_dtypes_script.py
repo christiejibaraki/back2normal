@@ -3,6 +3,7 @@ import pandas as pd
 from data import dbclient, daily_case_data_by_zip, data_transformations, census_api_pull
 from data.socrata import soda_data, socrata_api_requests
 from data.groundtruth import process_ground_truth_data
+from sandbox.data import create_zipcode_crash_for_testing
 
 pd.set_option('display.max_columns', None)
 
@@ -96,10 +97,10 @@ print(db.get_table_info(process_ground_truth_data.SQL_TABLE_NAME))  # 4
 #       process_traffic_crash_data.py
 # date is 2019-11-12, (obj)
 traffic_crash_sql_table_name = "TRAFFIC_CRASH_DATA"
-crash_file = os.path.join("resources", "zipcode_crash_data_testing.csv")
+crash_file = os.path.join("resources", "zipcode_crash_data_1_1_2019-3_7_20201.csv")
 crash_data = pd.read_csv(crash_file)
-data_transformations.standardize_zip_code_col(crash_data, "zipcode")  # 2
-data_transformations.standardize_date_col(crash_data, "SHORT_DATE")
+data_transformations.standardize_zip_code_col(crash_data, create_zipcode_crash_for_testing.ZIP_COL_NAME)  # 2
+data_transformations.standardize_date_col(crash_data, create_zipcode_crash_for_testing.DATE_COL_NAME)
 data_transformations.\
     compute_moving_avg_from_daily_data(crash_data,
                                        data_transformations.STD_ZIP_COL_NAME,
