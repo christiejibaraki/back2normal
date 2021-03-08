@@ -11,7 +11,6 @@ from data import data_transformations
 # We're using the 2019 ACS 5-year data profiles
 # Full list of variables: https://api.census.gov/data/2019/acs/acs5/profile/variables.html
 
-
 zip_lst = data_transformations.get_chicago_zipcodes()
 ZIPS = ",".join(zip_lst)
 CENSUS_API_KEY = api_util.get_census_key()
@@ -40,6 +39,7 @@ VARIABLE_LST = ",".join(variable_dict.keys())
 query_url = (f"https://api.census.gov/data/2019/acs/acs5/profile?"
              f"get={VARIABLE_LST}&for=zip%20code%20tabulation%20area:{ZIPS}"
              f"&in=state:17&key={CENSUS_API_KEY}")
+
 
 def get_census_data_from_api():
     """
