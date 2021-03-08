@@ -214,7 +214,7 @@ def standardize_zip_code_col(data_df, original_zip_col_name):
     print(data_df)
     data_df[STD_ZIP_COL_NAME] = data_df[STD_ZIP_COL_NAME].astype(str)
     mask = data_df[STD_ZIP_COL_NAME].apply(is_valid_chicago_zip)
-    data_df[STD_ZIP_COL_NAME][mask == False] = None
+    data_df[STD_ZIP_COL_NAME][mask == False] = None # this throws a pandas SettingWithCopyWarning
 
 
 def standardize_date_col(data_df, original_date_col_name):
