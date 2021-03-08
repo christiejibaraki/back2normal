@@ -6,7 +6,7 @@ import math
 from urllib import error
 from datetime import datetime, timedelta
 import pandas as pd
-from urllib3.exceptions import MaxRetryError
+from urllib3.exceptions import MaxRetryError, ConnectionError, ProtocolError
 from ratelimit import limits, sleep_and_retry
 from util import basic_io
 
@@ -100,6 +100,10 @@ def get_zipcode_from_lat_long(lat, long, session, access_token):
     except error.HTTPError:
         print(request_url)
     except MaxRetryError:
+        print(request_url)
+    except ConnectionError:
+        print(request_url)
+    except ProtocolError:
         print(request_url)
     except IndexError:
         return None
