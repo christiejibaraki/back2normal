@@ -37,6 +37,14 @@ def get_combined_ground_truth_data():
     merged_data.reset_index(drop=True, inplace=True)
     standard_col_names = create_col_name_map(merged_data.columns)
     merged_data.rename(columns=standard_col_names, inplace=True)
+
+    merged_data = merged_data.replace(',', '', regex = True)
+    
+    for column in merged_data.columns:
+        if column != 'TIME_STAMP':
+            if column != 'ZIP_CODE':
+                merged_data[column] = merged_data[column].astype(float)
+    
     return merged_data
 
 
