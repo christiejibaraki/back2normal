@@ -2,7 +2,8 @@
 Data object for Socrata Chicago Data
 """
 
-ZIP_COL_NAME = 'zip_code'
+VACC_ZIP_COL_NAME = 'zip_code'
+VACC_DATE_COL_NAME = 'date'
 
 
 class SodaData:
@@ -50,7 +51,7 @@ class SodaData:
         self.request_url = self._build_soql_query()
 
         # variables for which weekly averages will be computed
-        self.week_avg_attr_list = week_avg_attr_lst
+        self.COLS_TO_AVG = week_avg_attr_lst
 
     def _build_soql_query(self):
         """
@@ -80,7 +81,7 @@ class SodaData:
 VACCINATION_DATA_OBJ = SodaData("COVID-19 Vaccinations by ZIP Code",
                          "VACCINATIONS",
                          "553k-3xzc",
-                         ["zip_code", "date",
+                         [VACC_ZIP_COL_NAME , VACC_DATE_COL_NAME,
                           "total_doses_daily", "total_doses_cumulative",
                           "vaccine_series_completed_daily",
                           "vaccine_series_completed_percent_population",

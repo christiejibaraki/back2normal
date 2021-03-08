@@ -16,6 +16,7 @@ CSV_URL = 'https://il-covid-zip-data.s3.us-east-2.amazonaws.com/latest/zips.csv'
 CSV_FILE_PATH = os.path.join("resources", "IDPH", "idph_covid_daily.csv")
 
 SQL_TABLE_NM = 'DAILY_COVID_CASE_DATA'
+
 # hardcoded data fields
 DATE_COL_NAME = 'date'
 ZIP_COL_NAME = 'zipcode'
@@ -29,8 +30,6 @@ SELECT_COLUMNS = [DATE_COL_NAME, ZIP_COL_NAME,
                   TESTED_COL, TESTED_CHANGE_COL]
 
 COLS_TO_AVG = [CASES_COL, TESTED_COL]
-
-# Date format: 'YYYY-MM-DD'
 
 
 def get_daily_covid_data_from_api(testing=False):

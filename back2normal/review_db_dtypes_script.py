@@ -26,12 +26,13 @@ data_obj = soda_data.VACCINATION_DATA_OBJ  # 1
 print(f" ##### making api request and create table for {data_obj.dataset_name} ####")
 print(f"    sqlite table will be named {data_obj.sql_table_name}")
 api_resp = socrata_api_requests.SocrataAPIClient(data_obj.request_url)  # 2
-data_transformations.standardize_zip_code_col(api_resp.data_df, soda_data.ZIP_COL_NAME)  # 3
+data_transformations.standardize_zip_code_col(api_resp.data_df, soda_data.VACC_ZIP_COL_NAME)  # 3
+data_transformations.standardize_date_col(api_resp.data_df, soda_data.VACC_DATE_COL_NAME)
 data_transformations.\
     compute_moving_avg_from_daily_data(api_resp.data_df,
                                        data_transformations.STD_ZIP_COL_NAME,  # should store this
-                                       'date',  # this too
-                                       data_obj.week_avg_attr_list)  # 4
+                                       data_transformations.STD_DATE_COL_NAME,  # this too
+                                       data_obj.COLS_TO_AVG)  # 4
 db.create_table_from_pandas(api_resp.data_df, data_obj.sql_table_name)  # 5
 print(f"    request url: {api_resp.request_url}")
 print(f"    request headers {api_resp.header_fields}")
@@ -43,6 +44,7 @@ print(db.get_table_info(data_obj.sql_table_name))
 print(f"nrow df:{len(api_resp.data_df)}\n")
 print(api_resp.data_df.tail())
 
+
 # DAILY COVID DATA BY ZIP
 # [data from https://il-covid-zip-data.s3.us-east-2.amazonaws.com/latest/zips.csv]
 # 1. use function get daily covid dataset as pandas df
@@ -53,10 +55,11 @@ print(api_resp.data_df.tail())
 
 daily_covid_data = daily_case_data_by_zip.get_daily_covid_data_from_api(testing=True)  # 1
 data_transformations.standardize_zip_code_col(daily_covid_data, daily_case_data_by_zip.ZIP_COL_NAME)  # 2
+data_transformations.standardize_date_col(daily_covid_data, daily_case_data_by_zip.DATE_COL_NAME)
 data_transformations.\
     compute_moving_avg_from_daily_data(daily_covid_data,
                                        data_transformations.STD_ZIP_COL_NAME,
-                                       daily_case_data_by_zip.DATE_COL_NAME,
+                                       data_transformations.STD_DATE_COL_NAME,
                                        daily_case_data_by_zip.COLS_TO_AVG)  # 3
 print(daily_covid_data.tail())
 db.create_table_from_pandas(daily_covid_data, daily_case_data_by_zip.SQL_TABLE_NM)  # 4
@@ -73,6 +76,7 @@ print(db.get_table_info(daily_case_data_by_zip.SQL_TABLE_NM))
 daily_foot_traffic_data = process_ground_truth_data.get_combined_ground_truth_data()  # 1
 data_transformations.standardize_zip_code_col(
     daily_foot_traffic_data, process_ground_truth_data.ZIP_COL_NAME)  # 2
+data_transformations.standardize_date_col(daily_foot_traffic_data, process_ground_truth_data.DATE_COL_NAME)
 data_transformations.\
     compute_moving_avg_from_daily_data(daily_foot_traffic_data,
                                        data_transformations.STD_ZIP_COL_NAME,
@@ -90,15 +94,16 @@ print(db.get_table_info(process_ground_truth_data.SQL_TABLE_NAME))  # 4
 #       sandbox/data/create_zipcode_crash_for_testing.py
 # file for processing the traffic data and getting zipcode from mapbox api:
 #       process_traffic_crash_data.py
-
+# date is 2019-11-12, (obj)
 traffic_crash_sql_table_name = "TRAFFIC_CRASH_DATA"
 crash_file = os.path.join("resources", "zipcode_crash_data_testing.csv")
 crash_data = pd.read_csv(crash_file)
 data_transformations.standardize_zip_code_col(crash_data, "zipcode")  # 2
+data_transformations.standardize_date_col(crash_data, "SHORT_DATE")
 data_transformations.\
     compute_moving_avg_from_daily_data(crash_data,
                                        data_transformations.STD_ZIP_COL_NAME,
-                                       'SHORT_DATE',
+                                       data_transformations.STD_DATE_COL_NAME,
                                        ['crash_count'])  # 3
 db.create_table_from_pandas(crash_data, traffic_crash_sql_table_name)  # 4
 
@@ -108,3 +113,18 @@ print(db.get_table_info(traffic_crash_sql_table_name))
 # CENSUS Data
 census_df = census_api_pull.get_census_data_from_api()
 data_transformations.standardize_zip_code_col(census_df, census_api_pull.ZIP_COL_NAME)
+
+# make it easier to review datas
+vacc_data = api_resp.data_df
+case_data = daily_covid_data
+groundtruth_data = daily_foot_traffic_data
+traffic_crash_data = crash_data
+data_list = [vacc_data, case_data, groundtruth_data, traffic_crash_data]
+for x in data_list:
+    print("\n\n")
+    print(x.columns)
+    print(f"\nzip col type = {x[data_transformations.STD_ZIP_COL_NAME].dtype}")
+    print(f"\ndate col type = {x[data_transformations.STD_DATE_COL_NAME].dtype}")
+    print(x[data_transformations.STD_DATE_COL_NAME].head(n=10))
+
+census_data = census_df

@@ -218,10 +218,17 @@ def standardize_date_col(data_df, original_date_col_name):
     Standardize the date column in a pandas DataFrame
     1. rename original_date_col_name to STD_DATE_COL_NAME (in place)
     2. standardize date format
-    3. convert col to string
+
+    Output format is YYYY-MM-DD
 
     :param data_df: pandas DataFrame containing date col to standardize
     :param original_date_col_name: (str) original date col name
     :return: NA, modify df in place
     """
-    pass
+    data_df.rename(columns={original_date_col_name: STD_DATE_COL_NAME}, inplace=True)
+
+    # this is pretty slow. not sure if necessary since a lot of them are already in this format
+    # data_df[STD_DATE_COL_NAME] = \
+    #     data_df[STD_DATE_COL_NAME].apply(lambda x: pd.to_datetime(x).strftime('%Y-%m-%d'))
+    data_df[STD_DATE_COL_NAME] = pd.to_datetime(data_df[STD_DATE_COL_NAME],
+                                                infer_datetime_format=True)
