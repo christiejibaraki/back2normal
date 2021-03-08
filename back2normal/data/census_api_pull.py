@@ -61,7 +61,7 @@ var_to_desc_dict = {'NAME': 'Zip Code Tabluation Area', 'DP02_0016E': 'Average h
                  }
 
 VARIABLE_LST = ",".join(var_to_colname_dict.keys())
-var_to_colname_dict['zip code tabulation area'] = ZIP_COL_NAME
+# var_to_colname_dict['zip code tabulation area'] = ZIP_COL_NAME
 
 query_url = (f"https://api.census.gov/data/2019/acs/acs5/profile?"
              f"get={VARIABLE_LST}&for=zip%20code%20tabulation%20area:{ZIPS}"
@@ -82,10 +82,11 @@ def get_census_data_from_api():
 
     data_df = data_transformations.convert_df_dtypes(data_df)
 
-    # rename columns
+    # rename non-zip columns
     data_df = data_df.rename(columns=var_to_colname_dict)
 
-    # zip codes should be strings
-    data_df[ZIP_COL_NAME] = data_df[ZIP_COL_NAME].astype(str)
+    data_transformations.standardize_zip_code_col(data_df, 'zip code tabulation area')
+    # this works but prompts a SettingWithCopyWarning from Pandas
+
 
     return data_df
