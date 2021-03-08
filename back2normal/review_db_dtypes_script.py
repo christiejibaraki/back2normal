@@ -52,7 +52,7 @@ print(api_resp.data_df.tail())
 # 3. use dbclient to create sql table from pandas df
 
 daily_covid_data = daily_case_data_by_zip.get_daily_covid_data_from_api(testing=True)  # 1
-daily_case_data_by_zip.compute_weekly_columns_for_IDPH_data(daily_covid_data)  # 2
+daily_case_data_by_zip.compute_7_day_mavg_columns_for_IDPH_data(daily_covid_data)  # 2
 print(daily_covid_data.tail())
 db.create_table_from_pandas(daily_covid_data, daily_case_data_by_zip.SQL_TABLE_NM)  # 3
 print("\nDAILY COVID DATA Table Info")

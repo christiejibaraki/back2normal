@@ -25,6 +25,8 @@ SELECT_COLUMNS = [DATE_COL, ZIP_COL,
 
 COLS_TO_AVG = [CASES_COL, TESTED_COL]
 
+#Date format: 'YYYY-MM-DD'
+
 
 def get_daily_covid_data_from_api(testing=False):
     """
@@ -56,7 +58,7 @@ def get_daily_covid_data_from_api(testing=False):
         return select_df
 
 
-def compute_weekly_columns_for_IDPH_data(daily_data_df):
+def compute_7_day_mavg_columns_for_IDPH_data(daily_data_df):
     """
     Computes weekly average columns listed in COLS_TO_AVG
     Appends columsn to daily_data_df
