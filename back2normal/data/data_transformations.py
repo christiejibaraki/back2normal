@@ -23,6 +23,7 @@ MOVING_AVG_COL_PREFIX = 'AVG7DAY_'
 
 # time period for mapbox api
 TIME_PERIOD = 60
+API_LIMIT = 600
 
 # location to zip path
 LOC_ZIP_FILE_PATH = os.path.join("resources", "location_zip.json")
@@ -44,10 +45,15 @@ def get_chicago_zipcodes():
 
 def get_zipcode_from_mapbox(lat, long, session, access_token):
     """
-    get zipcode for geo coords via mapbox api
+    get zipcode for geo coords.
 
-    :param long: longitude
+    read in location to zip dict and attempt lookup
+    if location is not in zip dict, call mapbox api
+    add location, zip pair to dict then write to file
+
     :param lat: latitude
+    :param long: longitude
+    :param session: Session to make calls faster
     :param access_token: mapbox api access token
     :return: (str) zipcode for input long, lat
     """
@@ -68,8 +74,18 @@ def get_zipcode_from_mapbox(lat, long, session, access_token):
 
 
 @sleep_and_retry
-@limits(calls=600, period=TIME_PERIOD)
+@limits(calls=API_LIMIT, period=TIME_PERIOD)
 def get_zipcode_from_lat_long(lat, long, session, access_token):
+    """
+    get zipcode from mapbox api
+    the api limits requests to 600 per min
+
+    :param lat: latitude
+    :param long: longitude
+    :param session: Session to make calls faster
+    :param access_token: mapbox api access token
+    :return: zipcode
+    """
 
     request_url = f"https://api.mapbox.com/geocoding/v5/mapbox.places/{long},{lat}.json"
     params = {"types": "postcode", "access_token": access_token}
@@ -84,8 +100,6 @@ def get_zipcode_from_lat_long(lat, long, session, access_token):
         print(request_url)
     except IndexError:
         return None
-
-
 
 
 def get_next_saturday(YYYY_MM_DD_str):
