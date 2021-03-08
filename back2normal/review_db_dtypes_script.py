@@ -17,24 +17,22 @@ db = dbclient.DBClient()
 # 2. use SocrataAPIClient to get dataset, using SodaData.request_url
 #    this returns a json that is converted to pandas dataframe
 #    by default, all data values are of type str
-#
-#    MISC data manipulations (e.g. traffic crasehs: add zipcode col from lat, long)
-#
-# 3. compute weekly averages
-# 4. use dbclient to create sql table from the pandas df
+# 3. standardize
+# 4. compute weekly averages
+# 5. use dbclient to create sql table from the pandas df
 
 # Vaccinations
 data_obj = soda_data.VACCINATION_DATA_OBJ  # 1
 print(f" ##### making api request and create table for {data_obj.dataset_name} ####")
 print(f"    sqlite table will be named {data_obj.sql_table_name}")
 api_resp = socrata_api_requests.SocrataAPIClient(data_obj.request_url)  # 2
-data_transformations.standardize_zip_code_col(api_resp.data_df, soda_data.ZIP_COL_NAME)
+data_transformations.standardize_zip_code_col(api_resp.data_df, soda_data.ZIP_COL_NAME)  # 3
 data_transformations.\
     compute_moving_avg_from_daily_data(api_resp.data_df,
                                        data_transformations.STD_ZIP_COL_NAME,  # should store this
                                        'date',  # this too
-                                       data_obj.week_avg_attr_list)  # 3
-db.create_table_from_pandas(api_resp.data_df, data_obj.sql_table_name)  # 4
+                                       data_obj.week_avg_attr_list)  # 4
+db.create_table_from_pandas(api_resp.data_df, data_obj.sql_table_name)  # 5
 print(f"    request url: {api_resp.request_url}")
 print(f"    request headers {api_resp.header_fields}")
 print(f"    request header dtypes {api_resp.header_dtypes}")
@@ -49,29 +47,32 @@ print(api_resp.data_df.tail())
 # [data from https://il-covid-zip-data.s3.us-east-2.amazonaws.com/latest/zips.csv]
 # 1. use function get daily covid dataset as pandas df
 #    if testing = True, data is read from csv resource
-# 2. compute weekly average columns
-# 3. use dbclient to create sql table from pandas df
+# 2. standardize
+# 3. compute weekly average columns
+# 4. use dbclient to create sql table from pandas df
 
 daily_covid_data = daily_case_data_by_zip.get_daily_covid_data_from_api(testing=True)  # 1
-data_transformations.standardize_zip_code_col(daily_covid_data, daily_case_data_by_zip.ZIP_COL_NAME)
+data_transformations.standardize_zip_code_col(daily_covid_data, daily_case_data_by_zip.ZIP_COL_NAME)  # 2
 data_transformations.\
     compute_moving_avg_from_daily_data(daily_covid_data,
                                        data_transformations.STD_ZIP_COL_NAME,
                                        daily_case_data_by_zip.DATE_COL_NAME,
-                                       daily_case_data_by_zip.COLS_TO_AVG)
+                                       daily_case_data_by_zip.COLS_TO_AVG)  # 3
 print(daily_covid_data.tail())
-db.create_table_from_pandas(daily_covid_data, daily_case_data_by_zip.SQL_TABLE_NM)  # 3
+db.create_table_from_pandas(daily_covid_data, daily_case_data_by_zip.SQL_TABLE_NM)  # 4
 print("\nDAILY COVID DATA Table Info")
 print(db.get_table_info(daily_case_data_by_zip.SQL_TABLE_NM))
 
 # GROUND TRUTH Foot Traffic Data BY ZIP
 # 1. use function to read in and combine ground truth CSVs
 #    this returns a single pandas dataframe
-# 2. compute weekly average columns
-# 3. use dbclient to create sql table from pandas df
+# 2. standardize
+# 3. compute weekly average columns
+# 4. use dbclient to create sql table from pandas df
 
 daily_foot_traffic_data = process_ground_truth_data.get_combined_ground_truth_data()  # 1
-data_transformations.standardize_zip_code_col(daily_foot_traffic_data, process_ground_truth_data.ZIP_COL_NAME)
+data_transformations.standardize_zip_code_col(
+    daily_foot_traffic_data, process_ground_truth_data.ZIP_COL_NAME)  # 2
 data_transformations.\
     compute_moving_avg_from_daily_data(daily_foot_traffic_data,
                                        data_transformations.STD_ZIP_COL_NAME,
@@ -80,7 +81,7 @@ data_transformations.\
 db.create_table_from_pandas(daily_foot_traffic_data, process_ground_truth_data.SQL_TABLE_NAME)  # 3
 
 print("\nDAILY FOOT TRAFFIC Table Info")
-print(db.get_table_info(process_ground_truth_data.SQL_TABLE_NAME))
+print(db.get_table_info(process_ground_truth_data.SQL_TABLE_NAME))  # 4
 
 
 # SOCRATA CRASH DATA
@@ -93,13 +94,13 @@ print(db.get_table_info(process_ground_truth_data.SQL_TABLE_NAME))
 traffic_crash_sql_table_name = "TRAFFIC_CRASH_DATA"
 crash_file = os.path.join("resources", "zipcode_crash_data_testing.csv")
 crash_data = pd.read_csv(crash_file)
-data_transformations.standardize_zip_code_col(crash_data, "zipcode")
+data_transformations.standardize_zip_code_col(crash_data, "zipcode")  # 2
 data_transformations.\
     compute_moving_avg_from_daily_data(crash_data,
                                        data_transformations.STD_ZIP_COL_NAME,
                                        'SHORT_DATE',
-                                       ['crash_count'])
-db.create_table_from_pandas(crash_data, traffic_crash_sql_table_name)  # 3
+                                       ['crash_count'])  # 3
+db.create_table_from_pandas(crash_data, traffic_crash_sql_table_name)  # 4
 
 print("\nDAILY TRAFFIC CRASH Table Info")
 print(db.get_table_info(traffic_crash_sql_table_name))
