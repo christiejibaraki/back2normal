@@ -4,8 +4,9 @@ import re
 from data import data_transformations
 
 GROUND_TRUTH_FILE_PATH = os.path.join("resources", "GroundTruth")
-#COLUMNS_TO_AVERAGE = ['BARS', 'GROCERY', 'RESTAURANT', 'PARKS_BEACHES', 'SCHOOLS_LIBRARIES']
-COLUMNS_TO_AVERAGE = ['GROCERY']
+ZIP_COL_NAME = data_transformations.STD_ZIP_COL_NAME
+DATE_COL_NAME = data_transformations.STD_DATE_COL_NAME
+COLS_TO_AVG = ['BARS', 'GROCERY', 'RESTAURANT', 'PARKS_BEACHES', 'SCHOOLS_LIBRARIES']
 SQL_TABLE_NAME = 'DAILY_FOOT_TRAFFIC_DATA'
 
 
@@ -13,7 +14,7 @@ def get_combined_ground_truth_data():
     """
     Process GroundTruth zipcode files and merge into single dataframe
     If orig zipcode level file does not contain a column,
-        the value should be zero
+        the value should be NaN
 
     :return: merged_data (pandas DataFrame)
     """
@@ -26,10 +27,9 @@ def get_combined_ground_truth_data():
                 # remove index line
                 df = df.drop([0])
                 # create time stamp header
-                df.rename(columns={"Category": "Time Stamp"}, inplace=True)
-                df = df.apply(pd.to_numeric, errors='ignore')
+                df.rename(columns={"Category": DATE_COL_NAME}, inplace=True)
                 # create zip code column + header
-                df.insert(1, "ZIP Code", fname.split(".")[0])
+                df.insert(1, ZIP_COL_NAME, fname.split(".")[0])
                 # append to dataframe list
                 df_list.append(df)
 
@@ -42,9 +42,8 @@ def get_combined_ground_truth_data():
     merged_data = merged_data.replace(',', '', regex = True)
     
     for column in merged_data.columns:
-        if column != 'TIME_STAMP':
-            if column != 'ZIP_CODE':
-                merged_data[column] = merged_data[column].astype(float)
+        if column not in [ZIP_COL_NAME, DATE_COL_NAME]:
+            merged_data[column] = merged_data[column].astype(float)
     
     return merged_data
 
@@ -85,4 +84,4 @@ def compute_moving_avg(pandas_df):
         NA, modifies pandas_df in place
     """
     data_transformations.compute_moving_avg_from_daily_data(
-        pandas_df, 'ZIP_CODE', 'TIME_STAMP', COLUMNS_TO_AVERAGE)
+        pandas_df, ZIP_COL_NAME , DATE_COL_NAME, COLS_TO_AVG)

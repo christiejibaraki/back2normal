@@ -12,14 +12,14 @@ CSV_FILE_PATH = os.path.join("resources", "IDPH", "idph_covid_daily.csv")
 
 SQL_TABLE_NM = 'DAILY_COVID_CASE_DATA'
 # hardcoded data fields
-DATE_COL = 'date'
-ZIP_COL = 'zipcode'
+DATE_COL_NAME = 'date'
+ZIP_COL_NAME = 'zipcode'
 CASES_COL = 'confirmed_cases'
 CASES_CHANGE_COL = 'confirmed_cases_change'
 TESTED_COL = 'total_tested'
 TESTED_CHANGE_COL = 'total_tested_change'
 
-SELECT_COLUMNS = [DATE_COL, ZIP_COL,
+SELECT_COLUMNS = [DATE_COL_NAME, ZIP_COL_NAME,
                   CASES_COL, CASES_CHANGE_COL,
                   TESTED_COL, TESTED_CHANGE_COL]
 
@@ -57,7 +57,7 @@ def get_daily_covid_data_from_api(testing=False):
         select_df = df.loc[:, SELECT_COLUMNS]
         return select_df
 
-
+@DeprecationWarning
 def compute_7_day_mavg_columns_for_IDPH_data(daily_data_df):
     """
     Computes weekly average columns listed in COLS_TO_AVG
@@ -68,8 +68,8 @@ def compute_7_day_mavg_columns_for_IDPH_data(daily_data_df):
     """
 
     data_transformations.compute_moving_avg_from_daily_data(daily_data_df,
-                                                            ZIP_COL,
-                                                            DATE_COL,
+                                                            ZIP_COL_NAME,
+                                                            DATE_COL_NAME,
                                                             COLS_TO_AVG)
 
 

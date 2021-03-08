@@ -1,4 +1,7 @@
 
+ZIP_COL_NAME = 'zip_code'
+
+
 class SodaData:
     """
     Data object for managing/storing fields related to a Socrata dataset.

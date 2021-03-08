@@ -13,7 +13,7 @@ from data import data_transformations
 # We're using the 2019 ACS 5-year data profiles
 # Full list of variables: https://api.census.gov/data/2019/acs/acs5/profile/variables.html
 
-
+ZIP_COL_NAME = data_transformations.STD_ZIP_COL_NAME
 zip_lst = data_transformations.get_chicago_zipcodes()
 ZIPS = ",".join(zip_lst)
 CENSUS_API_KEY = api_util.get_census_key()
@@ -58,7 +58,7 @@ var_to_desc_dict = {'NAME': 'Zip Code Tabluation Area', 'DP02_0016E': 'Average h
                  'DP03_0096PE': 'Pct. of pop. w/ health insurance coverage',
                  }
 
-zip_col_rename_dict = {'zip code tabulation area': 'zipcode'}
+zip_col_rename_dict = {'zip code tabulation area': ZIP_COL_NAME}
 
 VARIABLE_LST = ",".join(var_to_colname_dict.keys())
 
@@ -86,6 +86,6 @@ def get_census_data_from_api():
     data_df = data_df.rename(columns=zip_col_rename_dict)
 
     # zip codes should be strings
-    data_df['zipcode'] = data_df['zipcode'].astype(str)
+    data_df[ZIP_COL_NAME] = data_df[ZIP_COL_NAME].astype(str)
 
     return data_df

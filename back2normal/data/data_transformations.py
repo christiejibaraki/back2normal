@@ -29,8 +29,8 @@ API_LIMIT = 600
 LOC_ZIP_FILE_PATH = os.path.join("resources", "location_zip.json")
 
 # standarizing zipcode and date columns
-ZIP_COL_NAME = 'ZIPCODE'
-DATE_COL_NAME = 'STD_DATE'
+STD_ZIP_COL_NAME = 'ZIPCODE'
+STD_DATE_COL_NAME = 'STD_DATE'
 
 
 def get_chicago_zipcodes():
@@ -204,7 +204,8 @@ def standardize_zip_code(df, original_zip_col_name):
     :param original_zip_col_name: (str) original zipcode col name
     :return: NA, modify df in place
     """
-    df.rename(columns={original_zip_col_name: ZIP_COL_NAME}, inplace=True)
-    df[ZIP_COL_NAME] = df[ZIP_COL_NAME].astype(str)
-    mask = df[ZIP_COL_NAME].apply(is_valid_chicago_zip)
-    df[ZIP_COL_NAME][mask == False] = None
+    df.rename(columns={original_zip_col_name: STD_ZIP_COL_NAME}, inplace=True)
+    print(df)
+    df[STD_ZIP_COL_NAME] = df[STD_ZIP_COL_NAME].astype(str)
+    mask = df[STD_ZIP_COL_NAME].apply(is_valid_chicago_zip)
+    df[STD_ZIP_COL_NAME][mask == False] = None
