@@ -8,6 +8,7 @@ GROUND_TRUTH_FILE_PATH = os.path.join("resources", "GroundTruth")
 COLUMNS_TO_AVERAGE = ['GROCERY']
 SQL_TABLE_NAME = 'DAILY_FOOT_TRAFFIC_DATA'
 
+
 def get_combined_ground_truth_data():
     """
     Process GroundTruth zipcode files and merge into single dataframe
@@ -65,9 +66,15 @@ def clean_col_name(col_name_str):
     col_name = re.sub(" ", "_", clean_str).upper()
     return col_name
 
+
 def compute_moving_avg(pandas_df):
     """
-    docstring
-    """
+    Compute moving average for columns in COLUMNS_TO_AVERAGE
 
-    data_transformations.compute_moving_avg_from_daily_data(pandas_df, 'ZIP_CODE', 'TIME_STAMP', COLUMNS_TO_AVERAGE)
+    input:
+        pandas_df: a pandas DataFrame containing the columns to average
+    output:
+        NA, modifies pandas_df in place
+    """
+    data_transformations.compute_moving_avg_from_daily_data(
+        pandas_df, 'ZIP_CODE', 'TIME_STAMP', COLUMNS_TO_AVERAGE)
