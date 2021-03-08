@@ -96,3 +96,13 @@ def test_standardize_zip_code():
     data = pd.DataFrame([None, 'Unknown', "60637", "96819"], columns=[orig_zip_col])
     data_transformations.standardize_zip_code_col(data, orig_zip_col)
     assert list(data[data_transformations.STD_ZIP_COL_NAME]) == [None, None, "60637", None]
+
+
+def test_standardize_date():
+
+    orig_zip_col = "daaate"
+    data = pd.DataFrame(
+        [None, '', "2020-12-15T00:00:00.000", "2020-12-15", "2020/12/15"], columns=[orig_zip_col])
+    data_transformations.standardize_date_col(data, orig_zip_col)
+    assert list(data[data_transformations.STD_DATE_COL_NAME]) == \
+        [pd.NaT, pd.NaT, pd.Timestamp('2020-12-15'), pd.Timestamp('2020-12-15'), pd.Timestamp('2020-12-15')]
