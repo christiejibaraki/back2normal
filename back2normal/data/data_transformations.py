@@ -176,7 +176,7 @@ def convert_df_dtypes(data_df):
     return data_df
 
 
-def verify_chicago_zip(zip_str):
+def is_valid_chicago_zip(zip_str):
     """
     For running inside of standardize_zip_code apply function
     """
@@ -189,5 +189,5 @@ def verify_chicago_zip(zip_str):
 def standardize_zip_code(df, original_zip_col_name):
     df.rename({original_zip_col_name: ZIP_COL_NAME},inplace=True)
     df.ZIP_COL_NAME = df.ZIP_COL_NAME.astype(str)
-    mask = df.ZIP_COL_NAME.apply(verify_chicago_zip)
+    mask = df.ZIP_COL_NAME.apply(is_valid_chicago_zip)
     df.ZIP_COL_NAME[mask == False] = None

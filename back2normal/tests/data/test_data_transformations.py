@@ -77,3 +77,13 @@ def test_compute_moving_avg_from_daily_data():
     assert true_avg == (daily_data_df.loc[daily_data_df['zip_code'] == '60637']
                         [data_transformations.MOVING_AVG_COL_PREFIX + col_to_avg]
                         [6:7].values[0])
+
+
+def test_is_valid_chicago_zip():
+
+    assert not data_transformations.is_valid_chicago_zip(None)
+    assert not data_transformations.is_valid_chicago_zip("0")
+    assert not data_transformations.is_valid_chicago_zip("Unknown")
+    assert not data_transformations.is_valid_chicago_zip("20002")
+    assert data_transformations.is_valid_chicago_zip("6")
+    assert data_transformations.is_valid_chicago_zip("60637")
