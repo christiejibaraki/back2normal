@@ -61,14 +61,36 @@ print(db.get_table_info(daily_case_data_by_zip.SQL_TABLE_NM))
 # GROUND TRUTH Foot Traffic Data BY ZIP
 # 1. use function to read in and combine ground truth CSVs
 #    this returns a single pandas dataframe
-# 2. use dbclient to create sql table from pandas df
+# 2. compute weekly average columns
+# 3. use dbclient to create sql table from pandas df
 
-daily_foot_traffic_data = process_ground_truth_data.get_combined_ground_truth_data()
-process_ground_truth_data.compute_moving_avg(daily_foot_traffic_data)
-db.create_table_from_pandas(daily_foot_traffic_data, process_ground_truth_data.SQL_TABLE_NAME)
+daily_foot_traffic_data = process_ground_truth_data.get_combined_ground_truth_data()  # 1
+process_ground_truth_data.compute_moving_avg(daily_foot_traffic_data)  # 2
+db.create_table_from_pandas(daily_foot_traffic_data, process_ground_truth_data.SQL_TABLE_NAME)  # 3
 
 print("\nDAILY FOOT TRAFFIC Table Info")
 print(db.get_table_info(process_ground_truth_data.SQL_TABLE_NAME))
+
+
+# SOCRATA CRASH DATA
+# THIS IS FOR TESTING/DATA EXPLORATION ONLY
+# file for computing counts and creating this test csv is:
+#       sandbox/data/create_zipcode_crash_for_testing.py
+# file for processing the traffic data and getting zipcode from mapbox api:
+#       process_traffic_crash_data.py
+
+traffic_crash_sql_table_name = "TRAFFIC_CRASH_DATA"
+crash_file = os.path.join("resources", "zipcode_crash_data_testing.csv")
+crash_data = pd.read_csv(crash_file)
+data_transformations.\
+    compute_moving_avg_from_daily_data(crash_data,
+                                       'zipcode',
+                                       'SHORT_DATE',
+                                       ['crash_count'])
+db.create_table_from_pandas(crash_data, traffic_crash_sql_table_name)  # 3
+
+print("\nDAILY TRAFFIC CRASH Table Info")
+print(db.get_table_info(traffic_crash_sql_table_name))
 
 # CENSUS Data
 census_df = census_api_pull.get_census_data_from_api()

@@ -3,6 +3,9 @@ from data.socrata import soda_data, socrata_api_requests
 from util import api_util
 import requests
 
+#######################################################
+####### SCRIPT FOR GRABBING ZIPCODES FR MAPBOX ########
+#######################################################
 
 # ~~~~~~ ******* Will not run without resource/location_zip.json ******* ~~~~~~ #
 
@@ -13,7 +16,7 @@ api_resp = socrata_api_requests.SocrataAPIClient(data_obj.request_url)  # 2
 data_df = api_resp.data_df
 
 # save file just in case
-data_df.to_csv("historical_traffic_1_1_2019-3_7_20201.csv", index=False)
+# data_df.to_csv("historical_traffic_1_1_2019-3_7_20201.csv", index=False)
 
 
 #######################################################
@@ -27,7 +30,7 @@ data_df.to_csv("historical_traffic_1_1_2019-3_7_20201.csv", index=False)
 #         x['latitude'], x['longitude'], access_token), axis=1)
 
 # continue processing from specified row
-row_to_start_processing = 65000
+row_to_start_processing = 155000
 subset_to_process = data_df.iloc[row_to_start_processing:]
 
 
