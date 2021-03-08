@@ -1,3 +1,6 @@
+"""
+Data object for Socrata Chicago Data
+"""
 
 ZIP_COL_NAME = 'zip_code'
 
@@ -57,7 +60,7 @@ class SodaData:
         """
 
         # soql docs: https://dev.socrata.com/docs/queries/
-        
+
         query =  f"?$query=SELECT {', '.join(self.desired_attr_lst)}"
         if self.where_lst:
             query += f" WHERE {'AND '.join(self.where_lst)}"
@@ -92,5 +95,6 @@ TRAFFIC_CRASH_DATA_OBJ_HISTORICAL = SodaData("Traffic Crashes",
                               "85ca-t3if",
                               ["CRASH_RECORD_ID", "CRASH_DATE",
                                "latitude", "longitude"],
-                              where=["CRASH_DATE > '2019-01-01T00:00:00'", "CRASH_DATE < '2021-03-07T00:00:00'"],
+                              where=["CRASH_DATE > '2019-01-01T00:00:00'",
+                                     "CRASH_DATE < '2021-03-07T00:00:00'"],
                               limit=300000)

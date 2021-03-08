@@ -1,7 +1,9 @@
-import os
+"""
+Functions for retrieving demographic data from census api
+"""
 import requests
 import pandas as pd
-from util import api_util, basic_io
+from util import api_util
 from data import data_transformations
 
 # there is census data for all 59 of the zipcodes in chicago_zips_59.json

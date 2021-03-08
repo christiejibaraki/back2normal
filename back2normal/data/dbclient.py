@@ -1,3 +1,6 @@
+"""
+Class for sqlite database
+"""
 import sqlite3
 
 DB_PATH = "back2normal_db"

@@ -1,6 +1,9 @@
+"""
+Functions for creating foot traffic dataset
+"""
 import os
-import pandas as pd
 import re
+import pandas as pd
 from data import data_transformations
 
 GROUND_TRUTH_FILE_PATH = os.path.join("resources", "GroundTruth")
@@ -20,18 +23,18 @@ def get_combined_ground_truth_data():
     """
     df_list = []
 
-    for dirName, subdirList, fileList in os.walk(GROUND_TRUTH_FILE_PATH):
-        for fname in fileList:
+    for dir_name, subdir_list, file_list in os.walk(GROUND_TRUTH_FILE_PATH):
+        for fname in file_list:
             if '.csv' in fname:
-                df = pd.read_csv(os.path.join(GROUND_TRUTH_FILE_PATH, fname))
+                data_df = pd.read_csv(os.path.join(GROUND_TRUTH_FILE_PATH, fname))
                 # remove index line
-                df = df.drop([0])
+                data_df = data_df.drop([0])
                 # create time stamp header
-                df.rename(columns={"Category": DATE_COL_NAME}, inplace=True)
+                data_df.rename(columns={"Category": DATE_COL_NAME}, inplace=True)
                 # create zip code column + header
-                df.insert(1, ZIP_COL_NAME, fname.split(".")[0])
+                data_df.insert(1, ZIP_COL_NAME, fname.split(".")[0])
                 # append to dataframe list
-                df_list.append(df)
+                df_list.append(data_df)
 
     # merged groundtruth dataframe
     merged_data = pd.concat(df_list)
@@ -39,12 +42,12 @@ def get_combined_ground_truth_data():
     standard_col_names = create_col_name_map(merged_data.columns)
     merged_data.rename(columns=standard_col_names, inplace=True)
 
-    merged_data = merged_data.replace(',', '', regex = True)
-    
+    merged_data = merged_data.replace(',', '', regex=True)
+
     for column in merged_data.columns:
         if column not in [ZIP_COL_NAME, DATE_COL_NAME]:
             merged_data[column] = merged_data[column].astype(float)
-    
+
     return merged_data
 
 
@@ -60,20 +63,21 @@ def create_col_name_map(col_names):
 def clean_col_name(col_name_str):
     """
     create standard column name from descriptive string
-    
+
     replace non alphanumeric chars with whitespace
     remove multiple whitespace
     convert whitespace to underscore
-    
+
     :param col_name_str: col name with spaces and special chars
     :return: standard col name
     """""
     clean_str = re.sub('[^0-9a-zA-Z]+', ' ', col_name_str)
-    clean_str = re.sub("\s\s+", " ", clean_str)
+    clean_str = re.sub("\\s\\s+", " ", clean_str)
     col_name = re.sub(" ", "_", clean_str).upper()
     return col_name
 
 
+@DeprecationWarning
 def compute_moving_avg(pandas_df):
     """
     Compute moving average for columns in COLUMNS_TO_AVERAGE

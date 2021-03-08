@@ -1,6 +1,11 @@
+"""
+Functions for retrieving daily covid case data from
+https://il-covid-zip-data.s3.us-east-2.amazonaws.com/latest/zips.csv
+Data is returned as csv
+"""
 import os
-import requests
 import csv
+import requests
 import pandas as pd
 from data import data_transformations
 
@@ -25,7 +30,7 @@ SELECT_COLUMNS = [DATE_COL_NAME, ZIP_COL_NAME,
 
 COLS_TO_AVG = [CASES_COL, TESTED_COL]
 
-#Date format: 'YYYY-MM-DD'
+# Date format: 'YYYY-MM-DD'
 
 
 def get_daily_covid_data_from_api(testing=False):
@@ -51,11 +56,12 @@ def get_daily_covid_data_from_api(testing=False):
 
         # list of list, where each list is a row and 0th row is header
         data_list = list(readout)
-        df = pd.DataFrame(data_list[1:], columns=data_list[0])
+        data_df = pd.DataFrame(data_list[1:], columns=data_list[0])
 
         # select columns to keep
-        select_df = df.loc[:, SELECT_COLUMNS]
+        select_df = data_df.loc[:, SELECT_COLUMNS]
         return select_df
+
 
 @DeprecationWarning
 def compute_7_day_mavg_columns_for_IDPH_data(daily_data_df):

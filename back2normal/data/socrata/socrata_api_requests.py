@@ -1,4 +1,6 @@
-import os
+"""
+Class for managing Socrata get requests
+"""
 import requests
 import pandas as pd
 from util import api_util

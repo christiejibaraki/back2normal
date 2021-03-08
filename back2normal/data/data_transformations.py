@@ -1,9 +1,12 @@
+"""
+Data utility functions
+"""
 import os
 import math
-import pandas as pd
 from urllib import error
-from urllib3.exceptions import MaxRetryError
 from datetime import datetime, timedelta
+import pandas as pd
+from urllib3.exceptions import MaxRetryError
 from ratelimit import limits, sleep_and_retry
 from util import basic_io
 
@@ -94,9 +97,9 @@ def get_zipcode_from_lat_long(lat, long, session, access_token):
         response = session.get(url=request_url, params=params)
         zipcode = response.json()['features'][0]['text']
         return zipcode
-    except error.HTTPError as e1:
+    except error.HTTPError:
         print(request_url)
-    except MaxRetryError as e2:
+    except MaxRetryError:
         print(request_url)
     except IndexError:
         return None
@@ -192,7 +195,7 @@ def is_valid_chicago_zip(zip_str):
     return True
 
 
-def standardize_zip_code(df, original_zip_col_name):
+def standardize_zip_code(data_df, original_zip_col_name):
     """
     Standardize the zipcode column in a pandas DataFrame
     1. rename original_zip_col_name to ZIP_COL_NAME (in place)
@@ -200,12 +203,12 @@ def standardize_zip_code(df, original_zip_col_name):
     3. if not valid chicago zip (ie start with "6") replace with None
 
 
-    :param df: pandas DataFrame containing zipcode col to standardize
+    :param data_df: pandas DataFrame containing zipcode col to standardize
     :param original_zip_col_name: (str) original zipcode col name
     :return: NA, modify df in place
     """
-    df.rename(columns={original_zip_col_name: STD_ZIP_COL_NAME}, inplace=True)
-    print(df)
-    df[STD_ZIP_COL_NAME] = df[STD_ZIP_COL_NAME].astype(str)
-    mask = df[STD_ZIP_COL_NAME].apply(is_valid_chicago_zip)
-    df[STD_ZIP_COL_NAME][mask == False] = None
+    data_df.rename(columns={original_zip_col_name: STD_ZIP_COL_NAME}, inplace=True)
+    print(data_df)
+    data_df[STD_ZIP_COL_NAME] = data_df[STD_ZIP_COL_NAME].astype(str)
+    mask = data_df[STD_ZIP_COL_NAME].apply(is_valid_chicago_zip)
+    data_df[STD_ZIP_COL_NAME][mask == False] = None
