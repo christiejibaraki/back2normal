@@ -60,9 +60,8 @@ var_to_desc_dict = {'NAME': 'Zip Code Tabluation Area', 'DP02_0016E': 'Average h
                  'DP03_0096PE': 'Pct. of pop. w/ health insurance coverage',
                  }
 
-zip_col_rename_dict = {'zip code tabulation area': ZIP_COL_NAME}
-
 VARIABLE_LST = ",".join(var_to_colname_dict.keys())
+var_to_colname_dict['zip code tabulation area'] = ZIP_COL_NAME
 
 query_url = (f"https://api.census.gov/data/2019/acs/acs5/profile?"
              f"get={VARIABLE_LST}&for=zip%20code%20tabulation%20area:{ZIPS}"
@@ -85,7 +84,6 @@ def get_census_data_from_api():
 
     # rename columns
     data_df = data_df.rename(columns=var_to_colname_dict)
-    data_df = data_df.rename(columns=zip_col_rename_dict)
 
     # zip codes should be strings
     data_df[ZIP_COL_NAME] = data_df[ZIP_COL_NAME].astype(str)
