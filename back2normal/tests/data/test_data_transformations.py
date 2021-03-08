@@ -93,7 +93,7 @@ def test_is_valid_chicago_zip():
 def test_standardize_zip_code():
 
     orig_zip_col = "zip_code"
-    data = pd.DataFrame([None, 'Unknown', "60637", "96819"], columns=[orig_zip_col])
+    data = pd.DataFrame([None, 'Unknown', "60637", 96819], columns=[orig_zip_col])
     data_transformations.standardize_zip_code_col(data, orig_zip_col)
     assert list(data[data_transformations.STD_ZIP_COL_NAME]) == [None, None, "60637", None]
 
