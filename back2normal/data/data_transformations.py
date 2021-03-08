@@ -1,11 +1,11 @@
 import os
 import math
+import pandas as pd
 from urllib import error
 from urllib3.exceptions import MaxRetryError
 from datetime import datetime, timedelta
-from util import basic_io
-import pandas as pd
 from ratelimit import limits, sleep_and_retry
+from util import basic_io
 
 
 # https://strftime.org/ python datetime formats
@@ -178,7 +178,13 @@ def convert_df_dtypes(data_df):
 
 def is_valid_chicago_zip(zip_str):
     """
-    For running inside of standardize_zip_code apply function
+    returns true of string starts with '6'
+    otherwise false
+
+    input:
+        zip_str: (str) zipcode string
+    outout:
+        boolean: true if valid chicago zip
     """
     if not zip_str or zip_str[0] != '6':
         return False
@@ -187,7 +193,18 @@ def is_valid_chicago_zip(zip_str):
 
 
 def standardize_zip_code(df, original_zip_col_name):
-    df.rename({original_zip_col_name: ZIP_COL_NAME},inplace=True)
-    df.ZIP_COL_NAME = df.ZIP_COL_NAME.astype(str)
-    mask = df.ZIP_COL_NAME.apply(is_valid_chicago_zip)
-    df.ZIP_COL_NAME[mask == False] = None
+    """
+    Standardize the zipcode column in a pandas DataFrame
+    1. rename original_zip_col_name to ZIP_COL_NAME (in place)
+    2. convert col to string
+    3. if not valid chicago zip (ie start with "6") replace with None
+
+
+    :param df: pandas DataFrame containing zipcode col to standardize
+    :param original_zip_col_name: (str) original zipcode col name
+    :return: NA, modify df in place
+    """
+    df.rename(columns={original_zip_col_name: ZIP_COL_NAME}, inplace=True)
+    df[ZIP_COL_NAME] = df[ZIP_COL_NAME].astype(str)
+    mask = df[ZIP_COL_NAME].apply(is_valid_chicago_zip)
+    df[ZIP_COL_NAME][mask == False] = None

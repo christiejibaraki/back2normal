@@ -1,10 +1,11 @@
 import statistics
+import requests
+import math
+import pandas as pd
 from datetime import datetime
 from data import data_transformations
 from data.socrata import soda_data, socrata_api_requests
 from util import basic_io, api_util
-import requests
-import math
 
 
 def test_get_zip_code_from_mapbox():
@@ -87,3 +88,11 @@ def test_is_valid_chicago_zip():
     assert not data_transformations.is_valid_chicago_zip("20002")
     assert data_transformations.is_valid_chicago_zip("6")
     assert data_transformations.is_valid_chicago_zip("60637")
+
+
+def test_standardize_zip_code():
+
+    orig_zip_col = "zip_code"
+    data = pd.DataFrame([None, 'Unknown', "60637", "96819"], columns=[orig_zip_col])
+    data_transformations.standardize_zip_code(data, orig_zip_col)
+    assert list(data[data_transformations.ZIP_COL_NAME]) == [None, None, "60637", None]
