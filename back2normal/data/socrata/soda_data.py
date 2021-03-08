@@ -5,6 +5,9 @@ Data object for Socrata Chicago Data
 VACC_ZIP_COL_NAME = 'zip_code'
 VACC_DATE_COL_NAME = 'date'
 
+CRASH_ZIP_COL_NAME = 'zipcode'
+CRASH_DATE_COL_NAME = 'short_date'
+
 
 class SodaData:
     """
