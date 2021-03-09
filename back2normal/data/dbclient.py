@@ -4,6 +4,7 @@ Class for sqlite database
 import sqlite3
 
 DB_PATH = "back2normal_db"
+DB_PATH_TEST = "back2normal_test_db"
 PRAGMA_INFO_FIELD_INDEX = 1
 PRAGMA_INFO_DTYPE_INDEX = 2
 

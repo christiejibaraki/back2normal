@@ -7,10 +7,10 @@ from data.groundtruth import process_ground_truth_data
 pd.set_option('display.max_columns', None)
 
 # Script to demonstrate how classes interact with each other
-if os.path.exists(dbclient.DB_PATH):
+if os.path.exists(dbclient.DB_PATH_TEST):
     print("Deleting existing db and creating a new one for demo purposes\n")
-    os.remove(dbclient.DB_PATH)
-db = dbclient.DBClient()
+    os.remove(dbclient.DB_PATH_TEST)
+db = dbclient.DBClient(db_path=dbclient.DB_PATH_TEST)
 
 # SOCRATA DATA PROCESS [data from https://data.cityofchicago.org]
 # 1. get SodaData obj (representing single dataset) from soda_data global const
