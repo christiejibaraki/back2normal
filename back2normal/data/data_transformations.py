@@ -211,7 +211,6 @@ def standardize_zip_code_col(data_df, original_zip_col_name):
     :return: NA, modify df in place
     """
     data_df.rename(columns={original_zip_col_name: STD_ZIP_COL_NAME}, inplace=True)
-    print(data_df)
     data_df[STD_ZIP_COL_NAME] = data_df[STD_ZIP_COL_NAME].astype(str)
     mask = data_df[STD_ZIP_COL_NAME].apply(is_valid_chicago_zip)
     data_df[STD_ZIP_COL_NAME][mask == False] = None # this throws a pandas SettingWithCopyWarning
