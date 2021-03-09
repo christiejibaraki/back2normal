@@ -10,7 +10,7 @@ table_name_dict ={"VACC_TBL": soda_data.VACCINATION_DATA_OBJ.sql_table_name,
                   "CRASHES_TBL": "TRAFFIC_CRASH_DATA",
                   "CENSUS_TBL": "DEMOGRAPHICS"}
 
-if os.path.exists(dbclient.DB_PATH_TEST):
+if os.path.exists(dbclient.DB_PATH):
     print("Deleting existing db and recreating with build_db_script\n")
     os.remove(dbclient.DB_PATH)
 db = dbclient.DBClient()
