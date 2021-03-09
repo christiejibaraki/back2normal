@@ -78,8 +78,7 @@ print(db.get_table_info(table_name_dict["CRASHES_TBL"]))
 
 # CENSUS Demographic Data
 census_data = census_api_pull.get_census_data_from_api()
-data_transformations.standardize_zip_code_col(census_df, census_api_pull.ZIP_COL_NAME)
+data_transformations.standardize_zip_code_col(census_data, census_api_pull.ZIP_COL_NAME)
 db.create_table_from_pandas(census_data, table_name_dict["CENSUS_TBL"])
 print("\nDEMOGRAPHICS Table Info")
 print(db.get_table_info(table_name_dict["CENSUS_TBL"]))
-#ZIPCODE is an integer in this sql table -- WHY???
