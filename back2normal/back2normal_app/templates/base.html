@@ -1,5 +1,12 @@
 <html>
-<header>
+<head>
+  <title>back2normal</title>
+  {% load static %}
+  <link rel=”stylesheet” href="{% static 'css/back2normal_app.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap" rel="stylesheet">
+  <link href=”http://cdn.pydata.org/bokeh/release/bokeh-1.0.4.min.css" rel=”stylesheet” type=”text/css”>
+  <link href=”http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.0.4.min.css" rel=”stylesheet” type=”text/css”>
+
   <!--https://docs.bokeh.org/en/latest/docs/user_guide/embed.html-->
   <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js"
           crossorigin="anonymous"></script>
@@ -7,12 +14,28 @@
           crossorigin="anonymous"></script>
   <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.0.min.js"
           crossorigin="anonymous"></script>
-
   {{ script | safe }}
-  <!--<link href=”http://cdn.pydata.org/bokeh/release/bokeh-1.0.4.min.css" rel=”stylesheet” type=”text/css”>-->
-  <!--<link href=”http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.0.4.min.css" rel=”stylesheet” type=”text/css”>-->
-</header>
+
+</head>
 <body>
-  {{div | safe}}
+ <div class="title">back2normal</div>
+ <div class = "map">
+   {{div | safe}}
+ </div>
 </body>
 </html>
+
+<style type="text/css">
+.title {
+  font-family: 'Cutive Mono', monospace;
+  font-size: 70px;
+  padding-bottom: 30px;
+  padding-left: 10px;
+}
+
+.map{
+  background-color: #deeaee;
+  padding: 10px 10px 10px 7.5px;
+
+}
+</style>
