@@ -1,0 +1,18 @@
+<html>
+<header>
+  <!--https://docs.bokeh.org/en/latest/docs/user_guide/embed.html-->
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.0.min.js"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.0.min.js"
+          crossorigin="anonymous"></script>
+
+  {{ script | safe }}
+  <!--<link href=”http://cdn.pydata.org/bokeh/release/bokeh-1.0.4.min.css" rel=”stylesheet” type=”text/css”>-->
+  <!--<link href=”http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.0.4.min.css" rel=”stylesheet” type=”text/css”>-->
+</header>
+<body>
+  {{div | safe}}
+</body>
+</html>
