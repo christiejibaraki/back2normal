@@ -1,8 +1,8 @@
 import os
 import pandas as pd
-from data import dbclient, daily_case_data_by_zip, data_transformations, census_api_pull
-from data.socrata import soda_data, socrata_api_requests
-from data.groundtruth import process_ground_truth_data
+from core.data import census_api_pull, dbclient, daily_case_data_by_zip, data_transformations
+from core.data.socrata import soda_data, socrata_api_requests
+from core.data.groundtruth import process_ground_truth_data
 
 VACC_TBL = soda_data.VACCINATION_DATA_OBJ.sql_table_name
 CASE_TBL = daily_case_data_by_zip.SQL_TABLE_NM
@@ -55,7 +55,7 @@ def build_back2normal_db():
     db.create_table_from_pandas(daily_foot_traffic_data, FOOT_TRAFF_TBL)
 
     # SOCRATA CRASH DATA
-    crash_file = os.path.join("resources", "zipcode_crash_data_1_1_2019-3_7_20201.csv")
+    crash_file = os.path.join("core", "resources", "zipcode_crash_data_1_1_2019-3_7_20201.csv")
     crash_data = pd.read_csv(crash_file)
     data_transformations.standardize_zip_code_col(crash_data, soda_data.CRASH_ZIP_COL_NAME)
     data_transformations.standardize_date_col(crash_data, soda_data.CRASH_DATE_COL_NAME)

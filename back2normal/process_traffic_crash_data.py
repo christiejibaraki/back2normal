@@ -1,6 +1,6 @@
-from data import data_transformations
-from data.socrata import soda_data, socrata_api_requests
-from util import api_util
+from core.data import data_transformations
+from core.data.socrata import soda_data, socrata_api_requests
+from core.util import api_util
 import requests
 
 #######################################################

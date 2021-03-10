@@ -1,5 +1,5 @@
-from django.shortcuts import render, render_to_response
-from plots import bokeh_test
+from django.shortcuts import render
+from core.plots import bokeh_test
 from bokeh.embed import components
 
 
