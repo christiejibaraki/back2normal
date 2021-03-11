@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>back2normal</title>
+    <link href="{% static 'css/back2normal_app.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Audiowide|Rajdhani" rel="stylesheet">
+    <link href=”http://cdn.pydata.org/bokeh/release/bokeh-1.0.4.min.css" rel=”stylesheet” type=”text/css”>
+    <link href=”http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.0.4.min.css" rel=”stylesheet” type=”text/css”>
+
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+    <!--https://docs.bokeh.org/en/latest/docs/user_guide/embed.html-->
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.0.min.js"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.0.min.js"
+            crossorigin="anonymous"></script>
+    {{ script | safe }}
+
+</head>
+<body>
+<div class="title">back2normal</div>
+<!-- Navigation Bar -->
+<div id="navbar">
+    <div id="dash">Dashboard</div>
+    <div id="about">About</div>
+</div>
+<div class="map">
+    {{div | safe}}
+</div>
+</body>
+</html>

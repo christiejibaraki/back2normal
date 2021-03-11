@@ -1,8 +1,48 @@
-html, body, p, a, h1, h2, h3, h4, h5, h6{
-  font-family: 'Special Elite', cursive;
+.title {
+  font-family: 'Cutive Mono', monospace;
+  font-size: 70px;
+  padding-bottom: 5px;
+  padding-left: 10px;
 }
 
-.title {
-  font-family: 'Special Elite', cursive;
-  font-size: 50px;
+.map{
+  background-color: #deeaee;
+  padding: 10px 10px 10px 7.5px;
+
+}
+
+#navbar {
+    display: flex;
+    background-color: #fafafa;
+    flex-wrap: wrap;
+    height: 5%;
+}
+
+#dash {
+    color: #563f46;
+    padding: 7.5px 15px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px;
+
+}
+
+#about {
+    color: #9aaab6;
+    padding: 7.5px 35px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px;
+
+}
+
+#about:hover {
+    color: #563f46;
+
 }
