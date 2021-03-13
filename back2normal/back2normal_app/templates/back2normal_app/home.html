@@ -47,11 +47,11 @@
     <div id="dash">Dashboard</div>
     <div id="about">About</div>
 </div>
-<!--<div class="map">-->
+<!--div class="map"-->
 <!--{{div | safe}}-->
 <!--</div>-->
-<!--<p id="map" class="leaflet-container leaflet-retina leaflet-fade-anim" tabindex="0" style="position: relative;">-->
-<!--</p>-->
+<p id="map" class="leaflet-container leaflet-retina leaflet-fade-anim" tabindex="0" style="position: relative;">
+</p>
 <!-- Initialize a select button -->
 
 <select id="selectButton"></select>
@@ -168,7 +168,7 @@
 
         var clickChart = d3.selectAll("path").on("click", function(e) {
             console.log(e.properties.zip)
-            console.log(projectr)
+            console.log(typeof p1);
         })
 
         // Use Leaflet to implement a D3 geometric transformation.
@@ -191,7 +191,7 @@
         height = 400 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
-    var svg = d3
+    var svg_p1 = d3
         .select("#my_dataviz")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -200,13 +200,13 @@
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     //Read the data
-    d3.csv(
+    var p1 = d3.csv(
         "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/5_OneCatSevNumOrdered.csv",
         function (data) {
             // List of groups (here I have one group per column)
             var allGroup = d3
                 .map(data, function (d) {
-                    console.log(d.name)
+                    //console.log(d.name)
                     return d.name;
                 })
                 .keys();
@@ -236,7 +236,7 @@
                     })
                 )
                 .range([0, width]);
-            svg
+            svg_p1
                 .append("g")
                 .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x).ticks(7));
@@ -251,10 +251,10 @@
                     })
                 ])
                 .range([height, 0]);
-            svg.append("g").call(d3.axisLeft(y));
+            svg_p1.append("g").call(d3.axisLeft(y));
 
             // Initialize line with first group of the list
-            var line = svg
+            var line = svg_p1
                 .append("g")
                 .append("path")
                 .datum(
@@ -311,9 +311,9 @@
             d3.select("#selectButton").on("change", function (d) {
                 // recover the option that has been chosen
                 var selectedOption = d3.select(this).property("value");
-                console.log(selectedOption);
+                //console.log(selectedOption);
                 // run the updateChart function with this selected option
-                update(selectedOption);
+                // update(selectedOption);
             });
         }
     );
@@ -330,7 +330,7 @@
         height: 760px;
     }
 
-    svg {
+    #map svg {
         position: relative;
     }
 
