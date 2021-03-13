@@ -15,10 +15,10 @@
     <link href=”http://cdn.pydata.org/bokeh/release/bokeh-1.0.4.min.css" rel=”stylesheet” type=”text/css”>
     <link href=”http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.0.4.min.css" rel=”stylesheet” type=”text/css”>
 
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.5.0.js"></script>-->
 
     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js"></script>
-    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <!--<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
           crossorigin=""/>
@@ -26,17 +26,18 @@
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
             crossorigin=""></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.js"></script>
-    <script src="https://d3js.org/d3-array.v2.min.js"></script>
-    <script src="https://d3js.org/d3-geo.v2.min.js"></script>
+    <!--<script src="https://d3js.org/d3-array.v2.min.js"></script>-->
+    <!--<script src="https://d3js.org/d3-geo.v2.min.js"></script>-->
+
 
     <!--https://docs.bokeh.org/en/latest/docs/user_guide/embed.html-->
-    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.0.min.js"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.0.min.js"
-            crossorigin="anonymous"></script>
-    {{ script | safe }}
+    <!--<script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js"-->
+            <!--crossorigin="anonymous"></script>-->
+    <!--<script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.0.min.js"-->
+            <!--crossorigin="anonymous"></script>-->
+    <!--<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.0.min.js"-->
+            <!--crossorigin="anonymous"></script>-->
+    <!--{{ script | safe }}-->
 
 </head>
 <body>
@@ -49,166 +50,307 @@
 <!--<div class="map">-->
 <!--{{div | safe}}-->
 <!--</div>-->
+<!--<p id="map" class="leaflet-container leaflet-retina leaflet-fade-anim" tabindex="0" style="position: relative;">-->
+<!--</p>-->
+<!-- Initialize a select button -->
 
-<p id="map" class="leaflet-container leaflet-retina leaflet-fade-anim" tabindex="0" style="position: relative;">
-</p>
+<select id="selectButton"></select>
 
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz"></div>
 
 </body>
 </html>
 
+<!--<script>-->
+
+    <!--// queue()-->
+    <!--//     .defer(d3.json, "USA.json")-->
+    <!--//     .defer(d3.csv, "mortality.csv", typeAndSet) // process-->
+    <!--//     .await(loaded);-->
+
+    <!--var map = new L.Map("map", {center: [41.83813, -87.72998], zoom: 11})-->
+        <!--.addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));-->
+
+    <!--// map.dragging.disable();-->
+    <!--map.touchZoom.disable();-->
+    <!--map.doubleClickZoom.disable();-->
+    <!--map.scrollWheelZoom.disable();-->
+    <!--map.boxZoom.disable();-->
+    <!--map.keyboard.disable();-->
+
+    <!--// var tip = d3.tip()-->
+    <!--//     .attr('class', 'd3-tip')-->
+    <!--//     .offset([-5, 0])-->
+    <!--//     .html(function (d) {-->
+    <!--//         var dataRow = countryById.get(d.properties.name);-->
+    <!--//         if (dataRow) {-->
+    <!--//             console.log(dataRow);-->
+    <!--//             return dataRow.states + ": " + dataRow.mortality;-->
+    <!--//         } else {-->
+    <!--//             console.log("no dataRow", d);-->
+    <!--//             return d.properties.name + ": No data.";-->
+    <!--//         }-->
+    <!--//     })-->
+
+    <!--var svg = d3.select(map.getPanes().overlayPane).append("svg"),-->
+        <!--g = svg.append("g").attr("class", "leaflet-zoom-hide");-->
+
+    <!--var labels = svg.append("svg:g")-->
+        <!--.attr("id", "labels")-->
+        <!--.attr("class", "Title");-->
+    <!--var projectr = d3.geo.albersUsa();-->
+
+
+    <!--// svg.call(tip);-->
+
+    <!--d3.json("{% static 'Boundaries - ZIP Codes.geojson' %}", function(error, collection) {-->
+        <!--if (error) throw error;-->
+
+        <!--var transform = d3.geo.transform({point: projectPoint}),-->
+            <!--path = d3.geo.path().projection(transform);-->
+
+        <!--var feature = g.selectAll("path")-->
+            <!--.data(collection.features)-->
+            <!--.enter().append("path");-->
+
+
+
+        <!--map.on("viewreset", reset);-->
+        <!--reset();-->
+
+        <!--// labels.selectAll("text")-->
+        <!--//     .data(collection.features)-->
+        <!--//     .enter().append("svg:text")-->
+        <!--//     .text(function(d){return d.properties.zip;})-->
+        <!--//     .attr("x", function(d){return projectr(d.geometry.coordinates)[0];})-->
+        <!--//     .attr("y", function(d){return projectr(d.geometry.coordinates)[1];})-->
+        <!--//     .attr("dx", "-1em");-->
+
+        <!--function albersRaw(φ0, φ1) {-->
+            <!--return function(λ, φ) {-->
+                <!--return [-->
+                    <!--/* compute x here */,-->
+                    <!--/* compute y here */-->
+                <!--];-->
+            <!--};-->
+        <!--}-->
+
+        <!--function albers() {-->
+            <!--var φ0 = 29.5,-->
+                <!--φ1 = 45.5,-->
+                <!--mutate = d3.geo.projectionMutator(albersRaw),-->
+                <!--projection = mutate(φ0, φ1);-->
+
+            <!--projection.parallels = function(_) {-->
+                <!--if (!arguments.length) return [φ0, φ1];-->
+                <!--return mutate(φ0 = +_[0], φ1 = +_[1]);-->
+            <!--};-->
+
+            <!--return projection;-->
+        <!--}-->
+
+        <!--// Reposition the SVG to cover the features.-->
+        <!--function reset() {-->
+            <!--var bounds = path.bounds(collection),-->
+                <!--topLeft = bounds[0],-->
+                <!--bottomRight = bounds[1];-->
+
+            <!--svg .attr("width", bottomRight[0] - topLeft[0])-->
+                <!--.attr("height", bottomRight[1] - topLeft[1])-->
+                <!--.style("left", topLeft[0] + "px")-->
+                <!--.style("top", topLeft[1] + "px");-->
+
+            <!--g   .attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");-->
+
+            <!--feature.attr("d", path);-->
+        <!--}-->
+
+        <!--var clickChart = d3.selectAll("path").on("click", function(e) {-->
+            <!--console.log(e.properties.zip)-->
+            <!--console.log(projectr)-->
+        <!--})-->
+
+        <!--// Use Leaflet to implement a D3 geometric transformation.-->
+        <!--function projectPoint(x, y) {-->
+            <!--var point = map.latLngToLayerPoint(new L.LatLng(y, x));-->
+            <!--this.stream.point(point.x, point.y);-->
+        <!--}-->
+
+    <!--});-->
+
+
+<!--</script>-->
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script>
+    // set the dimensions and margins of the graph
+    var margin = { top: 10, right: 30, bottom: 30, left: 60 },
+        width = 460 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
 
-    // queue()
-    //     .defer(d3.json, "USA.json")
-    //     .defer(d3.csv, "mortality.csv", typeAndSet) // process
-    //     .await(loaded);
+    // append the svg object to the body of the page
+    var svg = d3
+        .select("#my_dataviz")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var map = new L.Map("map", {center: [41.83813, -87.72998], zoom: 11})
-        .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+    //Read the data
+    d3.csv(
+        "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/5_OneCatSevNumOrdered.csv",
+        function (data) {
+            // List of groups (here I have one group per column)
+            var allGroup = d3
+                .map(data, function (d) {
+                    console.log(d.name)
+                    return d.name;
+                })
+                .keys();
 
-    // map.dragging.disable();
-    map.touchZoom.disable();
-    map.doubleClickZoom.disable();
-    map.scrollWheelZoom.disable();
-    map.boxZoom.disable();
-    map.keyboard.disable();
+            // add the options to the button
+            d3.select("#selectButton")
+                .selectAll("myOptions")
+                .data(allGroup)
+                .enter()
+                .append("option")
+                .text(function (d) {
+                    return d;
+                }) // text showed in the menu
+                .attr("value", function (d) {
+                    return d;
+                }); // corresponding value returned by the button
 
-    // var tip = d3.tip()
-    //     .attr('class', 'd3-tip')
-    //     .offset([-5, 0])
-    //     .html(function (d) {
-    //         var dataRow = countryById.get(d.properties.name);
-    //         if (dataRow) {
-    //             console.log(dataRow);
-    //             return dataRow.states + ": " + dataRow.mortality;
-    //         } else {
-    //             console.log("no dataRow", d);
-    //             return d.properties.name + ": No data.";
-    //         }
-    //     })
+            // A color scale: one color for each group
+            var myColor = d3.scaleOrdinal().domain(allGroup).range(d3.schemeSet2);
 
-    var svg = d3.select(map.getPanes().overlayPane).append("svg"),
-        g = svg.append("g").attr("class", "leaflet-zoom-hide");
+            // Add X axis --> it is a date format
+            var x = d3
+                .scaleLinear()
+                .domain(
+                    d3.extent(data, function (d) {
+                        return d.year;
+                    })
+                )
+                .range([0, width]);
+            svg
+                .append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x).ticks(7));
 
-    var labels = svg.append("svg:g")
-        .attr("id", "labels")
-        .attr("class", "Title");
-    var projectr = d3.geo.albersUsa();
+            // Add Y axis
+            var y = d3
+                .scaleLinear()
+                .domain([
+                    0,
+                    d3.max(data, function (d) {
+                        return +d.n;
+                    })
+                ])
+                .range([height, 0]);
+            svg.append("g").call(d3.axisLeft(y));
 
+            // Initialize line with first group of the list
+            var line = svg
+                .append("g")
+                .append("path")
+                .datum(
+                    data.filter(function (d) {
+                        return d.name == allGroup[0];
+                    })
+                )
+                .attr(
+                    "d",
+                    d3
+                        .line()
+                        .x(function (d) {
+                            return x(d.year);
+                        })
+                        .y(function (d) {
+                            return y(+d.n);
+                        })
+                )
+                .attr("stroke", function (d) {
+                    return myColor("valueA");
+                })
+                .style("stroke-width", 4)
+                .style("fill", "none");
 
-    // svg.call(tip);
+            // A function that update the chart
+            function update(selectedGroup) {
+                // Create new data with the selection?
+                var dataFilter = data.filter(function (d) {
+                    return d.name == selectedGroup;
+                });
 
-    d3.json("{% static 'Boundaries - ZIP Codes.geojson' %}", function(error, collection) {
-        if (error) throw error;
+                // Give these new data to update line
+                line
+                    .datum(dataFilter)
+                    .transition()
+                    .duration(1000)
+                    .attr(
+                        "d",
+                        d3
+                            .line()
+                            .x(function (d) {
+                                return x(d.year);
+                            })
+                            .y(function (d) {
+                                return y(+d.n);
+                            })
+                    )
+                    .attr("stroke", function (d) {
+                        return myColor(selectedGroup);
+                    });
+            }
 
-        var transform = d3.geo.transform({point: projectPoint}),
-            path = d3.geo.path().projection(transform);
-
-        var feature = g.selectAll("path")
-            .data(collection.features)
-            .enter().append("path");
-
-
-
-        map.on("viewreset", reset);
-        reset();
-
-        // labels.selectAll("text")
-        //     .data(collection.features)
-        //     .enter().append("svg:text")
-        //     .text(function(d){return d.properties.zip;})
-        //     .attr("x", function(d){return projectr(d.geometry.coordinates)[0];})
-        //     .attr("y", function(d){return projectr(d.geometry.coordinates)[1];})
-        //     .attr("dx", "-1em");
-
-        function albersRaw(φ0, φ1) {
-            return function(λ, φ) {
-                return [
-                    /* compute x here */,
-                    /* compute y here */
-                ];
-            };
+            // When the button is changed, run the updateChart function
+            d3.select("#selectButton").on("change", function (d) {
+                // recover the option that has been chosen
+                var selectedOption = d3.select(this).property("value");
+                console.log(selectedOption);
+                // run the updateChart function with this selected option
+                update(selectedOption);
+            });
         }
-
-        function albers() {
-            var φ0 = 29.5,
-                φ1 = 45.5,
-                mutate = d3.geo.projectionMutator(albersRaw),
-                projection = mutate(φ0, φ1);
-
-            projection.parallels = function(_) {
-                if (!arguments.length) return [φ0, φ1];
-                return mutate(φ0 = +_[0], φ1 = +_[1]);
-            };
-
-            return projection;
-        }
-
-        // Reposition the SVG to cover the features.
-        function reset() {
-            var bounds = path.bounds(collection),
-                topLeft = bounds[0],
-                bottomRight = bounds[1];
-
-            svg .attr("width", bottomRight[0] - topLeft[0])
-                .attr("height", bottomRight[1] - topLeft[1])
-                .style("left", topLeft[0] + "px")
-                .style("top", topLeft[1] + "px");
-
-            g   .attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
-
-            feature.attr("d", path);
-        }
-
-        var clickChart = d3.selectAll("path").on("click", function(e) {
-            console.log(e.properties.zip)
-            console.log(projectr)
-        })
-
-        // Use Leaflet to implement a D3 geometric transformation.
-        function projectPoint(x, y) {
-            var point = map.latLngToLayerPoint(new L.LatLng(y, x));
-            this.stream.point(point.x, point.y);
-        }
-
-    });
-
+    );
 
 </script>
 
 
 <style>
 
-    @import url(//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.css);
+    /*@import url(//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.css);*/
 
-    #map {
-        width: 640px;
-        height: 760px;
-    }
+    /*#map {*/
+        /*width: 640px;*/
+        /*height: 760px;*/
+    /*}*/
 
-    svg {
-        position: relative;
-    }
+    /*svg {*/
+        /*position: relative;*/
+    /*}*/
 
-    path {
-        fill: #000;
-        fill-opacity: .2;
-        stroke: #fff;
-        stroke-width: 1.5px;
-    }
+    /*path {*/
+        /*fill: #000;*/
+        /*fill-opacity: .2;*/
+        /*stroke: #fff;*/
+        /*stroke-width: 1.5px;*/
+    /*}*/
 
-    path:hover {
-        fill: brown;
-        fill-opacity: .7;
-    }
+    /*path:hover {*/
+        /*fill: brown;*/
+        /*fill-opacity: .7;*/
+    /*}*/
 
-    .d3-tip {
-        line-height: 1;
-        padding: 12px;
-        background: rgba(43,43,43, 0.8);
-        color: #fff;
-        border-radius: 2px;
-    }
+    /*.d3-tip {*/
+        /*line-height: 1;*/
+        /*padding: 12px;*/
+        /*background: rgba(43,43,43, 0.8);*/
+        /*color: #fff;*/
+        /*border-radius: 2px;*/
+    /*}*/
 
 </style>
