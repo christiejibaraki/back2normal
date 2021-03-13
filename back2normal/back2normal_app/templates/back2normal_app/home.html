@@ -26,6 +26,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.js"></script>
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+    <script type="text/javascript" src="static/demographic_data.js"></script>
+
 </head>
 
 <body>
@@ -117,7 +120,9 @@
 
 <script>
 
-    var 	formatAsPercentage = d3.format("%"),
+    console.log(demographic_data)
+
+    var formatAsPercentage = d3.format("%"),
         formatAsPercentage1Dec = d3.format(".1%"),
         formatAsInteger = d3.format(","),
         fsec = d3.time.format("%S s"),
