@@ -4,8 +4,8 @@
 <head>
 
     <!--<meta-->
-            <!--name="viewport"-->
-            <!--content="initial-scale=1,maximum-scale=1,user-scalable=no"-->
+    <!--name="viewport"-->
+    <!--content="initial-scale=1,maximum-scale=1,user-scalable=no"-->
     <!--/>-->
 
     <title>back2normal</title>
@@ -47,7 +47,7 @@
     <div id="about">About</div>
 </div>
 <!--<div class="map">-->
-    <!--{{div | safe}}-->
+<!--{{div | safe}}-->
 <!--</div>-->
 
 <p id="map" class="leaflet-container leaflet-retina leaflet-fade-anim" tabindex="0" style="position: relative;">
@@ -114,13 +114,13 @@
         map.on("viewreset", reset);
         reset();
 
-        labels.selectAll("text")
-            .data(collection.features)
-            .enter().append("svg:text")
-            .text(function(d){return d.properties.zip;})
-            .attr("x", function(d){return projectr(d.geometry.coordinates)[0];})
-            .attr("y", function(d){return projectr(d.geometry.coordinates)[1];})
-            .attr("dx", "-1em");
+        // labels.selectAll("text")
+        //     .data(collection.features)
+        //     .enter().append("svg:text")
+        //     .text(function(d){return d.properties.zip;})
+        //     .attr("x", function(d){return projectr(d.geometry.coordinates)[0];})
+        //     .attr("y", function(d){return projectr(d.geometry.coordinates)[1];})
+        //     .attr("dx", "-1em");
 
         function albersRaw(φ0, φ1) {
             return function(λ, φ) {
