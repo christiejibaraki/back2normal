@@ -103,7 +103,7 @@
 
         var clickChart = d3.selectAll("path").on("click", function(e) {
             console.log(e.properties.zip)
-            updateBarChart("Rick", 1)
+            updateBarChart(String(e.properties.zip), 1)
 
         })
 
@@ -119,8 +119,6 @@
 </script>
 
 <script>
-
-    console.log(demographic_data)
 
     var formatAsPercentage = d3.format("%"),
         formatAsPercentage1Dec = d3.format(".1%"),
@@ -176,14 +174,19 @@
             { group: "Steve", category: "Figs", measure: 2328.93745 },
             { group: "Steve", category: "Mangos", measure: 1822.6467 },
         ]
+
+        var datasetBarChart = demographic_data
     ;
 
-    var group = "All";
+    var group = "60637";
 
     function datasetBarChosen(group) {
         var ds = [];
         for (x in datasetBarChart) {
-            if(datasetBarChart[x].group==group){
+            console.log(datasetBarChart[x])
+            console.log(datasetBarChart[x].ZIPCODE)
+
+            if(datasetBarChart[x].ZIPCODE==group){
                 ds.push(datasetBarChart[x]);
             }
         }
@@ -233,7 +236,7 @@
         var yScale = d3.scale.linear()
             // use the max funtion to derive end point of the domain (max value of the dataset)
             // do not use the min value of the dataset as min of the domain as otherwise you will not see the first bar
-                .domain([0, d3.max(firstDatasetBarChart, function(d) { return d.measure; })])
+                .domain([0, d3.max(firstDatasetBarChart, function(d) { return d.fam_size; })])
                 // As coordinates are always defined from the top left corner, the y position of the bar
                 // is the svg height minus the data value. So you basically draw the bar starting from the top.
                 // To have the y position calculated by the range function
@@ -263,10 +266,10 @@
             })
             .attr("width", width / firstDatasetBarChart.length - barPadding)
             .attr("y", function(d) {
-                return yScale(d.measure);
+                return yScale(d.fam_size);
             })
             .attr("height", function(d) {
-                return height-yScale(d.measure);
+                return height-yScale(d.fam_size);
             })
             .attr("fill", "lightgrey")
         ;
@@ -279,7 +282,7 @@
             .enter()
             .append("text")
             .text(function(d) {
-                return formatAsInteger(d3.round(d.measure));
+                return formatAsInteger(d3.round(d.fam_size));
             })
             .attr("text-anchor", "middle")
             // Set x position to the left edge of each bar plus half the bar width
@@ -287,7 +290,7 @@
                 return (i * (width / firstDatasetBarChart.length)) + ((width / firstDatasetBarChart.length - barPadding) / 2);
             })
             .attr("y", function(d) {
-                return yScale(d.measure) + 14;
+                return yScale(d.fam_size) + 14;
             })
             .attr("class", "yAxis")
         /* moved to CSS
@@ -308,7 +311,7 @@
             .data(firstDatasetBarChart)
             .enter()
             .append("text")
-            .text(function(d) { return d.category;})
+            .text(function(d) { return 'ANYTHING';})
             .attr("text-anchor", "middle")
             // Set x position to the left edge of each bar plus half the bar width
             .attr("x", function(d, i) {
@@ -334,7 +337,11 @@
 
     function updateBarChart(group, colorChosen) {
 
+        console.log(group)
+        console.log(typeof(group))
+
         var currentDatasetBarChart = datasetBarChosen(group);
+        console.log(currentDatasetBarChart)
 
         var basics = dsBarChartBasics();
 
@@ -352,7 +359,7 @@
 
 
         var yScale = d3.scale.linear()
-            .domain([0, d3.max(currentDatasetBarChart, function(d) { return d.measure; })])
+            .domain([0, d3.max(currentDatasetBarChart, function(d) { return d.fam_size; })])
             .range([height,0])
         ;
 
@@ -372,10 +379,10 @@
             })
             .attr("width", width / currentDatasetBarChart.length - barPadding)
             .attr("y", function(d) {
-                return yScale(d.measure);
+                return yScale(d.fam_size);
             })
             .attr("height", function(d) {
-                return height-yScale(d.measure);
+                return height-yScale(d.fam_size);
             })
             .attr("fill", colorChosen)
         ;
@@ -389,10 +396,10 @@
                 return (i * (width / currentDatasetBarChart.length)) + ((width / currentDatasetBarChart.length - barPadding) / 2);
             })
             .attr("y", function(d) {
-                return yScale(d.measure) + 14;
+                return yScale(d.fam_size) + 14;
             })
             .text(function(d) {
-                return formatAsInteger(d3.round(d.measure));
+                return formatAsInteger(d3.round(d.fam_size));
             })
             .attr("class", "yAxis")
         ;
