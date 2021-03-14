@@ -50,6 +50,8 @@ d3.json("static/Boundaries - ZIP Codes.geojson", function (error, collection) {
 
         document.getElementById("rightzip").innerHTML = "ZIP Code: " + e.properties.zip;
         document.getElementById("righttitle").innerHTML = neighborhood_lookup[e.properties.zip];
+        document.getElementById("rightdash").style.display = "contents";
+        document.getElementById("rightabout").style.display = "none";
         updatePieChart(e.properties.zip)
         updateBarChart(String(e.properties.zip), 1)
 

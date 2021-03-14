@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Audiowide|Rajdhani" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <link href=”http://cdn.pydata.org/bokeh/release/bokeh-1.0.4.min.css" rel=”stylesheet” type=”text/css”>
     <link href=”http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.0.4.min.css" rel=”stylesheet” type=”text/css”>
 
@@ -23,27 +24,39 @@
     <div id="leftmap">
         <div id="lefttitle">back2normal</div>
         <!-- Navigation Bar -->
-        <div id="navbar">
-            <div id="dash">Dashboard</div>
-            <div id="about">About</div>
-        </div>
+        <!--<div id="navbar">-->
+        <!--<div id="dash">Dashboard</div>-->
+        <!--<div id="about">About</div>-->
+        <!--</div>-->
         <div id="map" class="leaflet-container leaflet-retina leaflet-fade-anim" tabindex="0"
              style="position: relative;"></div>
     </div>
 
     <div id="rightcol">
         <div>
-            <div id="rightzip">City of Chicago</div>
-            <div id="righttitle"></div>
+            <div id="rightzip">About</div>
+            <div id="righttitle"><b>by theteam</b> cole frank, christie ibaraki, shai slotky</div>
         </div>
+
         <div id="rightdash">
             <div class="chart_row">
                 <div id="pieChart"></div>
                 <div id="barChart"></div>
             </div>
         </div>
-    </div>
 
+        <div id="rightabout">
+            <div class="chart_row">
+                <p>
+                <br>Covid and social distancing have altered the lives of Chicagoans in many ways.
+                    Using data from a range of sources, we visualize some of those changes, at the zipcode-level, over the course of the pandemic,
+                    with a focus on the ways in which daily activities have and have not begun to return to their pre-pandemic forms.</br>
+                    <br><b>Explore the data by selecting a ZIP Code region in the map.</b></br>
+                </p>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 <!--<script src="https://code.jquery.com/jquery-3.5.0.js"></script>-->
