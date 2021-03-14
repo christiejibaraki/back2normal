@@ -1,4 +1,5 @@
-var label_lookup = {"unemploy_rate" : "Unemployed",
+var label_lookup = {
+    "unemploy_rate": "Unemployed",
     "pct_below_poverty_lvl": "In poverty",
     "pct_65_or_older": "Age >= 65",
     "pct_w_health_insur": "w/ health insurance"
@@ -124,7 +125,7 @@ function dsBarChart() {
         .enter()
         .append("text")
         .text(function (d) {
-            return formatAsPercentage1Dec(d.VALUE/100);
+            return formatAsPercentage1Dec(d.VALUE / 100);
         })
         .attr("text-anchor", "middle")
         // Set x position to the left edge of each bar plus half the bar width
@@ -241,7 +242,7 @@ function updateBarChart(group, colorChosen) {
             return yScale(d.VALUE) + 14;
         })
         .text(function (d) {
-            return formatAsPercentage1Dec(d.VALUE/100);
+            return formatAsPercentage1Dec(d.VALUE / 100);
         })
         .attr("class", "yAxis")
     ;
