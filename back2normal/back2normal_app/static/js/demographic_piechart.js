@@ -28,8 +28,8 @@ function datasetPieChosen(group) {
 
 function dsPieChartBasics() {
 
-    var width = 400,
-        height = 400,
+    var width = 300,
+        height = 300,
         outerRadius = Math.min(width, height) / 2,
         innerRadius = outerRadius * .999,
         // for animation
