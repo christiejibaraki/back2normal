@@ -8,7 +8,9 @@
     <!--content="initial-scale=1,maximum-scale=1,user-scalable=no"-->
     <!--/>-->
     <title>back2normal</title>
+    <meta charset="UTF-8">
     <link href="{% static 'css/back2normal_app.css' %}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Audiowide|Rajdhani" rel="stylesheet">
     <link href=”http://cdn.pydata.org/bokeh/release/bokeh-1.0.4.min.css" rel=”stylesheet” type=”text/css”>
@@ -17,26 +19,29 @@
 </head>
 
 <body>
-<div class="title">back2normal</div>
-<!-- Navigation Bar -->
-<div id="navbar">
-    <div id="dash">Dashboard</div>
-    <div id="about">About</div>
-</div>
-
-<div id="main" class="float-container">
-
-    <div class="float-child">
+<div class="container">
+    <div id="leftmap">
+        <div id="lefttitle">back2normal</div>
+        <!-- Navigation Bar -->
+        <div id="navbar">
+            <div id="dash">Dashboard</div>
+            <div id="about">About</div>
+        </div>
         <div id="map" class="leaflet-container leaflet-retina leaflet-fade-anim" tabindex="0"
              style="position: relative;"></div>
     </div>
 
-    <div class="float-child">
-        <div id="pieChart"></div>
-        <div id="barChart"></div>
+    <div id="rightcol">
+        <div id="righttitle">HELLO</div>
+        <div id="rightdash">
+            <div class="chart_row">
+                <div id="pieChart"></div>
+                <div id="barChart"></div>
+            </div>
+        </div>
     </div>
-</div>
 
+</div>
 
 <!--<script src="https://code.jquery.com/jquery-3.5.0.js"></script>-->
 <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js"></script>

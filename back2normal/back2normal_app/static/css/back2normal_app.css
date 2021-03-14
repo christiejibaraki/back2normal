@@ -1,14 +1,64 @@
-.title {
-  font-family: 'Cutive Mono', monospace;
-  font-size: 70px;
-  padding-bottom: 5px;
-  padding-left: 10px;
+* {
+    box-sizing: border-box;
 }
 
-.main{
-  background-color: #deeaee;
-  padding: 10px 10px 10px 7.5px;
+html, body {
+    margin: 0;
+}
 
+/* main container */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 40%;
+    height: 100%;
+    overflow-y: hidden;
+    /*background-color: #23233f;*/
+}
+
+#leftmap {
+    flex: 40%;
+    /*flex-wrap: wrap;*/
+    /*max-width: 40%;*/
+    /*background-color: #23233f;*/
+    padding: 20px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#rightcol {
+    flex: 60%;
+    background-color: #fafafa;
+    padding: 20px;
+    overflow-y: hidden;
+}
+
+#rightdash {
+    height: 90%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.chart_row {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: white;
+}
+
+#lefttitle {
+    font-family: 'Cutive Mono', monospace;
+    font-size: 70px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    position: relative;
 }
 
 #navbar {
@@ -16,6 +66,8 @@
     background-color: #fafafa;
     flex-wrap: wrap;
     height: 5%;
+    position: relative;
+    width: 640px
 }
 
 #dash {
@@ -47,15 +99,13 @@
 
 }
 
-.float-container {
-    /*border: 3px solid #fff;*/
-    padding: 10px;
-
-}
-
-.float-child {
-    width: 45%;
-    float: left;
-    padding: 20px;
-
+#righttitle {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 70px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    position: relative;
+    background: #708090;
+    text-align: right;
+    padding-right: 30px;
 }
