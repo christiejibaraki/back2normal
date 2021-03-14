@@ -99,13 +99,25 @@ html, body {
 
 }
 
-#righttitle {
+#rightzip {
     font-family: 'Rajdhani', sans-serif;
-    font-size: 70px;
-    padding-bottom: 5px;
+    font-size: 50px;
+    color: #001a33;
     padding-left: 10px;
     position: relative;
     background: #708090;
+    text-align: right;
+    padding-right: 30px;
+}
+
+#righttitle {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 18px;
+    color: #001a33;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    position: relative;
+    background: #8c99a6;
     text-align: right;
     padding-right: 30px;
 }

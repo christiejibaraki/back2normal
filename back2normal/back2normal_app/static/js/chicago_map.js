@@ -47,7 +47,9 @@ d3.json("static/Boundaries - ZIP Codes.geojson", function (error, collection) {
     }
 
     var clickChart = d3.selectAll("path").on("click", function (e) {
-        console.log(e.properties.zip)
+
+        document.getElementById("rightzip").innerHTML = "ZIP Code: " + e.properties.zip;
+        document.getElementById("righttitle").innerHTML = neighborhood_lookup[e.properties.zip];
         updatePieChart(e.properties.zip)
         updateBarChart(String(e.properties.zip), 1)
 
