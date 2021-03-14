@@ -1,22 +1,24 @@
-var map = new L.Map("map", {center: [41.83813, -87.72998], zoom: 11})
-    .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
-
-// turn off map zoom
-map.touchZoom.disable();
-map.doubleClickZoom.disable();
-map.scrollWheelZoom.disable();
-map.boxZoom.disable();
-map.keyboard.disable();
-
-var svg = d3.select(map.getPanes().overlayPane).append("svg"),
-    g = svg.append("g").attr("class", "leaflet-zoom-hide");
-
-var labels = svg.append("svg:g")
-    .attr("id", "labels")
-    .attr("class", "Title");
 
 d3.json("static/Boundaries - ZIP Codes.geojson", function (error, collection) {
     if (error) throw error;
+
+    var map = new L.Map("map", {center: [41.83813, -87.72998], zoom: 11})
+        .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+
+    // turn off map zoom
+    map.touchZoom.disable();
+    map.doubleClickZoom.disable();
+    map.scrollWheelZoom.disable();
+    map.boxZoom.disable();
+    map.keyboard.disable();
+
+    var svg = d3.select(map.getPanes().overlayPane).append("svg"),
+        g = svg.append("g").attr("class", "leaflet-zoom-hide");
+
+    var labels = svg.append("svg:g")
+        .attr("id", "labels")
+        .attr("class", "Title");
+
 
     var transform = d3.geo.transform({point: projectPoint}),
         path = d3.geo.path().projection(transform);
