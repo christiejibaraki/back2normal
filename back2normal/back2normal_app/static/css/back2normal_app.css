@@ -6,43 +6,47 @@ html, body {
     margin: 0;
     font-family: 'Lato', sans-serif;
     font-size: 20px;
+    height: 100%;
+    overflow: hidden;
 }
 
 /* main container */
 .container {
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
-    flex: 40%;
-    height: 100%;
     overflow-y: hidden;
-    /*background-color: #23233f;*/
 }
 
 #leftmap {
     flex: 40%;
-    /*flex-wrap: wrap;*/
-    /*max-width: 40%;*/
-    /*background-color: #23233f;*/
     padding: 20px;
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow-x: hidden;
+    height: 100%;
+
 }
 
 #rightcol {
-    flex: 60%;
+    height: 100%;
     background-color: #fafafa;
+    flex: 60%;
     padding: 20px;
-    overflow-y: hidden;
+    display: block;
 }
+
+#rightheader{
+    height: 10%;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
 
 #rightdash {
     height: 90%;
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
     overflow-y: scroll;
-    overflow-x: hidden;
     display: none;
 }
 
@@ -56,6 +60,7 @@ html, body {
     overflow-x: hidden;
     display: contents;
     text-align: right;
+    position: relative;
 }
 
 #rightabout p {
@@ -64,12 +69,20 @@ html, body {
 }
 
 .chart_row {
-    /* height: 100%; */
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    /*align-items: center;*/
+    background-color: white;
+    padding-top: 100px;
+}
+
+.about_row {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    height: 90%;
     background-color: white;
     padding-top: 100px;
 }
@@ -141,4 +154,24 @@ html, body {
     background: #8c99a6;
     text-align: right;
     padding-right: 30px;
+}
+
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #e6e6e6;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #feb236;
 }
