@@ -136,11 +136,6 @@ function dsBarChart() {
             return yScale(d.VALUE) + 14;
         })
         .attr("class", "yAxis")
-    /* moved to CSS
-    .attr("font-family", "sans-serif")
-    .attr("font-size", "11px")
-    .attr("fill", "white")
-    */
     ;
 
     // Add x labels to chart
@@ -189,9 +184,12 @@ function updateBarChart(group, colorChosen) {
     var margin = basics.margin,
         width = basics.width,
         height = basics.height,
-        colorBar = basics.colorBar,
         barPadding = basics.barPadding
     ;
+
+    var color = d3.scaleOrdinal()
+        .domain(data)
+        .range(d3.schemeSet3);
 
     var xScale = d3.scale.linear()
         .domain([0, currentDatasetBarChart.length])
@@ -212,6 +210,8 @@ function updateBarChart(group, colorChosen) {
         .datum(currentDatasetBarChart)
     ;
 
+    console.log(color)
+
     /* Note that here we only have to select the elements - no more appending! */
     plot.selectAll("rect")
         .data(currentDatasetBarChart)
@@ -227,7 +227,7 @@ function updateBarChart(group, colorChosen) {
         .attr("height", function (d) {
             return height - yScale(d.VALUE);
         })
-        .attr("fill", colorChosen)
+        .attr("fill", function(d,i){return color(i)})
     ;
 
     plot.selectAll("text.yAxis") // target the text element(s) which has a yAxis class defined
@@ -253,6 +253,6 @@ function updateBarChart(group, colorChosen) {
         .attr("y", 15)
         .attr("class", "chart_title")
         .attr("text-anchor", "middle")
-        .text(group + " Demographic Data")
+        .text("Demographic Data")
     ;
 }
