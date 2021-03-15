@@ -74,7 +74,9 @@ html, body {
     flex-wrap: wrap;
     justify-content: flex-start;
     background-color: white;
-    padding-top: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
 }
 
 .about_row {
