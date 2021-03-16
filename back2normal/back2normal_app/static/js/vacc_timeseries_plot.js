@@ -101,7 +101,10 @@ svg.selectAll(".line")
       .attr("stroke-width", 1.5)
       .attr("d", function(d){
         return d3.line()
-          .xScale(function(d) { return xScale(d.STD_DATE); })
+            .x(function(d) {
+                return xScale(d.STD_DATE);
+            })
+          // .xScale(function(d) { return xScale(d.STD_DATE); })
           .y(function(d) { return y(+d.AVG7DAY_total_doses_daily); })
           (d.values)
       })
