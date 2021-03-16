@@ -13,7 +13,7 @@ d3.json("static/Boundaries - ZIP Codes.geojson", function (error, collection) {
     map.scrollWheelZoom.disable();
     map.boxZoom.disable();
     map.keyboard.disable();
-    map.removeControl(map.zoomControl);
+    // map.removeControl(map.zoomControl);
 
     var svg = d3.select(map.getPanes().overlayPane).append("svg"),
         g = svg.append("g").attr("class", "leaflet-zoom-hide");
@@ -30,13 +30,13 @@ d3.json("static/Boundaries - ZIP Codes.geojson", function (error, collection) {
         .enter().append("path");
 
 
-    labels.selectAll("text")
-        .data(collection.features)
-        .enter().append("svg:text")
-        .text(function(d){return d.properties.zip;})
-        .attr("x", function(d){return path.centroid(d)[0]-10;})
-        .attr("y", function(d){return path.centroid(d)[1]-20;})
-        .attr("text-anchor", "middle")
+    // labels.selectAll("text")
+    //     .data(collection.features)
+    //     .enter().append("svg:text")
+    //     .text(function(d){return d.properties.zip;})
+    //     .attr("x", function(d){return path.centroid(d)[0]-10;})
+    //     .attr("y", function(d){return path.centroid(d)[1]-20;})
+    //     .attr("text-anchor", "middle")
 
     map.on("viewreset", reset);
     reset();
