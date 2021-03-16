@@ -1,6 +1,3 @@
-
-
-
 d3.json("static/Boundaries - ZIP Codes.geojson", function (error, collection) {
     if (error) throw error;
 
@@ -29,15 +26,6 @@ d3.json("static/Boundaries - ZIP Codes.geojson", function (error, collection) {
         .data(collection.features)
         .enter().append("path");
 
-
-    // labels.selectAll("text")
-    //     .data(collection.features)
-    //     .enter().append("svg:text")
-    //     .text(function(d){return d.properties.zip;})
-    //     .attr("x", function(d){return path.centroid(d)[0]-10;})
-    //     .attr("y", function(d){return path.centroid(d)[1]-20;})
-    //     .attr("text-anchor", "middle")
-
     map.on("viewreset", reset);
     reset();
 
@@ -65,7 +53,7 @@ d3.json("static/Boundaries - ZIP Codes.geojson", function (error, collection) {
         document.getElementById("rightdash").style.overflowY = "scroll";
         document.getElementById("rightabout").style.display = "none";
         updatePieChart(e.properties.zip)
-        updateBarChart(String(e.properties.zip), 1)
+        updateBarChart(e.properties.zip, 1)
         scatter(e.properties.zip)
     })
 
