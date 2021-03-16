@@ -134,16 +134,6 @@ function dsPieChart() {
         return a > 90 ? a - 180 : a;
     }
 
-
-    // // Pie chart title
-    // vis.append("svg:text")
-    //     .attr("dy", ".35em")
-    //     .attr("text-anchor", "middle")
-    //     .text("Revenue Share 2012")
-    //     .attr("class","title")
-    // ;
-
-
     function mouseover() {
         d3.select(this).select("path").transition()
             .duration(750)
@@ -249,21 +239,9 @@ function updatePieChart(group) {
         return a > 90 ? a - 180 : a;
     }
 
-
-    // // Pie chart title
-    // vis.append("svg:text")
-    //     .attr("dy", ".35em")
-    //     .attr("text-anchor", "middle")
-    //     .text("Revenue Share 2012")
-    //     .attr("class","title")
-    // ;
-
-
     function mouseover() {
         d3.select(this).select("path").transition()
             .duration(750)
-            //.attr("stroke","red")
-            //.attr("stroke-width", 1.5)
             .attr("d", arcFinal3)
         ;
     }
@@ -271,8 +249,6 @@ function updatePieChart(group) {
     function mouseout() {
         d3.select(this).select("path").transition()
             .duration(750)
-            //.attr("stroke","blue")
-            //.attr("stroke-width", 1.5)
             .attr("d", arcFinal)
         ;
     }
