@@ -28,16 +28,11 @@ const parse = d3.timeParse("%Y-%m-%d");
 
 const parse4 = d3.timeParse("%Y-%m-%d %H:%M:%S")
 
-//test if new parse works
-// data4.forEach((element) => {
-//     console.log("pre", element.STD_DATE, "is", typeof(element.STD_DATE));
-//     console.log('post parse', parse4(element.STD_DATE), "is", typeof(parse4(element.STD_DATE)));
-// });
-
 //rename columns of data 4
 data4 = data4.map((datum) =>{
     datum.date = parse4(datum.STD_DATE);
     datum.value = datum.AVG7DAY_total_doses_daily
+    datum.value2 = 1000 //datum.total_doses_daily
     return datum
 })
 
@@ -45,7 +40,7 @@ data4 = data4.map((datum) =>{
 function filterNaNs(dataset) {
     var filtered_data = [];
     for (x in dataset) {
-        if (dataset[x].value == dataset[x].value) {
+        if ((dataset[x].value == dataset[x].value) && (dataset[x].value2 == dataset[x].value2)) {
             filtered_data.push(dataset[x]);
         }
     }
@@ -71,7 +66,7 @@ function filterOnZip(selected_ZIP) {
 var xAxisScale = d3
     .scaleTime()
     .domain(
-        d3.extent(data4, function (d) { //replaced data3 with data4
+        d3.extent(data4, function (d) {
             return d.date;
         })
     )
@@ -88,8 +83,8 @@ var yAxisScale = d3
     .scaleLinear()
     .domain([
         0,
-        d3.max(data4, function (d) { //replaced data3 with data4
-            return +d.value;
+        d3.max(data4, function (d) {
+            return Math.max(d.value, d.value2);
         })
     ])
     .range([height, 0]);
@@ -147,7 +142,7 @@ function scatter(selected_ZIP) {
                     return xAxisScale(d.date);
                 })
                 .y(function (d) {
-                    return yAxisScale(d.value+505);
+                    return yAxisScale(d.value2);
                 })
         )
         .style("stroke", ranCol);
