@@ -33,12 +33,29 @@ var data = vacc_records
 // handle the date
 function datehandle(dataset){
     dataset.forEach(function(d){
-        console.log(d.STD_DATE, typeof(d.STD_DATE))
+        // console.log(d.STD_DATE, typeof(d.STD_DATE))
         d.STD_DATE = parseDate(d.STD_DATE);
-        console.log(d.STD_DATE, typeof(d.STD_DATE))
+        // console.log(d.STD_DATE, typeof(d.STD_DATE))
     });
 };
 datehandle(data)
+
+// filter data
+var group = "60605";
+
+function datasetVaccLineChosen(group) {
+    var ds = [];
+    for (x in data) {
+
+        if (data[x].ZIPCODE == group && data[x].AVG7DAY_total_doses_daily == data[x].AVG7DAY_total_doses_daily) {
+            console.log(data[x])
+            ds.push(data[x]);
+        }
+    }
+    return ds;
+}
+
+data = datasetVaccLineChosen(group)
 
 // group the data: I want to draw one line per group
 function datafunc(d){
