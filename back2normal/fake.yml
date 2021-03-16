@@ -1,0 +1,18 @@
+name: back2normal222
+channels:
+  - defaults
+dependencies:
+  - ca-certificates=2021.1.19
+  - certifi=2020.6.20
+  - libcxx=10.0.0
+  - libffi=3.3
+  - ncurses=6.2
+  - pip=19.3.1
+  - python=2.7.18
+  - readline=8.1
+  - setuptools=44.0.0
+  - sqlite=3.35.0
+  - tk=8.6.10
+  - wheel=0.36.2
+  - zlib=1.2.11
+prefix: /anaconda3/envs/back2normal222
