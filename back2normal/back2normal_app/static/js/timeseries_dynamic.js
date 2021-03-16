@@ -32,13 +32,6 @@ data4.forEach((element) => {
     console.log("pre", element.STD_DATE, "is", typeof(element.STD_DATE));
     console.log('post parse', parse4(element.STD_DATE), "is", typeof(parse4(element.STD_DATE)));
 });
-//DATA is already parsed ?
-// data manipulation first
-data4 = data4.map((datum) => {
-    datum.date = parse(datum.date);
-    //console.log("datum.date is", datum.date, "with type", typeof(datum.date))
-    return datum;
-});
 
 //rename columns of data 4
 data4 = data4.map((datum) =>{
