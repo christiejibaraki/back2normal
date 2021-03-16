@@ -27,15 +27,16 @@ var svg4 = svg
 const parse = d3.timeParse("%Y-%m-%d");
 
 const parse4 = d3.timeParse("%Y-%m-%d %H:%M:%S")
+
 //test if new parse works
-data4.forEach((element) => {
-    console.log("pre", element.STD_DATE, "is", typeof(element.STD_DATE));
-    console.log('post parse', parse4(element.STD_DATE), "is", typeof(parse4(element.STD_DATE)));
-});
+// data4.forEach((element) => {
+//     console.log("pre", element.STD_DATE, "is", typeof(element.STD_DATE));
+//     console.log('post parse', parse4(element.STD_DATE), "is", typeof(parse4(element.STD_DATE)));
+// });
 
 //rename columns of data 4
 data4 = data4.map((datum) =>{
-    datum.date = datum.STD_DATE;
+    datum.date = parse4(datum.STD_DATE);
     datum.value = datum.AVG7DAY_total_doses_daily
     return datum
 })
