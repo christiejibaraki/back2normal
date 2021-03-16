@@ -37,7 +37,6 @@ function datasetGroundTruthChosen(group) {
     for (x in data) {
         // this if statement filters on zipcode and filters out any rows with NaNs for AVG7DAY_RESTAURANT
         if (data[x].ZIPCODE == group && data[x].AVG7DAY_RESTAURANT == data[x].AVG7DAY_RESTAURANT) {
-            console.log(data[x])
             ds.push(data[x]);
         }
     }
