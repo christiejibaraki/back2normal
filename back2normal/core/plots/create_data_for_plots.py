@@ -24,3 +24,10 @@ def get_vaccine_data(output_file):
     vacc_df = pd.read_sql_query(query, db.conn)
     vacc_records = vacc_df.to_dict(orient='records')
     basic_io.write_dict_to_json(output_file, vacc_records)
+
+def get_groundtruth_data(output_file):
+    db = dbclient.DBClient()
+    query = f"select * from {build_db.FOOT_TRAFF_TBL}"
+    groundtruth_df = pd.read_sql_query(query, db.conn)
+    gt_records = groundtruth_df.to_dict(orient='records')
+    basic_io.write_dict_to_json(output_file, gt_records)
