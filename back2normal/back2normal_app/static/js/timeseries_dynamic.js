@@ -804,6 +804,8 @@ var data3 = [{
     }
 ];
 
+var data4 = vacc_records
+
 // set the dimensions and margins of the graph
 var margin = { top: 10, right: 30, bottom: 30, left: 60 },
     width = 860 - margin.left - margin.right,
@@ -829,17 +831,63 @@ var svg4 = svg
 // -------------------------------Data manipulation--------
 const parse = d3.timeParse("%Y-%m-%d");
 
+const parse4 = d3.timeParse("%Y-%m-%d %H:%M:%S")
+//test if new parse works
+data4.forEach((element) => {
+    console.log("pre", element.STD_DATE, "is", typeof(element.STD_DATE));
+    console.log('post parse', parse4(element.STD_DATE), "is", typeof(parse4(element.STD_DATE)));
+});
+//DATA is already parsed ?
 // data manipulation first
 data3 = data3.map((datum) => {
     datum.date = parse(datum.date);
+    //console.log("datum.date is", datum.date, "with type", typeof(datum.date))
     return datum;
 });
+
+//rename columns of data 4
+data4 = data4.map((datum) =>{
+    datum.date = datum.STD_DATE;
+    datum.value = datum.AVG7DAY_total_doses_daily
+    return datum
+})
+
+//filter out NaNs
+function filterNaNs(dataset) {
+    var filtered_data = [];
+    for (x in dataset) {
+        if (dataset[x].value == dataset[x].value) {
+            filtered_data.push(dataset[x]);
+        }
+    }
+    return filtered_data
+}
+
+data4 = filterNaNs(data4)
+
+//filter on zip function
+function filterOnZip(selected_ZIP) {
+    var filtered_data = [];
+    for (x in data4) {
+        if (data4[x].ZIPCODE == selected_ZIP) {
+            filtered_data.push(data4[x]);
+        }
+    }
+    return filtered_data
+}
+// test code for filterOnZip() function
+test_data = filterOnZip('60615')
+test_data.forEach((element) => {
+    console.log(element);
+});
+
+
 // -------------------------------Data manipulation ends--------
 // Add X axis --> it is a date format
 var xP = d3
     .scaleTime()
     .domain(
-        d3.extent(data3, function (d) {
+        d3.extent(data4, function (d) { //replaced data3 with data4
             return d.date;
         })
     )
@@ -856,7 +904,7 @@ var y = d3
     .scaleLinear()
     .domain([
         0,
-        d3.max(data3, function (d) {
+        d3.max(data4, function (d) { //replaced data3 with data4
             return +d.value;
         })
     ])
@@ -875,12 +923,14 @@ function getRandomColor() {
 }
 
 
-function scatter() {
+function scatter(selected_ZIP) {
+
+    subset_data = filterOnZip(selected_ZIP)
 
     ranCol = getRandomColor()
     svg4
         .append("path")
-        .datum(data3)
+        .datum(subset_data) //replaced data3 with data4
         .attr("fill", "none")
         .attr("stroke", "none")
         .attr("stroke-width", 2)
