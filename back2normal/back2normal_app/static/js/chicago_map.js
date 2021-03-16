@@ -66,7 +66,7 @@ d3.json("static/Boundaries - ZIP Codes.geojson", function (error, collection) {
         document.getElementById("rightabout").style.display = "none";
         updatePieChart(e.properties.zip)
         updateBarChart(String(e.properties.zip), 1)
-
+        scatter()
     })
 
     // Use Leaflet to implement a D3 geometric transformation.

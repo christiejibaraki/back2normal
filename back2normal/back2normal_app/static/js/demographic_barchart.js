@@ -210,8 +210,6 @@ function updateBarChart(group, colorChosen) {
         .datum(currentDatasetBarChart)
     ;
 
-    console.log(color)
-
     /* Note that here we only have to select the elements - no more appending! */
     plot.selectAll("rect")
         .data(currentDatasetBarChart)
