@@ -64,16 +64,11 @@ function filterOnZip(selected_ZIP) {
     }
     return filtered_data
 }
-// test code for filterOnZip() function
-test_data = filterOnZip('60615')
-test_data.forEach((element) => {
-    console.log(element);
-});
 
 
 // -------------------------------Data manipulation ends--------
 // Add X axis --> it is a date format
-var xP = d3
+var xAxisScale = d3
     .scaleTime()
     .domain(
         d3.extent(data4, function (d) { //replaced data3 with data4
@@ -86,10 +81,10 @@ svg
     .append("g")
     .attr("class", "myXaxis")
     .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(xP));
+    .call(d3.axisBottom(xAxisScale));
 
 // Add Y axis
-var y = d3
+var yAxisScale = d3
     .scaleLinear()
     .domain([
         0,
@@ -99,7 +94,7 @@ var y = d3
     ])
     .range([height, 0]);
 
-svg.append("g").call(d3.axisLeft(y));
+svg.append("g").call(d3.axisLeft(yAxisScale));
 
 
 function getRandomColor() {
@@ -130,10 +125,10 @@ function scatter(selected_ZIP) {
             d3
                 .line()
                 .x(function (d) {
-                    return xP(d.date);
+                    return xAxisScale(d.date);
                 })
                 .y(function (d) {
-                    return y(d.value);
+                    return yAxisScale(d.value);
                 })
         )
         .style("stroke", ranCol);
@@ -143,10 +138,6 @@ function scatter(selected_ZIP) {
         .transition()
         .duration(800)
         .attr("opacity", "1")
-        .call(d3.axisBottom(xP));
+        .call(d3.axisBottom(xAxisScale));
 
 }
-
-// d3.select("select").on("change", function (d) {
-//     scatter();
-// });
