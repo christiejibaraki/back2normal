@@ -134,6 +134,25 @@ function scatter(selected_ZIP) {
         .style("stroke", ranCol);
 
     svg4
+        .append("path")
+        .datum(subset_data) //replaced data3 with data4
+        .attr("fill", "none")
+        .attr("stroke", "none")
+        .attr("stroke-width", 2)
+        .attr(
+            "d",
+            d3
+                .line()
+                .x(function (d) {
+                    return xAxisScale(d.date);
+                })
+                .y(function (d) {
+                    return yAxisScale(d.value+505);
+                })
+        )
+        .style("stroke", ranCol);
+
+    svg4
         .select(".myXaxis")
         .transition()
         .duration(800)
