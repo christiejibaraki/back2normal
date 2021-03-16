@@ -106,34 +106,6 @@ html, body {
     width: 640px
 }
 
-#dash {
-    color: #563f46;
-    padding: 7.5px 15px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    text-decoration: none;
-    text-align: center;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 20px;
-
-}
-
-#about {
-    color: #9aaab6;
-    padding: 7.5px 35px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    text-decoration: none;
-    text-align: center;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 20px;
-
-}
-
-#about:hover {
-    color: #563f46;
-
-}
 
 #rightzip {
     font-family: 'Rajdhani', sans-serif;
