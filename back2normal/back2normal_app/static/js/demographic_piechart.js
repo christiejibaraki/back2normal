@@ -1,3 +1,9 @@
+/*
+Code adapted from
+diethardsteiner Block 3287802
+http://bl.ocks.org/diethardsteiner/3287802
+*/
+
 var datasetPieChart = demographic_data;
 
 var group = "60637";

@@ -1,3 +1,9 @@
+/*
+Code adapted from
+diethardsteiner Block 3287802
+http://bl.ocks.org/diethardsteiner/3287802
+*/
+
 var label_lookup = {
     "unemploy_rate": "Unemployed",
     "pct_below_poverty_lvl": "In poverty",

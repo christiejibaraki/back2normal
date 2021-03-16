@@ -1,3 +1,8 @@
+/*
+Code adapted from Mike Bostock, D3 + Leaflet
+https://bost.ocks.org/mike/leaflet/
+* */
+
 d3.json("static/Boundaries - ZIP Codes.geojson", function (error, collection) {
     if (error) throw error;
 
