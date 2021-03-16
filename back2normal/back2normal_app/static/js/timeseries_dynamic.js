@@ -1,47 +1,7 @@
-// set the dimensions and margins of the graph
-var margin = { top: 10, right: 30, bottom: 30, left: 60 },
-    width = 860 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
-
-// append the svg object to the body of the page
-var svg = d3
-    .select("#dynamic_series")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-// append the svg object to the body of the page
-var svg2 = svg
-    .select("#cvg_svgC2")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + +")");
-
-var svg3 = svg
-    .append("svg")
-    .attr("id", "cvg_svgC3")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + +")");
-
-var svg4 = svg
-    .append("svg")
-    .attr("id", "cvg_svgC4")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + +")");
-
-var data = [
-    {
-        date: "2013-04-28",
-        value: 135.98
-    },
+var data3 = [{
+    date: "2013-04-28",
+    value: 135.98
+},
     {
         date: "2013-04-29",
         value: 147.49
@@ -843,21 +803,43 @@ var data = [
         value: 760.58
     }
 ];
+
+// set the dimensions and margins of the graph
+var margin = { top: 10, right: 30, bottom: 30, left: 60 },
+    width = 860 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3
+    .select("#dynamic_series")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var svg4 = svg
+    .append("svg")
+    .attr("id", "cvg_svgC4")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g");
+// .attr("transform", "translate(" + +")");
+
 // -------------------------------Data manipulation--------
 const parse = d3.timeParse("%Y-%m-%d");
-const bisectDate = d3.bisector((d) => d.date).left;
 
 // data manipulation first
-data = data.map((datum) => {
+data3 = data3.map((datum) => {
     datum.date = parse(datum.date);
-return datum;
+    return datum;
 });
 // -------------------------------Data manipulation ends--------
 // Add X axis --> it is a date format
-var x = d3
+var xP = d3
     .scaleTime()
     .domain(
-        d3.extent(data, function (d) {
+        d3.extent(data3, function (d) {
             return d.date;
         })
     )
@@ -867,97 +849,38 @@ svg
     .append("g")
     .attr("class", "myXaxis")
     .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x));
+    .call(d3.axisBottom(xP));
 
 // Add Y axis
 var y = d3
     .scaleLinear()
     .domain([
         0,
-        d3.max(data, function (d) {
+        d3.max(data3, function (d) {
             return +d.value;
         })
     ])
     .range([height, 0]);
 
 svg.append("g").call(d3.axisLeft(y));
-//Read the data
-// Now I can use this dataset:
-function line() {
-    d3.select("#cvg_svgC2").remove();
-    d3.select("#cvg_svgC3").remove();
 
-    // Add the line
 
-    svg2
-        .append("path")
-        .datum(data)
-        .attr("fill", "none")
-        .attr("stroke", "none")
-        .attr("stroke-width", 2)
-        .attr(
-            "d",
-            d3
-                .line()
-                .x(function (d) {
-                    return x(d.date);
-                })
-                .y(function (d) {
-                    return y(d.value);
-                })
-        )
-        .style("stroke", "#0594fa");
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
 }
 
-function bar() {
-    // Bars
-    d3.select("#cvg_svgC2").selectAll("path").remove();
-    d3.select("#cvg_svgC4").selectAll("circle").remove();
-
-    svg3
-        .selectAll("mybar")
-        .data(data)
-        .enter()
-        .append("rect")
-        .attr("x", function (d) {
-            return x(d.date);
-        })
-        .attr("width", 1.5)
-        .attr("fill", "#fcba03")
-        // no bar at the beginning thus:
-        .attr("height", function (d) {
-            return height - y(0);
-        }) // always equal to 0
-        .attr("y", function (d) {
-            return y(0);
-        });
-
-    // Animation
-    svg3
-        .selectAll("rect")
-        .transition()
-        .duration(800)
-        .attr("y", function (d) {
-            return y(d.value);
-        })
-        .attr("height", function (d) {
-            return height - y(d.value);
-        })
-        .delay(function (d, i) {
-            console.log(i);
-            return i * 5;
-        });
-}
 
 function scatter() {
-    // scatter plots
 
-    d3.select("#cvg_svgC2").remove();
-    d3.select("#cvg_svgC3").remove();
-
+    ranCol = getRandomColor()
     svg4
         .append("path")
-        .datum(data)
+        .datum(data3)
         .attr("fill", "none")
         .attr("stroke", "none")
         .attr("stroke-width", 2)
@@ -966,20 +889,20 @@ function scatter() {
             d3
                 .line()
                 .x(function (d) {
-                    return x(d.date);
+                    return xP(d.date);
                 })
                 .y(function (d) {
                     return y(d.value);
                 })
         )
-        .style("stroke", "#0594fa");
+        .style("stroke", ranCol);
 
     svg4
         .select(".myXaxis")
         .transition()
         .duration(800)
         .attr("opacity", "1")
-        .call(d3.axisBottom(x));
+        .call(d3.axisBottom(xP));
 
     svg4
         .selectAll("circle")
@@ -989,7 +912,7 @@ function scatter() {
         })
         .duration(800)
         .attr("cx", function (d) {
-            return x(d.date);
+            return xP(d.date);
         })
         .attr("cy", function (d) {
             return y(d.value);
@@ -997,14 +920,6 @@ function scatter() {
         .style("fill", "#0594fa");
 }
 
-d3.select("select").on("change", function (d) {
-    var selected = d3.select("#d3-dropdown").node().value;
-
-    if (selected == "line") {
-        line();
-    } else if (selected == "bar") {
-        bar();
-    } else if (selected == "scatter") {
-        scatter();
-    }
-});
+// d3.select("select").on("change", function (d) {
+//     scatter();
+// });

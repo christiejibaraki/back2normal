@@ -48,7 +48,7 @@ function datasetVaccLineChosen(group) {
     for (x in data) {
         // this if statement filters on zipcode and filters out any rows with NaNs for AVG7DAY_total_doses_daily
         if (data[x].ZIPCODE == group && data[x].AVG7DAY_total_doses_daily == data[x].AVG7DAY_total_doses_daily) {
-            console.log(data[x])
+            // console.log(data[x])
             ds.push(data[x]);
         }
     }
