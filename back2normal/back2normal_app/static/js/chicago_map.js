@@ -53,7 +53,7 @@ d3.json("static/Boundaries - ZIP Codes.geojson", function (error, collection) {
         document.getElementById("rightdash").style.overflowY = "scroll";
         document.getElementById("rightabout").style.display = "none";
         updatePieChart(e.properties.zip)
-        updateBarChart(e.properties.zip, 1)
+        updateBarChart(e.properties.zip)
         scatter(e.properties.zip)
     })
 

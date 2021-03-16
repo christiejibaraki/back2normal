@@ -175,7 +175,7 @@ function dsBarChart() {
 
 dsBarChart();
 
-function updateBarChart(group, colorChosen) {
+function updateBarChart(group) {
 
     var currentDatasetBarChart = datasetBarChosen(group);
 
