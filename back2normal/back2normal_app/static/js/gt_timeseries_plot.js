@@ -30,13 +30,13 @@ function datehandle(dataset) {
 datehandle(data)
 
 // filter data
-var group = "60605";
+var group = "60611";
 
 function datasetGroundTruthChosen(group) {
     var ds = [];
     for (x in data) {
-        // this if statement filters on zipcode and filters out any rows with NaNs for AVG7DAY_BARS
-        if (data[x].ZIPCODE == group && data[x].AVG7DAY_BARS == data[x].AVG7DAY_BARS) {
+        // this if statement filters on zipcode and filters out any rows with NaNs for AVG7DAY_RESTAURANT
+        if (data[x].ZIPCODE == group && data[x].AVG7DAY_RESTAURANT == data[x].AVG7DAY_RESTAURANT) {
             console.log(data[x])
             ds.push(data[x]);
         }
@@ -74,7 +74,7 @@ function datafunc(d) {
     // Add Y axis
     var y = d3.scaleLinear()
         .domain([0, d3.max(data, function (d) {
-            return +d.AVG7DAY_BARS;
+            return +d.AVG7DAY_RESTAURANT;
         })])
         .range([height, 0]);
     svg.append("g")
@@ -104,7 +104,7 @@ function datafunc(d) {
                     return xScale(d.STD_DATE);
                 })
                 .y(function (d) {
-                    return y(+d.AVG7DAY_BARS);
+                    return y(+d.AVG7DAY_RESTAURANT);
                 })
                 (d.values)
         })
