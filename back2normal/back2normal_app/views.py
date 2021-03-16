@@ -1,6 +1,4 @@
 from django.shortcuts import render
-from core.plots import bokeh_test
-from bokeh.embed import components
 
 
 def home(request):
