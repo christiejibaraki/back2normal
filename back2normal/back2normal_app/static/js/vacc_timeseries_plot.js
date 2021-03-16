@@ -46,7 +46,7 @@ var group = "60605";
 function datasetVaccLineChosen(group) {
     var ds = [];
     for (x in data) {
-
+        // this if statement filters on zipcode and filters out any rows with NaNs for AVG7DAY_total_doses_daily
         if (data[x].ZIPCODE == group && data[x].AVG7DAY_total_doses_daily == data[x].AVG7DAY_total_doses_daily) {
             console.log(data[x])
             ds.push(data[x]);
@@ -64,12 +64,19 @@ var sumstat = d3.nest() // nest function allows to group the calculation per lev
   .entries(data);
 
   // Add X axis --> it is a date format
-var x = d3.scaleLinear()
+var xScale = d3.scaleTime()
   .domain(d3.extent(data, function(d) { return d.STD_DATE; }))
   .range([ 0, width ]);
-svg.append("g")
+
+var xaxis = d3.axisBottom()
+  .ticks(d3.timeDay.every(15))
+  .tickFormat(d3.timeFormat('%b %d'))
+  .scale(xScale);
+
+
+  svg.append("g")
   .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x).ticks(5));
+    .call(xaxis);
 
   // Add Y axis
 var y = d3.scaleLinear()
@@ -94,12 +101,12 @@ svg.selectAll(".line")
       .attr("stroke-width", 1.5)
       .attr("d", function(d){
         return d3.line()
-          .x(function(d) { return x(d.STD_DATE); })
+          .xScale(function(d) { return xScale(d.STD_DATE); })
           .y(function(d) { return y(+d.AVG7DAY_total_doses_daily); })
           (d.values)
       })
 }
 
-//datehandle(data)
+
 datafunc(data)
 
