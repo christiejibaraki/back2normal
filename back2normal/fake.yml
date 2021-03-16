@@ -15,4 +15,3 @@ dependencies:
   - tk=8.6.10
   - wheel=0.36.2
   - zlib=1.2.11
-prefix: /anaconda3/envs/back2normal222
