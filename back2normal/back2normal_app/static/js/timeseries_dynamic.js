@@ -904,20 +904,6 @@ function scatter() {
         .attr("opacity", "1")
         .call(d3.axisBottom(xP));
 
-    svg4
-        .selectAll("circle")
-        .transition()
-        .delay(function (d, i) {
-            return i * 5;
-        })
-        .duration(800)
-        .attr("cx", function (d) {
-            return xP(d.date);
-        })
-        .attr("cy", function (d) {
-            return y(d.value);
-        })
-        .style("fill", "#0594fa");
 }
 
 // d3.select("select").on("change", function (d) {
