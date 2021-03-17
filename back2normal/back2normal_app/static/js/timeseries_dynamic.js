@@ -86,24 +86,14 @@ svg
 var yAxisScale = d3
     .scaleLinear()
     .domain([
-        0,
-        d3.max(data4, function (d) {
-            return Math.max(d.value, d.value2);
-        })
+        0, 600
+        // d3.max(data4, function (d) {
+        //     return Math.max(d.value, d.value2);
+        // })
     ])
     .range([height, 0]);
 
 svg.append("g").call(d3.axisLeft(yAxisScale));
-
-
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
 
 
 function scatter(selected_ZIP) {
@@ -112,7 +102,6 @@ function scatter(selected_ZIP) {
 
     subset_data = filterOnZip(selected_ZIP)
 
-    ranCol = getRandomColor()
     svg4
         .append("path")
         .datum(subset_data) //replaced data3 with data4
@@ -130,7 +119,7 @@ function scatter(selected_ZIP) {
                     return yAxisScale(d.value);
                 })
         )
-        .style("stroke", ranCol);
+        .style("stroke", "#588c7e");
 
     svg4
         .append("path")
@@ -149,7 +138,7 @@ function scatter(selected_ZIP) {
                     return yAxisScale(d.value2);
                 })
         )
-        .style("stroke", ranCol);
+        .style("stroke", "#d96459");
 
     svg4
         .select(".myXaxis")
