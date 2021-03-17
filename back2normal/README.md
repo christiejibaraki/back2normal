@@ -29,16 +29,14 @@ See [requirements.txt](requirements.txt)
 3. Launch the application by running `python3 manage.py runserver`.
 This should print out a localhost address. The default port is 8080. To change the port, for example to Port 8080: `python3 manage.py runserver 8080`.
 4. Navigate to the address from the previous step, e.g. `http://127.0.0.1:8000/`, in a web browser.
-
-    **Optional**
- 5. Build the database for the project.
+5. (Optional) Build the database for the project.
 <br>The database is not directly connected to the web application at this time.
  It is used to store a static copy of the data from which javascript resources are built.
  To build the database, run `python3 build_db.py` from the project root
- 6. View database tables in jupyter notebook.
+6. (Optional) View database tables in jupyter notebook.
 <br>The team has created a jupyter notebook to manually inspect sqlite tables. Once the database is built,
 to view the notebook, run `env/bin/jupyter-notebook prod_data_review.ipynb`. Navigate to localhost URL.
-7. The team has written a handful of unit tests which can be run with the following command `python -m pytest`
+7. (Optional) The team has written a handful of unit tests which can be run with the following command `python -m pytest`
  
 ### Description
 The frontend for our project is a simple javascript application that uses the D3 library to visualize the data.
