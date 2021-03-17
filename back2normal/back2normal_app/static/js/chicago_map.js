@@ -60,6 +60,7 @@ d3.json("static/Boundaries - ZIP Codes.geojson", function (error, collection) {
         updatePieChart(e.properties.zip)
         updateBarChart(e.properties.zip)
         scatter(e.properties.zip)
+        scatter_gt(e.properties.zip)
     })
 
     // Use Leaflet to implement a D3 geometric transformation.
