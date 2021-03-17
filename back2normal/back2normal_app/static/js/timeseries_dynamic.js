@@ -3,7 +3,7 @@ Code adapted from @imdineshrewal
 https://codepen.io/imdineshgrewal/pen/MNvPXv?editors=1111
  */
 
-var data4 = vacc_records
+var data4 = covid_case_vacc_data
 
 // set the dimensions and margins of the graph
 var margin = { top: 10, right: 30, bottom: 30, left: 60 },
@@ -36,7 +36,7 @@ const parse4 = d3.timeParse("%Y-%m-%d %H:%M:%S")
 data4 = data4.map((datum) =>{
     datum.date = parse4(datum.STD_DATE);
     datum.value = datum.AVG7DAY_total_doses_daily
-    datum.value2 = 1000 //datum.total_doses_daily
+    datum.value2 = datum.AVG7DAY_confirmed_cases_change
     return datum
 })
 

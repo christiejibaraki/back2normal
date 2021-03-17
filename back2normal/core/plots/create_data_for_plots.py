@@ -1,3 +1,4 @@
+import json
 import pandas as pd
 import build_db
 from core.data import dbclient
@@ -30,12 +31,17 @@ def get_covid_and_vaccine_data(output_file):
 
     query = (f"select case_data.{data_transformations.STD_ZIP_COL_NAME},"
              f" case_data.{data_transformations.STD_DATE_COL_NAME},"
+             f" vacc_data.{data_transformations.STD_ZIP_COL_NAME} ZIPB,"
+             f" vacc_data.{data_transformations.STD_DATE_COL_NAME} DATEB,"
              f" case_data.AVG7DAY_confirmed_cases,"
+             f" case_data.AVG7DAY_confirmed_cases_change,"
              f" vacc_data.AVG7DAY_total_doses_daily, vacc_data.AVG7DAY_vaccine_series_completed_daily"
              f" from {build_db.CASE_TBL} case_data left join {build_db.VACC_TBL} vacc_data"
              f" on case_data.{data_transformations.STD_ZIP_COL_NAME} = vacc_data.{data_transformations.STD_ZIP_COL_NAME}"
              f" and case_data.{data_transformations.STD_DATE_COL_NAME} = vacc_data.{data_transformations.STD_DATE_COL_NAME}"
-             f" where case_data.{data_transformations.STD_ZIP_COL_NAME} is not null")
+             f" where case_data.{data_transformations.STD_ZIP_COL_NAME}"
+             f" in (select distinct {data_transformations.STD_ZIP_COL_NAME} from {build_db.VACC_TBL})")
+
     case_and_vacc_df = pd.read_sql_query(query, db.conn)
     case_and_vacc_df['AVG7DAY_total_doses_daily'].fillna(0, inplace=True)
     case_and_vacc_df['AVG7DAY_vaccine_series_completed_daily'].fillna(0, inplace=True)
@@ -47,5 +53,5 @@ def get_groundtruth_data(output_file):
     db = dbclient.DBClient()
     query = f"select * from {build_db.FOOT_TRAFF_TBL}"
     groundtruth_df = pd.read_sql_query(query, db.conn)
-    gt_records = groundtruth_df.to_dict(orient='records')
+    gt_records = groundtruth_df.to_dict(åorient='records')
     basic_io.write_dict_to_json(output_file, gt_records)

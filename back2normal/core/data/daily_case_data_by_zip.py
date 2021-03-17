@@ -29,7 +29,7 @@ SELECT_COLUMNS = [DATE_COL_NAME, ZIP_COL_NAME,
                   CASES_COL, CASES_CHANGE_COL,
                   TESTED_COL, TESTED_CHANGE_COL]
 
-COLS_TO_AVG = [CASES_COL, TESTED_COL]
+COLS_TO_AVG = [CASES_COL, CASES_CHANGE_COL, TESTED_COL]
 
 
 def get_daily_covid_data_from_api(testing=False):
