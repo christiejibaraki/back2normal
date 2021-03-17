@@ -67,6 +67,10 @@ query_url = (f"https://api.census.gov/data/2019/acs/acs5/profile?"
              f"get={VARIABLE_LST}&for=zip%20code%20tabulation%20area:{ZIPS}"
              f"&in=state:17&key={CENSUS_API_KEY}")
 
+chicago_county_query = (f"https://api.census.gov/data/2019/acs/acs5/profile?"
+             f"get={VARIABLE_LST}&for=county:*"
+             f"&in=state:17&key={CENSUS_API_KEY}")
+
 
 def get_census_data_from_api():
     """
