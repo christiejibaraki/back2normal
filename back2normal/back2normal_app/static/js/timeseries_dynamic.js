@@ -28,7 +28,7 @@ var svg4 = svg
 // .attr("transform", "translate(" + +")");
 
 // -------------------------------Data manipulation--------
-const parse = d3.timeParse("%Y-%m-%d");
+// const parse = d3.timeParse("%Y-%m-%d");
 
 const parse4 = d3.timeParse("%Y-%m-%d %H:%M:%S")
 
@@ -36,7 +36,7 @@ const parse4 = d3.timeParse("%Y-%m-%d %H:%M:%S")
 data4 = data4.map((datum) =>{
     datum.date = parse4(datum.STD_DATE);
     datum.value = datum.AVG7DAY_total_doses_daily
-    datum.value2 = 1000 //datum.total_doses_daily
+    datum.value2 = datum.total_doses_daily
     return datum
 })
 
@@ -95,7 +95,7 @@ var yAxisScale = d3
 
 svg.append("g").call(d3.axisLeft(yAxisScale));
 
-
+// do we need this?
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
@@ -115,7 +115,7 @@ function scatter(selected_ZIP) {
     ranCol = getRandomColor()
     svg4
         .append("path")
-        .datum(subset_data) //replaced data3 with data4
+        .datum(subset_data)
         .attr("fill", "none")
         .attr("stroke", "none")
         .attr("stroke-width", 2)

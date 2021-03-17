@@ -1,113 +1,161 @@
+/*
+Code adapted from @imdineshrewal
+https://codepen.io/imdineshgrewal/pen/MNvPXv?editors=1111
+ */
+
+var data_gt = gt_records
+
 // set the dimensions and margins of the graph
-var margin = {top: 10, right: 30, bottom: 30, left: 60},
-    width = 800 - margin.left - margin.right,
+var margin = { top: 10, right: 30, bottom: 30, left: 60 },
+    width = 860 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
-// parse the date and time
-// strftime('%Y-%m-%d'
-var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
-
 // append the svg object to the body of the page
-var svg = d3.select("#groundTruth")
+var svg_gt = d3
+    .select("#groundTruth")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
-    .attr("transform",
-        "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-//Read the data
-var data = gt_records
+var svg4_gt = svg_gt
+    .append("svg")
+    .attr("id", "cvg_svgC4_gt")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g");
+// .attr("transform", "translate(" + +")");
 
-// handle the date
-function datehandle(dataset) {
-    dataset.forEach(function (d) {
-        // console.log(d.STD_DATE, typeof(d.STD_DATE))
-        d.STD_DATE = parseDate(d.STD_DATE);
-        // console.log(d.STD_DATE, typeof(d.STD_DATE))
-    });
-};
-datehandle(data)
+// -------------------------------Data manipulation--------
+// const parse = d3.timeParse("%Y-%m-%d");
 
-// filter data
-var group = "60611";
+const parse_gt = d3.timeParse("%Y-%m-%d %H:%M:%S")
 
-function datasetGroundTruthChosen(group) {
-    var ds = [];
-    for (x in data) {
-        // this if statement filters on zipcode and filters out any rows with NaNs for AVG7DAY_RESTAURANT
-        if (data[x].ZIPCODE == group && data[x].AVG7DAY_RESTAURANT == data[x].AVG7DAY_RESTAURANT) {
-            ds.push(data[x]);
+//rename columns of data 4
+data_gt = data_gt.map((datum) =>{
+    datum.date = parse_gt(datum.STD_DATE);
+    datum.value = datum.AVG7DAY_RESTAURANT
+    datum.value2 = datum.AVG7DAY_BARS
+    return datum
+})
+
+//filter out NaNs
+function filterNaNs(dataset) {
+    var filtered_data = [];
+    for (x in dataset) {
+        if ((dataset[x].value == dataset[x].value) && (dataset[x].value2 == dataset[x].value2)) {
+            filtered_data.push(dataset[x]);
         }
     }
-    return ds;
+    return filtered_data
 }
 
-data = datasetGroundTruthChosen(group)
+data_gt = filterNaNs(data_gt)
 
-// group the data: I want to draw one line per group
-function datafunc(d) {
-    var sumstat = d3.nest() // nest function allows to group the calculation per level of a factor
-        .key(function (d) {
-            return d.ZIPCODE;
+//filter on zip function
+function filterOnZip(selected_ZIP) {
+    var filtered_data = [];
+    for (x in data_gt) {
+        if (data_gt[x].ZIPCODE == selected_ZIP) {
+            filtered_data.push(data_gt[x]);
+        }
+    }
+    return filtered_data
+}
+
+
+// -------------------------------Data manipulation ends--------
+// Add X axis --> it is a date format
+var xAxisScale_gt = d3
+    .scaleTime()
+    .domain(
+        d3.extent(data_gt, function (d) {
+            return d.date;
         })
-        .entries(data);
+    )
+    .range([0, width]);
 
-    // Add X axis --> it is a date format
-    var xScale = d3.scaleTime()
-        .domain(d3.extent(data, function (d) {
-            return d.STD_DATE;
-        }))
-        .range([0, width]);
+svg_gt
+    .append("g")
+    .attr("class", "myXaxis_gt")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(xAxisScale_gt));
 
-    var xaxis = d3.axisBottom()
-        .ticks(d3.timeDay.every(15))
-        .tickFormat(d3.timeFormat('%b %d'))
-        .scale(xScale);
+// Add Y axis
+var yAxisScale_gt = d3
+    .scaleLinear()
+    .domain([
+        0, 150
+        // d3.max(data_gt, function (d) {
+        //     return Math.max(d.value, d.value2);
+        // })
+    ])
+    .range([height, 0]);
+
+svg_gt.append("g").call(d3.axisLeft(yAxisScale_gt));
+
+// do we need this?
+function getRandomColor_gt() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
 
 
-    svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xaxis);
+function scatter_gt(selected_ZIP) {
 
-    // Add Y axis
-    var y = d3.scaleLinear()
-        .domain([0, d3.max(data, function (d) {
-            return +d.AVG7DAY_RESTAURANT;
-        })])
-        .range([height, 0]);
-    svg.append("g")
-        .call(d3.axisLeft(y));
+    d3.select("#cvg_svgC4_gt").selectAll("path").remove();
 
-    // color palette
-    var res = sumstat.map(function (d) {
-        return d.key
-    }) // list of group names
-    var color = d3.scaleOrdinal()
-        .domain(res)
-        .range(['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#a65628', '#f781bf', '#999999'])
+    subset_data = filterOnZip(selected_ZIP)
 
-    // Draw the line
-    svg.selectAll(".line")
-        .data(sumstat)
-        .enter()
+    ranCol = getRandomColor_gt()
+    svg4_gt
         .append("path")
+        .datum(subset_data)
         .attr("fill", "none")
-        .attr("stroke", function (d) {
-            return color(d.key)
-        })
-        .attr("stroke-width", 1.5)
-        .attr("d", function (d) {
-            return d3.line()
+        .attr("stroke", "none")
+        .attr("stroke-width", 2)
+        .attr(
+            "d",
+            d3
+                .line()
                 .x(function (d) {
-                    return xScale(d.STD_DATE);
+                    return xAxisScale_gt(d.date);
                 })
                 .y(function (d) {
-                    return y(+d.AVG7DAY_RESTAURANT);
+                    return yAxisScale_gt(d.value);
                 })
-                (d.values)
-        })
+        )
+        .style("stroke", ranCol);
+
+    svg4_gt
+        .append("path")
+        .datum(subset_data)
+        .attr("fill", "none")
+        .attr("stroke", "none")
+        .attr("stroke-width", 2)
+        .attr(
+            "d",
+            d3
+                .line()
+                .x(function (d) {
+                    return xAxisScale_gt(d.date);
+                })
+                .y(function (d) {
+                    return yAxisScale_gt(d.value2);
+                })
+        )
+        .style("stroke", ranCol);
+
+    svg4_gt
+        .select(".myXaxis_gt")
+        .transition()
+        .duration(800)
+        .attr("opacity", "1")
+        .call(d3.axisBottom(xAxisScale_gt));
+
 }
-
-
-datafunc(data)

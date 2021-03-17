@@ -194,7 +194,7 @@ function updateBarChart(group) {
     ;
 
     var color = d3.scaleOrdinal()
-        .domain(data)
+        .domain(currentDatasetBarChart)
         .range(d3.schemeSet3);
 
     var xScale = d3.scale.linear()
