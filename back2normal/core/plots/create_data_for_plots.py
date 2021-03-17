@@ -1,4 +1,7 @@
-import json
+"""
+Functions for retrieving stored and creating static js files
+that are used as data resources
+"""
 import pandas as pd
 import build_db
 from core.data import dbclient
