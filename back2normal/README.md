@@ -15,7 +15,7 @@ This data is displayed in an interactive D3 dashboard that allows the user to ex
  
 ![alt text](back2normal_app/static/img/readme_hydepark.png "Configure Model")
 
-**Project Writeup and Documentation**
+**Project Writeup and Documentation:**
 See [cvf-ibarakicj-slotky.pdf](cvf-ibarakicj-slotky.pdf)
 
 **Language Requirements:**
