@@ -30,7 +30,7 @@ See [requirements.txt](requirements.txt)
 This should print out a localhost address. The default port is 8080. To change the port, for example to Port 8080: `python3 manage.py runserver 8080`.
 4. Navigate to the address from the previous step, e.g. `http://127.0.0.1:8000/`, in a web browser.
 
-    #####Optional
+    **Optional**
  5. Build the database for the project.
 <br>The database is not directly connected to the web application at this time.
  It is used to store a static copy of the data from which javascript resources are built.
