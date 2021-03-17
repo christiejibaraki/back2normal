@@ -8,7 +8,8 @@ html, body {
     font-size: 20px;
     height: 100%;
     width:100%;
-    overflow: hidden;
+    /*overflow: hidden;*/
+    overflow-x: scroll;
 }
 
 a:link, a:visited {
@@ -50,8 +51,8 @@ a:hover {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    overflow-y: hidden;
-    overflow-x: hidden;
+    overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 #leftmap {
@@ -141,6 +142,7 @@ a:hover {
     height: 5%;
     position: relative;
     width: 640px
+    overflow-x:hidden;
 }
 
 
@@ -179,7 +181,7 @@ a:hover {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #e6e6e6;
+    background: #ada397;
 }
 
 /* Handle on hover */
@@ -192,10 +194,12 @@ a:hover {
 #map {
     width: 640px;
     height: 790px;
+    overflow-x: hidden;
 }
 
 #map svg {
     position: relative;
+    overflow-x: hidden;
 }
 
 #map path {
