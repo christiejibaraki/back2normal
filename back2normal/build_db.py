@@ -1,9 +1,13 @@
+"""
+Module for creating sqlite database
+"""
 import os
 import pandas as pd
 from core.data import census_api_pull, dbclient, daily_case_data_by_zip, data_transformations
 from core.data.socrata import soda_data, socrata_api_requests
 from core.data.groundtruth import process_ground_truth_data
 
+# Table names
 VACC_TBL = soda_data.VACCINATION_DATA_OBJ.sql_table_name
 CASE_TBL = daily_case_data_by_zip.SQL_TABLE_NM
 FOOT_TRAFF_TBL = process_ground_truth_data.SQL_TABLE_NAME
@@ -12,6 +16,15 @@ CENSUS_TBL = "DEMOGRAPHICS"
 
 
 def build_back2normal_db():
+    """
+    Builds database from various datasources
+    For each source:
+        1. get data from source (API, CSV, etc) and convert to pandas DatFrame
+        2. standardize zip code col name and format
+        3. standardize date col name and format
+        4. compute 7 day moving average
+        5. create table in sqlite db
+    """
 
     if os.path.exists(dbclient.DB_PATH):
         print("Deleting existing db and recreating with build_db_script\n")
