@@ -103,17 +103,17 @@ var yAxisScale_gt = d3
 
 svg_gt.append("g").call(d3.axisLeft(yAxisScale_gt));
 
-svg_gt.append("rect").attr("x", 5).attr('y', 0).attr('width', 170).attr('height', 90).attr('stroke', 'black').attr('fill', 'white')
-svg_gt.append("circle").attr("cx",15).attr("cy",15).attr("r", 6).style("fill", "#ffd571");
-svg_gt.append("circle").attr("cx",15).attr("cy",30).attr("r", 6).style("fill", "#bbd196");
-svg_gt.append("circle").attr("cx",15).attr("cy",45).attr("r", 6).style("fill", "#56556e");
-svg_gt.append("circle").attr("cx",15).attr("cy",60).attr("r", 6).style("fill", "#a35d6a");
-svg_gt.append("circle").attr("cx",15).attr("cy",75).attr("r", 6).style("fill", "#3c2946");
-svg_gt.append("text").attr("x", 30).attr("y", 15).text("Restaurants").style("font-size", "15px").attr("alignment-baseline","middle");
-svg_gt.append("text").attr("x", 30).attr("y", 30).text("Bars").style("font-size", "15px").attr("alignment-baseline","middle");
-svg_gt.append("text").attr("x", 30).attr("y", 45).text("Grocery").style("font-size", "15px").attr("alignment-baseline","middle");
-svg_gt.append("text").attr("x", 30).attr("y", 60).text("Parks and Beaches").style("font-size", "15px").attr("alignment-baseline","middle");
-svg_gt.append("text").attr("x", 30).attr("y", 75).text("Schools and Libraries").style("font-size", "15px").attr("alignment-baseline","middle");
+svg_gt.append("rect").attr("x", width - 200).attr('y', 0).attr('width', 225).attr('height', 90).attr('stroke', 'black').attr("stroke-width", 0.5).attr('fill', 'white')
+svg_gt.append("circle").attr("cx",width-185).attr("cy",15).attr("r", 6).style("fill", "#ffd571");
+svg_gt.append("circle").attr("cx",width-185).attr("cy",30).attr("r", 6).style("fill", "#bbd196");
+svg_gt.append("circle").attr("cx",width-185).attr("cy",45).attr("r", 6).style("fill", "#56556e");
+svg_gt.append("circle").attr("cx",width-185).attr("cy",60).attr("r", 6).style("fill", "#a35d6a");
+svg_gt.append("circle").attr("cx",width-185).attr("cy",75).attr("r", 6).style("fill", "#51c2d5");
+svg_gt.append("text").attr("x", width-175).attr("y", 15).text("Restaurants").style("font-size", "15px").attr("alignment-baseline","middle");
+svg_gt.append("text").attr("x", width-175).attr("y", 30).text("Bars").style("font-size", "15px").attr("alignment-baseline","middle");
+svg_gt.append("text").attr("x", width-175).attr("y", 45).text("Grocery").style("font-size", "15px").attr("alignment-baseline","middle");
+svg_gt.append("text").attr("x", width-175).attr("y", 60).text("Parks and Beaches").style("font-size", "15px").attr("alignment-baseline","middle");
+svg_gt.append("text").attr("x", width-175).attr("y", 75).text("Schools and Libraries").style("font-size", "15px").attr("alignment-baseline","middle");
 
 
 function scatter_gt(selected_ZIP) {
@@ -215,7 +215,7 @@ function scatter_gt(selected_ZIP) {
                     return yAxisScale_gt(d.value5);
                 })
         )
-        .style("stroke", "#3c2946");
+        .style("stroke", "#51c2d5");
 
     svg4_gt
         .select(".myXaxis_gt")

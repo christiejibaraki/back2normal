@@ -43,8 +43,8 @@ function datasetBarChosen(group) {
 function dsBarChartBasics() {
 
     var margin = {top: 30, right: 5, bottom: 20, left: 50},
-        width = 500 - margin.left - margin.right,
-        height = 250 - margin.top - margin.bottom,
+        width = 520 - margin.left - margin.right,
+        height = 375 - margin.top - margin.bottom,
         colorBar = d3.scale.category20(),
         barPadding = 1
     ;
@@ -168,15 +168,6 @@ function dsBarChart() {
     //.attr("style", "font-size: 12; font-family: Helvetica, sans-serif")
     ;
 
-    // Title
-
-    svg.append("text")
-        .attr("x", (width + margin.left + margin.right) / 2)
-        .attr("y", 15)
-        .attr("class", "chart_title")
-        .attr("text-anchor", "middle")
-        .text("hiiii")
-    ;
 }
 
 dsBarChart();
@@ -251,12 +242,11 @@ function updateBarChart(group) {
         .attr("class", "yAxis")
     ;
 
-
-    svg.selectAll("text.chart_title") // target the text element(s) which has a title class defined
-        .attr("x", (width + margin.left + margin.right) / 2)
-        .attr("y", 15)
-        .attr("class", "chart_title")
-        .attr("text-anchor", "middle")
-        .text("Demographic Data")
-    ;
+    // svg.selectAll("text.chart_title") // target the text element(s) which has a title class defined
+    //     .attr("x", (width + margin.left + margin.right) / 2)
+    //     .attr("y", 15)
+    //     .attr("class", "chart_title")
+    //     .attr("text-anchor", "middle")
+    //     .text("Demographic Data")
+    // ;
 }

@@ -4,32 +4,54 @@
 
 html, body {
     margin: 0;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Cutive Mono', monospace;
     font-size: 20px;
     height: 100%;
+    width:100%;
     overflow: hidden;
 }
 
-#divtitle {
-    font-family: 'Lato', sans-serif;
-    text-align: center;
-    background: white;
-    padding-top: 5px;
+a:link, a:visited {
+    color: black;
+    font-family: 'Padauk', sans-serif;
+    font-size: 16px;
+    text-decoration: none;
 }
 
-#divtitle2 {
-    font-family: 'Lato', sans-serif;
-    text-align: center;
-    background: white;
-    padding-top: 5px;
+a:hover {
+    color: #d64161;
+    font-family: 'Padauk', sans-serif;
+    font-size: 16px;
 }
+.divtitle {
+    text-align: left;
+    background: white;
+    padding-top: 15px;
+    padding-left: 25px;
+    font-family: 'Cutive Mono', monospace;
+    font-size: 28px;
+}
+
+.chartfooter {
+    text-align: left;
+    background: white;
+    padding-top: 0px;
+    padding-left: 25px;
+    padding-bottom: 10px;
+    font-family: 'Padauk', sans-serif;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
 
 /* main container */
 .container {
     height: 100%;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 #leftmap {
@@ -43,7 +65,7 @@ html, body {
 
 #rightcol {
     height: 100%;
-    background-color: #fafafa;
+    background-color: #d4d9de;
     flex: 60%;
     padding: 20px;
     display: block;
@@ -69,13 +91,13 @@ html, body {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: flex-start;s
     overflow-y: scroll;
-    overflow-x: hidden;
+    overflow-x: scroll;
     display: contents;
     text-align: right;
     position: relative;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Padauk', sans-serif;
 }
 
 #rightabout p {
@@ -85,13 +107,13 @@ html, body {
 
 .chart_row {
     width: 100%;
-    display: flex;
+    display:flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    background-color: white;
     padding-top: 20px;
-    padding-bottom: 20px;
-
+    padding-bottom: 10px;
+    background: white;
+    justify-content: center;
 }
 
 .about_row {
@@ -99,9 +121,9 @@ html, body {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    height: 90%;
+    height: 100%;
     background-color: white;
-    padding-top: 100px;
+    padding-top: 200px;
 }
 
 #lefttitle {

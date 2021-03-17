@@ -97,11 +97,11 @@ var yAxisScale = d3
 svg.append("g").call(d3.axisLeft(yAxisScale));
 
 
-svg.append("rect").attr("x", 5).attr('y', 0).attr('width', 170).attr('height', 45).attr('stroke', 'black').attr('fill', 'white')
-svg.append("circle").attr("cx",15).attr("cy",15).attr("r", 6).style("fill", "#588c7e");
-svg.append("circle").attr("cx",15).attr("cy",30).attr("r", 6).style("fill", "#d96459");
-svg.append("text").attr("x", 30).attr("y", 15).text("Vaccinations").style("font-size", "15px").attr("alignment-baseline","middle");
-svg.append("text").attr("x", 30).attr("y", 30).text("Covid Cases").style("font-size", "15px").attr("alignment-baseline","middle");
+svg.append("rect").attr("x", width-200).attr('y', 0).attr('width', 225).attr('height', 45).attr('stroke', 'black').attr("stroke-width", 0.5).attr('fill', 'white')
+svg.append("circle").attr("cx",width-185).attr("cy",15).attr("r", 6).style("fill", "#588c7e");
+svg.append("circle").attr("cx",width-185).attr("cy",30).attr("r", 6).style("fill", "#d96459");
+svg.append("text").attr("x", width-175).attr("y", 15).text("Vaccinations").style("font-size", "15px").attr("alignment-baseline","middle");
+svg.append("text").attr("x",width-175).attr("y", 30).text("Covid Cases").style("font-size", "15px").attr("alignment-baseline","middle");
 
 
 

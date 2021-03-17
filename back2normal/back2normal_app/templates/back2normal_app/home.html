@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Audiowide|Rajdhani" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Padauk&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -33,20 +33,36 @@
 
         <div id="rightdash">
 
-            <div id="divtitle">Foot Traffic Index</div>
+            <div class="divtitle">Foot Traffic Index</div>
             <div class="chart_row">
                 <div id ="groundTruth"></div>
             </div>
+            <div class="chartfooter">Foot traffic data was sourced from GroundTruth's Daily Foot Traffic Tracker
+                [<a href="https://www.groundtruth.com/insight/industry-foot-traffic-tracker/" target="_blank">groundtruth.com/insight/industry-foot-traffic-tracker</a>].
+                Data is available from December 20, 2019 through March 3, 2021.
+                GroundTruth data is indexed to show relative increases and decreases in daily activity at places of interest.</div>
 
-            <div id="divtitle2">Covid Cases and Vaccinations</div>
+
+            <div class="divtitle">Daily Covid Cases and Vaccinations</div>
             <div class="chart_row">
                 <div id="dynamic_series"></div>
             </div>
+            <div class="chartfooter">Covid case numbers are from IDPH
+                [<a href="https://observablehq.com/@chicagoreporter/historical-illinois-covid-19-zip-code-data" target="_blank">observablehq.com/@chicagoreporter/historical-illinois-covid-19-zip-code-data</a>].
+                The plot shows the change in number of confirmed covid cases averaged over the previous seven days.
+                The vaccination data is from the Chicago Data Portal API
+                [<a href="https://data.cityofchicago.org/" target="_blank">data.cityofchicago.org</a>].
+                The plot shows the number of vaccine doses administered averaged over the previous seven days.
+            </div>
 
+            <div class="divtitle">Demographic Data</div>
             <div class="chart_row">
                 <div id="pieChart"></div>
                 <div id="barChart"></div>
             </div>
+            <div class="chartfooter">Demographic data is from the Census API for the American Community Survey for 2009-2019.
+            [<a href="https://www.census.gov/data/developers/data-sets/acs-5year.html" target="_blank">www.census.gov/data/developers/data-sets/acs-5year.html</a>].</div>
+
         </div>
 
         <div id="rightabout">
