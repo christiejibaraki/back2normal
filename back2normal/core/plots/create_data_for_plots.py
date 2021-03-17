@@ -53,5 +53,12 @@ def get_groundtruth_data(output_file):
     db = dbclient.DBClient()
     query = f"select * from {build_db.FOOT_TRAFF_TBL}"
     groundtruth_df = pd.read_sql_query(query, db.conn)
-    gt_records = groundtruth_df.to_dict(åorient='records')
+
+    groundtruth_df['AVG7DAY_BARS'].fillna(0, inplace=True)
+    groundtruth_df['AVG7DAY_GROCERY'].fillna(0, inplace=True)
+    groundtruth_df['AVG7DAY_RESTAURANT'].fillna(0, inplace=True)
+    groundtruth_df['AVG7DAY_PARKS_BEACHES'].fillna(0, inplace=True)
+    groundtruth_df['AVG7DAY_SCHOOLS_LIBRARIES'].fillna(0, inplace=True)
+
+    gt_records = groundtruth_df.to_dict(orient='records')
     basic_io.write_dict_to_json(output_file, gt_records)
