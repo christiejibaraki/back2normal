@@ -88,13 +88,10 @@ var yAxisScale = d3
     .scaleLinear()
     .domain([
         0, 600
-        // d3.max(data4, function (d) {
-        //     return Math.max(d.value, d.value2);
-        // })
     ])
     .range([height, 0]);
 
-svg.append("g").call(d3.axisLeft(yAxisScale));
+yAxis = svg.append("g").call(d3.axisLeft(yAxisScale));
 
 
 svg.append("rect").attr("x", width-200).attr('y', 0).attr('width', 225).attr('height', 45).attr('stroke', 'black').attr("stroke-width", 0.5).attr('fill', 'white')
@@ -108,8 +105,22 @@ svg.append("text").attr("x",width-175).attr("y", 30).text("Covid Cases").style("
 function scatter(selected_ZIP) {
 
     d3.select("#cvg_svgC4").selectAll("path").remove();
-
     covid_subset_data = filterOnZipCovid(selected_ZIP)
+
+    yAxis.remove()
+
+    var yAxisScale = d3
+        .scaleLinear()
+        .domain([
+            0,
+            d3.max(covid_subset_data, function (ds) {
+                return Math.max(ds.covid_val1, ds.covid_val2);
+            })
+        ])
+        .range([height, 0]);
+
+    yAxis = svg.append("g").call(d3.axisLeft(yAxisScale));
+
 
     svg4
         .append("path")
