@@ -18,7 +18,10 @@ def get_demographic_data(output_file):
         for cat in census_df.columns:
             demographic_data.append({"ZIPCODE": zipc, "CATEGORY": cat, 
                                      "VALUE": census_df[cat][i]})
-    #basic_io.write_dict_to_json(output_file, demographic_data)
+    with open(output_file, 'w') as filehandle:
+        for listitem in demographic_data:
+            filehandle.write('%s\n' % listitem)
+
 
 
 def get_vaccine_data(output_file):
