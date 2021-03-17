@@ -97,6 +97,14 @@ var yAxisScale = d3
 svg.append("g").call(d3.axisLeft(yAxisScale));
 
 
+svg.append("rect").attr("x", 5).attr('y', 0).attr('width', 170).attr('height', 45).attr('stroke', 'black').attr('fill', 'white')
+svg.append("circle").attr("cx",15).attr("cy",15).attr("r", 6).style("fill", "#588c7e");
+svg.append("circle").attr("cx",15).attr("cy",30).attr("r", 6).style("fill", "#d96459");
+svg.append("text").attr("x", 30).attr("y", 15).text("Vaccinations").style("font-size", "15px").attr("alignment-baseline","middle");
+svg.append("text").attr("x", 30).attr("y", 30).text("Covid Cases").style("font-size", "15px").attr("alignment-baseline","middle");
+
+
+
 function scatter(selected_ZIP) {
 
     d3.select("#cvg_svgC4").selectAll("path").remove();
