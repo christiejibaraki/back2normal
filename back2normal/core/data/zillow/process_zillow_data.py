@@ -1,8 +1,11 @@
+"""
+Module for Zillow Data
+"""
 import os
 import pandas as pd
 from core.data import data_transformations
 
-
+@DeprecationWarning
 def get_zillow_zori_data():
     desired_zip = data_transformations.get_chicago_zipcodes()
     all_rents = pd.read_csv(os.path.join("resources", "Zillow",
