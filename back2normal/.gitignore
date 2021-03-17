@@ -2,7 +2,6 @@
 # keys.json
 
 # large data resources
-core/resources/GroundTruth/
 core/resources/IDPH/
 core/resources/Zillow/
 historical_traffic_1_1_2019-3_7_20201.csv
