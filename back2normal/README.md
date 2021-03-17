@@ -36,7 +36,8 @@ This should print out a localhost address. The default port is 8080. To change t
 6. (Optional) View database tables in jupyter notebook.
 <br>The team has created a jupyter notebook to manually inspect sqlite tables. Once the database is built,
 to view the notebook, run `env/bin/jupyter-notebook prod_data_review.ipynb`. Navigate to localhost URL.
-7. (Optional) The team has written a handful of unit tests which can be run with the following command `python -m pytest`
+7. (Optional) View supplementary cross-zip code analysis in the viz_analysis.ipynb jupyter notebook, by running  `env/bin/jupyter-notebook viz_analysis.ipynb`
+8. (Optional) The team has written a handful of unit tests which can be run with the following command `python -m pytest`
  
 ### Description
 The frontend for our project is a simple javascript application that uses the D3 library to visualize the data.
