@@ -30,8 +30,6 @@ def get_covid_and_vaccine_data(output_file):
 
     query = (f"select case_data.{data_transformations.STD_ZIP_COL_NAME},"
              f" case_data.{data_transformations.STD_DATE_COL_NAME},"
-             f" vacc_data.{data_transformations.STD_ZIP_COL_NAME} ZIPB,"
-             f" vacc_data.{data_transformations.STD_DATE_COL_NAME} DATEB,"
              f" case_data.AVG7DAY_confirmed_cases,"
              f" vacc_data.AVG7DAY_total_doses_daily, vacc_data.AVG7DAY_vaccine_series_completed_daily"
              f" from {build_db.CASE_TBL} case_data left join {build_db.VACC_TBL} vacc_data"
