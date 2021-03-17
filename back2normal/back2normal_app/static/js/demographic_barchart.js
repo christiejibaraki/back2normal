@@ -123,6 +123,8 @@ function dsBarChart() {
         .attr("fill", "lightgrey")
     ;
 
+    //
+
 
     // Add y labels to plot
 
@@ -143,6 +145,8 @@ function dsBarChart() {
         })
         .attr("class", "yAxis")
     ;
+
+
 
     // Add x labels to chart
 
@@ -167,6 +171,7 @@ function dsBarChart() {
         .attr("class", "xAxis")
     //.attr("style", "font-size: 12; font-family: Helvetica, sans-serif")
     ;
+<<<<<<< Updated upstream
 
     // Title
 
@@ -177,6 +182,22 @@ function dsBarChart() {
         .attr("text-anchor", "middle")
         .text("hiiii")
     ;
+=======
+    
+    // Adding cook county averages
+    // y = f(x) = height - ((x/100) * height)
+    // unemply: 4.6 -> 
+    // poverty: 10.7 -> 
+    // age >= 65: 14.3 -> 
+    // pct. w/ healt ins: 91.2 -> 
+    //width 1/8, 3/8, 5/8, 7/8
+    plot.append("circle").attr("cx",5).attr("cy",15).attr("r", 4).attr('stroke', 'black').style("fill", "#d96459");
+    plot.append("text").attr("x", 15).attr("y", 15).text("Cook County Average").style("font-size", "17px").attr("alignment-baseline","middle");
+    plot.append("circle").attr("cx",width/8).attr("cy",height-(.046*height)).attr("r", 4).attr('stroke', 'black').style("fill", "#d96459");
+    plot.append("circle").attr("cx",width*(3/8)).attr("cy",height-(.107*height)).attr("r", 4).attr('stroke', 'black').style("fill", "#d96459");
+    plot.append("circle").attr("cx",width*(5/8)).attr("cy",height-(.143*height)).attr("r", 4).attr('stroke', 'black').style("fill", "#d96459");
+    //plot.append("circle").attr("cx",width*(7/8)).attr("cy",height-(.912*height)).attr("r", 4).attr('stroke', 'black').style("fill", "#d96459");
+>>>>>>> Stashed changes
 }
 
 dsBarChart();
