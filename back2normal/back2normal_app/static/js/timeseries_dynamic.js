@@ -28,15 +28,15 @@ var svg4 = svg
 // .attr("transform", "translate(" + +")");
 
 // -------------------------------Data manipulation--------
-const parse = d3.timeParse("%Y-%m-%d");
+// const parse = d3.timeParse("%Y-%m-%d");
 
 const parse4 = d3.timeParse("%Y-%m-%d %H:%M:%S")
 
 //rename columns of data 4
 data4 = data4.map((datum) =>{
     datum.date = parse4(datum.STD_DATE);
-    datum.value = datum.AVG7DAY_total_doses_daily
-    datum.value2 = datum.AVG7DAY_confirmed_cases_change
+    datum.covid_val1 = datum.AVG7DAY_total_doses_daily
+    datum.covid_val2 = datum.AVG7DAY_confirmed_cases_change
     return datum
 })
 
@@ -44,7 +44,8 @@ data4 = data4.map((datum) =>{
 function filterNaNs(dataset) {
     var filtered_data = [];
     for (x in dataset) {
-        if ((dataset[x].value == dataset[x].value) && (dataset[x].value2 == dataset[x].value2)) {
+        if ((dataset[x].covid_val1 == dataset[x].covid_val1)
+            && (dataset[x].covid_val2 == dataset[x].covid_val2)) {
             filtered_data.push(dataset[x]);
         }
     }
@@ -54,7 +55,7 @@ function filterNaNs(dataset) {
 data4 = filterNaNs(data4)
 
 //filter on zip function
-function filterOnZip(selected_ZIP) {
+function filterOnZipCovid(selected_ZIP) {
     var filtered_data = [];
     for (x in data4) {
         if (data4[x].ZIPCODE == selected_ZIP) {
@@ -100,14 +101,14 @@ function scatter(selected_ZIP) {
 
     d3.select("#cvg_svgC4").selectAll("path").remove();
 
-    subset_data = filterOnZip(selected_ZIP)
+    covid_subset_data = filterOnZipCovid(selected_ZIP)
 
     svg4
         .append("path")
-        .datum(subset_data) //replaced data3 with data4
+        .datum(covid_subset_data) //replaced data3 with data4
         .attr("fill", "none")
         .attr("stroke", "none")
-        .attr("stroke-width", 2)
+        .attr("stroke-width", 3)
         .attr(
             "d",
             d3
@@ -116,17 +117,17 @@ function scatter(selected_ZIP) {
                     return xAxisScale(d.date);
                 })
                 .y(function (d) {
-                    return yAxisScale(d.value);
+                    return yAxisScale(d.covid_val1);
                 })
         )
         .style("stroke", "#588c7e");
 
     svg4
         .append("path")
-        .datum(subset_data) //replaced data3 with data4
+        .datum(covid_subset_data)
         .attr("fill", "none")
         .attr("stroke", "none")
-        .attr("stroke-width", 2)
+        .attr("stroke-width", 3)
         .attr(
             "d",
             d3
@@ -135,7 +136,7 @@ function scatter(selected_ZIP) {
                     return xAxisScale(d.date);
                 })
                 .y(function (d) {
-                    return yAxisScale(d.value2);
+                    return yAxisScale(d.covid_val2);
                 })
         )
         .style("stroke", "#d96459");
@@ -146,5 +147,13 @@ function scatter(selected_ZIP) {
         .duration(800)
         .attr("opacity", "1")
         .call(d3.axisBottom(xAxisScale));
+
+    svg4.append("text") // target the text element(s) which has a title class defined
+        .attr("x", (width + margin.left + margin.right) / 2)
+        .attr("y", 15)
+        .attr("class", "chart_title")
+        .attr("text-anchor", "middle")
+        .text("Covid Cases and Vaccinations")
+    ;
 
 }
