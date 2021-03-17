@@ -148,12 +148,4 @@ function scatter(selected_ZIP) {
         .attr("opacity", "1")
         .call(d3.axisBottom(xAxisScale));
 
-    svg4.append("text") // target the text element(s) which has a title class defined
-        .attr("x", (width + margin.left + margin.right) / 2)
-        .attr("y", 15)
-        .attr("class", "chart_title")
-        .attr("text-anchor", "middle")
-        .text("Covid Cases and Vaccinations")
-    ;
-
 }

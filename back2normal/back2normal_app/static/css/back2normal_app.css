@@ -10,6 +10,20 @@ html, body {
     overflow: hidden;
 }
 
+#divtitle {
+    font-family: 'Lato', sans-serif;
+    text-align: center;
+    background: white;
+    padding-top: 5px;
+}
+
+#divtitle2 {
+    font-family: 'Lato', sans-serif;
+    text-align: center;
+    background: white;
+    padding-top: 5px;
+}
+
 /* main container */
 .container {
     height: 100%;
@@ -61,6 +75,7 @@ html, body {
     display: contents;
     text-align: right;
     position: relative;
+    font-family: 'Lato', sans-serif;
 }
 
 #rightabout p {

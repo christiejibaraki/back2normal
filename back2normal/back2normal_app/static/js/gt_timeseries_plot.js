@@ -224,12 +224,4 @@ function scatter_gt(selected_ZIP) {
         .attr("opacity", "1")
         .call(d3.axisBottom(xAxisScale_gt));
 
-    svg4_gt.append("text") // target the text element(s) which has a title class defined
-        .attr("x", (width + margin.left + margin.right) / 2)
-        .attr("y", 15)
-        .attr("class", "chart_title")
-        .attr("text-anchor", "middle")
-        .text("Foot Traffic Index")
-    ;
-
 }
